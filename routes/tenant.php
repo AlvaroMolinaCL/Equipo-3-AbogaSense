@@ -71,6 +71,13 @@ Route::middleware([
     Route::post('/api/apply-batch', [ScheduleBatchController::class, 'applyBatch']);
     Route::get('/api/batch-preview', [ScheduleBatchController::class, 'previewBatch']);
 
+    Route::get('/communes-by-region/{region}', function ($regionId) {
+        return \App\Models\Commune::where('region_id', $regionId)
+            ->orderBy('name')
+            ->get(['id', 'name']);
+    })->name('communes.byRegion');
+
+
     // Rutas solo para usuarios que han iniciado sesión
     Route::middleware(['auth'])->group(function () {
 

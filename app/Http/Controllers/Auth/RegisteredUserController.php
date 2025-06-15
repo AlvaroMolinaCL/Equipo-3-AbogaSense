@@ -13,6 +13,10 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Role;
+use App\Models\Region;
+use App\Models\Genre;
+
+
 
 
 class RegisteredUserController extends Controller
@@ -22,12 +26,16 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+        $regions = Region::orderBy('order')->get();
+        $genres = Genre::orderBy('name')->get();
+
         if (tenant()) {
-            return view(tenantView('auth.register'));
+            return view(tenantView('auth.register'), compact('regions', 'genres'));
         }
 
-        return view('auth.register');
+        return view('tenants.default.auth.register', compact('regions', 'genres'));
     }
+
 
     /**
      * Handle an incoming registration request.
@@ -44,6 +52,12 @@ class RegisteredUserController extends Controller
             'second_last_name' => 'nullable|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'phone_number' => 'required|string|max:15',
+
+            'genre_id' => ['nullable', 'exists:genres,id'],
+            'birth_date' => ['nullable', 'date'],
+            'residence_region_id' => ['nullable', 'exists:regions,id'],
+            'residence_commune_id' => ['nullable', 'exists:communes,id'],
         ];
 
         if (!tenant() && !$noUsersExist) {
@@ -72,7 +86,13 @@ class RegisteredUserController extends Controller
             'second_last_name' => $request->second_last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone_number' => $request->phone_number,
+            'genre_id' => $request->genre_id ?? null,
+            'birth_date' => $request->birth_date ?? null,
+            'residence_region_id' => $request->residence_region_id ?? null,
+            'residence_commune_id' => $request->residence_commune_id ?? null,
         ]);
+
 
         if (!tenant()) {
             $user->assignRole('Super Admin');
@@ -99,4 +119,12 @@ class RegisteredUserController extends Controller
         // Guardar el nuevo token en el cache
         Cache::put('current_token', $newToken, now()->endOfDay());
     }
+
+
+    public function showRegistrationForm()
+    {
+        $regions = Region::orderBy('order')->get();
+        return view('auth.register', compact('regions'));
+    }
+
 }
