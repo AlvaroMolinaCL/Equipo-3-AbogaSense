@@ -60,7 +60,7 @@
                         <option value="">Selecciona una región</option>
                         @foreach ($regions as $region)
                             <option value="{{ $region->id }}"
-                                {{ old('residence_region_id', optional($user->commune)->region_id) == $region->id ? 'selected' : '' }}>
+                                {{ old('residence_region_id', $user->residence_region_id) == $region->id ? 'selected' : '' }}>
                                 {{ $region->name }}
                             </option>
                         @endforeach
@@ -71,14 +71,19 @@
                     <select name="residence_commune_id" id="residence_commune_id" class="form-select" required>
                         <option value="">Selecciona una comuna</option>
                         @foreach ($communes as $commune)
-                            <option value="{{ $commune->id }}" data-region="{{ $commune->region_id }}"
-                                {{ old('residence_commune_id', $user->address_commune) == $commune->id ? 'selected' : '' }}>
+                            <option value="{{ $commune->id }}"
+                                data-region="{{ $commune->region_id }}"
+                                {{ (old('residence_commune_id') !== null 
+                                        ? old('residence_commune_id') == $commune->id 
+                                        : $user->residence_commune_id == $commune->id) ? 'selected' : '' }}>
                                 {{ $commune->name }}
                             </option>
                         @endforeach
                     </select>
                 </div>
+
             </div>
+
 
             <div class="row mt-3">
                 <div class="col-md-6">
@@ -115,25 +120,44 @@
     </div>
 </section>
 
-<script>
-    function filterCommunes(regionSelectId, communeSelectId) {
-        const regionId = document.getElementById(regionSelectId).value;
-        const communeSelect = document.getElementById(communeSelectId);
-        Array.from(communeSelect.options).forEach(option => {
-            if (!option.value) return;
-            option.style.display = option.getAttribute('data-region') == regionId ? '' : 'none';
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const regionSelect = document.getElementById('residence_region_id');
+            const communeSelect = document.getElementById('residence_commune_id');
+
+            function filterCommunes() {
+                const selectedRegion = regionSelect.value;
+                let foundSelected = false;
+
+                Array.from(communeSelect.options).forEach(option => {
+                    if (option.value === '') {
+                        option.style.display = 'block';
+                        return;
+                    }
+
+                    const communeRegionId = option.getAttribute('data-region');
+                    if (communeRegionId === selectedRegion) {
+                        option.style.display = 'block';
+                        if (
+                            option.value === communeSelect.value
+                        ) {
+                            foundSelected = true;
+                        }
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+
+                // Si la comuna actual no pertenece a la región, resetea el select
+                if (!foundSelected) {
+                    communeSelect.value = '';
+                }
+            }
+
+            regionSelect.addEventListener('change', filterCommunes);
+
+            // Filtra al cargar por si ya hay región y comuna seleccionadas
+            filterCommunes();
         });
-        communeSelect.value = '';
-    }
-
-    document.getElementById('residence_region_id').addEventListener('change', function() {
-        filterCommunes('residence_region_id', 'residence_commune_id');
-    });
-    document.getElementById('incident_region_id').addEventListener('change', function() {
-        filterCommunes('incident_region_id', 'incident_commune_id');
-    });
-
-    filterCommunes('residence_region_id', 'residence_commune_id');
-    filterCommunes('incident_region_id', 'incident_commune_id');
-</script>
+    </script>
 @endsection

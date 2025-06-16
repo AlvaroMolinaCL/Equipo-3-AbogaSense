@@ -119,6 +119,109 @@
             @endif
         </div>
 
+        <div class="mb-4">
+            <label for="phone_number" class="form-label fw-medium"
+                style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-telephone me-1"></i>{{ __('Teléfono') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text" style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};
+                     color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                    <i class="bi bi-telephone"></i>
+                </span>
+                <input type="text" class="form-control border-start-0"
+                    style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};"
+                    placeholder="Por ejemplo: +56912345678" id="phone_number" name="phone_number"
+                    value="{{ old('phone_number', $user->phone_number) }}">
+            </div>
+            @error('phone_number')
+                <div class="text-danger small mt-2">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="genre_id" class="form-label fw-medium"
+                style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-gender-ambiguous me-1"></i>{{ __('Género') }}
+            </label>
+            <select id="genre_id" name="genre_id" class="form-select"
+                style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};">
+                <option value="">{{ __('Seleccione su género') }}</option>
+                @foreach ($genres as $genre)
+                    <option value="{{ $genre->id }}" {{ old('genre_id', $user->genre_id) == $genre->id ? 'selected' : '' }}>
+                        {{ $genre->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('genre_id')
+                <div class="text-danger small mt-2">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="birth_date" class="form-label fw-medium"
+                style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-calendar-date me-1"></i>{{ __('Fecha de Nacimiento') }}
+            </label>
+            <input type="date" class="form-control"
+                style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};" id="birth_date"
+                name="birth_date" value="{{ old('birth_date', $user->birth_date) }}">
+            @error('birth_date')
+                <div class="text-danger small mt-2">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="residence_region_id" class="form-label fw-medium"
+                style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-geo-alt me-1"></i>{{ __('Región de Residencia') }}
+            </label>
+            <select id="residence_region_id" name="residence_region_id" class="form-select"
+                style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};">
+                <option value="">{{ __('Seleccione su región') }}</option>
+                @foreach ($regions as $region)
+                    <option value="{{ $region->id }}" {{ old('residence_region_id', $user->residence_region_id) == $region->id ? 'selected' : '' }}>
+                        {{ $region->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('residence_region_id')
+                <div class="text-danger small mt-2">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="residence_commune_id" class="form-label fw-medium"
+                style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-geo-fill me-1"></i>{{ __('Comuna de Residencia') }}
+            </label>
+            <select id="residence_commune_id" name="residence_commune_id" class="form-select"
+                style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};">
+                <option value="">{{ __('Seleccione su comuna') }}</option>
+                @foreach ($communes as $commune)
+                    <option value="{{ $commune->id }}" 
+                        data-region="{{ $commune->region_id }}"
+                        {{ old('residence_commune_id', $user->residence_commune_id) == $commune->id ? 'selected' : '' }}>
+                        {{ $commune->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('residence_commune_id')
+                <div class="text-danger small mt-2">
+                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
+                </div>
+            @enderror
+        </div>
+
+
         <div class="mt-4 pt-3 border-top text-center">
             <button type="submit" class="btn fw-medium py-1"
                 style="background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }}; color: {{ tenantSetting('primary_button_text_color', 'white') }}; width: 210px;">
@@ -133,4 +236,46 @@
             @endif
         </div>
     </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const regionSelect = document.getElementById('residence_region_id');
+            const communeSelect = document.getElementById('residence_commune_id');
+
+            function filterCommunes() {
+                const selectedRegion = regionSelect.value;
+                let foundSelected = false;
+
+                Array.from(communeSelect.options).forEach(option => {
+                    if (option.value === '') {
+                        option.style.display = 'block';
+                        return;
+                    }
+
+                    const communeRegionId = option.getAttribute('data-region');
+                    if (communeRegionId === selectedRegion) {
+                        option.style.display = 'block';
+                        if (
+                            option.value === communeSelect.value
+                        ) {
+                            foundSelected = true;
+                        }
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+
+                // Si la comuna actual no pertenece a la región, resetea el select
+                if (!foundSelected) {
+                    communeSelect.value = '';
+                }
+            }
+
+            regionSelect.addEventListener('change', filterCommunes);
+
+            // Filtra al cargar por si ya hay región y comuna seleccionadas
+            filterCommunes();
+        });
+    </script>
+
 </section>
