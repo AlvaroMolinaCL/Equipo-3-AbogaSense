@@ -9,6 +9,10 @@ use Transbank\Webpay\WebpayPlus;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\PlanConfirmationMail;
+use App\Models\Tenant;
+use Database\Seeders\TenantInitialSetupSeeder;
+
 
 
 class PlanCheckoutController extends Controller
@@ -126,44 +130,48 @@ class PlanCheckoutController extends Controller
             $order = Order::findOrFail($response->getBuyOrder());
 
             if ($response->isApproved()) {
-                // Actualiza el monto desde la respuesta de Webpay (no desde la orden)
-                $amountFromWebpay = $response->getAmount(); // Importante
-
+                // Actualizar estado de la orden
                 $order->update([
                     'status' => 'completed',
-                    'amount' => $amountFromWebpay, // Guarda el monto real
                     'transaction_code' => $response->getAuthorizationCode(),
                     'transaction_date' => $response->getTransactionDate()
                 ]);
 
+                // Crear el tenant automáticamente
+                $tenant = $this->createTenantFromOrder($order);
+
+                // Enviar email de confirmación
+                Mail::to($order->customer_email)->send(
+                    new PlanConfirmationMail(
+                        $order->customer_name,
+                        $order->plan_name,
+                        $order->amount,
+                        $response->getAuthorizationCode(),
+                        $response->getTransactionDate()
+                    )
+                );
+
                 return view('webpay.success', [
                     'buyOrder' => $order->id,
-                    'amount' => $amountFromWebpay, // Usa el monto de Webpay
+                    'amount' => $order->amount,
                     'authorizationCode' => $response->getAuthorizationCode(),
                     'transactionDate' => $response->getTransactionDate(),
-                    'planName' => $order->plan_name
+                    'planName' => $order->plan_name,
+                    'tenantUrl' => $tenant->id . '.' . config('app.domain')
                 ]);
             }
 
-
-            // Pago rechazado: pasa los datos clave a la vista
             return view('webpay.failure', [
-                'buyOrder' => $order ? $order->id : 'N/A', // Siempre pasa buyOrder
+                'buyOrder' => $order->id,
                 'responseCode' => $response->getResponseCode(),
-                'errorMessage' => $this->getResponseMessage($response->getResponseCode()),
-                'isPlanPurchase' => true
+                'errorMessage' => $this->getResponseMessage($response->getResponseCode())
             ]);
-
 
         } catch (\Exception $e) {
-            Log::error("Error en handleResponse: " . $e->getMessage());
-            return view('webpay.failure', [
-                'error' => $e->getMessage(),
-                'buyOrder' => 'N/A' // Asegura que la variable exista
-            ]);
+            Log::error('Error en handleResponse: ' . $e->getMessage());
+            return view('webpay.failure')->with('error', $e->getMessage());
         }
     }
-
     protected function getResponseMessage($responseCode)
     {
         $messages = [
@@ -183,5 +191,43 @@ class PlanCheckoutController extends Controller
         ];
 
         return $messages[$responseCode] ?? 'Error desconocido en la transacción';
+    }
+
+    protected function createTenantFromOrder(Order $order)
+    {
+        // Generar un ID único para el tenant basado en el email del cliente
+        $tenantId = Str::slug($order->customer_email);
+
+        // Crear el tenant con datos básicos
+        $tenant = Tenant::create([
+            'id' => $tenantId,
+            'name' => $order->customer_name . ' - ' . $order->plan_name,
+            'email' => $order->customer_email,
+        ]);
+
+        // Crear el dominio principal
+        $tenant->domains()->create([
+            'domain' => $tenantId . '.' . config('app.domain')
+        ]);
+
+        // Inicializar el tenant y ejecutar el seeder
+        tenancy()->initialize($tenant);
+
+        $password = Str::random(12); 
+
+        (new TenantInitialSetupSeeder(
+            name: $order->customer_name,
+            email: $order->customer_email,
+            password: $password,
+        ))->run();
+        Log::info("Contraseña generada para tenant {$tenant->id}: {$password}");
+
+
+        tenancy()->end();
+
+        // Asociar el tenant con la orden
+        $order->update(['tenant_id' => $tenant->id]);
+
+        return $tenant;
     }
 }

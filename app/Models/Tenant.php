@@ -123,5 +123,9 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->hasMany(TenantText::class);
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'tenant_id', 'id');
+    }
 
 }

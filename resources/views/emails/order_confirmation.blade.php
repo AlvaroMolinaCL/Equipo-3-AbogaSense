@@ -25,7 +25,6 @@
         <div class="order-details">
             <h2>Detalles del Pedido #{{ $order->id }}</h2>
             <p><strong>Fecha:</strong> {{ $order->created_at->format('d/m/Y H:i') }}</p>
-            <p><strong>Método de pago:</strong> {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
         </div>
         
         <h3>Productos:</h3>
@@ -51,7 +50,7 @@
             <tfoot>
                 <tr>
                     <td colspan="3" class="total">Total:</td>
-                    <td class="total">${{ number_format($order->total, 0, ',', '.') }}</td>
+                    <td class="total">${{ number_format($order->amount, 0, ',', '.') }}</td>
                 </tr>
             </tfoot>
         </table>
