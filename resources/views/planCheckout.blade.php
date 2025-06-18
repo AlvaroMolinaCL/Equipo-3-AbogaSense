@@ -169,7 +169,7 @@
                         <!-- Formulario de datos -->
                         <h5 class="section-title fw-bold" style="color: var(--primary-color);">Tus datos</h5>
 
-                        <form method="POST" action="{{ route('plan.checkout.pay') }}">
+                        <form method="POST" action="{{ route('plan.checkout.pay') }}" id="paymentForm">
                             @csrf
                             <input type="hidden" name="plan_name" value="{{ $plan['name'] }}">
                             <input type="hidden" name="plan_price" value="{{ $plan['price'] }}">
@@ -263,13 +263,65 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
-        document.getElementById('pay-button').addEventListener('click', function () {
-            const payText = document.getElementById('pay-text');
-            const paySpinner = document.getElementById('pay-spinner');
+        document.addEventListener('DOMContentLoaded', function () {
+            const paymentForm = document.getElementById('paymentForm');
 
-            payText.innerText = 'Procesando pago...';
-            paySpinner.classList.remove('d-none');
-            this.disabled = true;
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    const payButton = document.getElementById('pay-button');
+                    const payText = document.getElementById('pay-text');
+                    const paySpinner = document.getElementById('pay-spinner');
+
+                    // Actualizar UI
+                    payText.innerText = 'Procesando pago...';
+                    paySpinner.classList.remove('d-none');
+                    payButton.disabled = true;
+
+                    try {
+                        // Enviar datos del formulario
+                        const formData = new FormData(paymentForm);
+                        const response = await fetch(paymentForm.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+
+                        const data = await response.json();
+
+                        if (data.url && data.token) {
+                            // Crear formulario dinámico para redirección a Webpay
+                            const form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = data.url;
+
+                            const tokenInput = document.createElement('input');
+                            tokenInput.type = 'hidden';
+                            tokenInput.name = 'token_ws';
+                            tokenInput.value = data.token;
+
+                            form.appendChild(tokenInput);
+                            document.body.appendChild(form);
+                            form.submit();
+                        } else {
+                            throw new Error('Respuesta inesperada del servidor');
+                        }
+
+                    } catch (error) {
+                        console.error('Error:', error);
+                        payText.innerText = 'Pagar ahora';
+                        paySpinner.classList.add('d-none');
+                        payButton.disabled = false;
+
+                        // Mostrar mensaje de error
+                        alert('Ocurrió un error al procesar el pago. Por favor intente nuevamente.');
+                    }
+                });
+            }
         });
     </script>
 

@@ -38,9 +38,16 @@ Route::post('/solicitar-superadmin', [PublicSuperAdminRequestController::class, 
 Route::get('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'form']);
 Route::post('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'register']);
 
-// routes/web.php
-Route::get('/plan-checkout/{plan}', [PlanCheckoutController::class, 'showForm'])->name('plan.checkout.form');
-Route::post('/plan-checkout/pay', [PlanCheckoutController::class, 'processPayment'])->name('plan.checkout.pay');
+
+Route::prefix('planes')->group(function () {
+    Route::get('/plan-checkout/{plan}', [PlanCheckoutController::class, 'showForm'])->name('plan.checkout.form');
+    Route::post('/pagar', [PlanCheckoutController::class, 'processPayment'])->name('plan.checkout.pay');
+
+    // Ruta única que acepta GET y POST
+    Route::match(['get', 'post'], '/respuesta', [PlanCheckoutController::class, 'handleResponse'])
+        ->name('plan.checkout.response')
+        ->withoutMiddleware(['auth']);
+});
 
 // Rutas solo para usuarios que han iniciado sesión
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -3,12 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TenantPurchase;
 use App\Models\Order;
 use Illuminate\Support\Str;
+use Transbank\Webpay\WebpayPlus;
+use Transbank\Webpay\WebpayPlus\Transaction;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
 
 class PlanCheckoutController extends Controller
 {
+    public function __construct()
+    {
+
+        if (config('app.env') == 'production') {
+            WebpayPlus::configureForProduction(
+                config('services.transbank.commerce_code'),
+                config('services.transbank.api_key')
+            );
+        } else {
+            WebpayPlus::configureForTesting();
+        }
+    }
+
     public function showForm($plan)
     {
         $plans = [
@@ -61,85 +78,110 @@ class PlanCheckoutController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'plan_name' => 'required|string',
-            'plan_price' => 'required|numeric',
+            'plan_price' => 'required|numeric'
         ]);
 
-        // Crear una orden temporal
-        $order = Order::create([
-            'user_id' => auth()->id() ?? null,
-            'amount' => $validated['plan_price'],
-            'status' => 'pending',
-            'order_code' => Str::uuid(),
-        ]);
-
-        // Guardar datos en sesión para después del pago
-        session([
-            'purchase_details' => [
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'phone' => $validated['phone'],
-                'plan_name' => $validated['plan_name'],
-                'plan_price' => $validated['plan_price'],
-                'order_id' => $order->id,
-            ],
-            'current_order_id' => $order->id,
-        ]);
-
-        // Redirigir a Transbank con el monto
-        return redirect()->route('transbank.create', ['amount' => $validated['plan_price']]);
-    }
-
-    public function handleSuccess(Request $request)
-    {
         try {
-            $purchaseDetails = session('purchase_details');
-
-            if (!$purchaseDetails) {
-                return redirect()->route('plan.checkout.form', ['plan' => 'basico'])
-                    ->with('error', 'No se encontraron los detalles de la compra.');
-            }
-
-            // Crear registro en TenantPurchase
-            TenantPurchase::create([
-                'order_id' => $purchaseDetails['order_id'],
-                'plan_name' => $purchaseDetails['plan_name'],
-                'plan_price' => $purchaseDetails['plan_price'],
-                'name' => $purchaseDetails['name'],
-                'email' => $purchaseDetails['email'],
-                'phone' => $purchaseDetails['phone'],
-                'status' => 'completed',
-                'tenant_slug' => Str::slug($purchaseDetails['name']),
-                'activated_at' => now()
+            $order = Order::create([
+                'amount' => $request->plan_price,
+                'status' => 'pending',
+                'type' => 'plan_purchase',
+                'plan_name' => $validated['plan_name'],
+                'customer_name' => $validated['name'],
+                'customer_email' => $validated['email'],
+                'customer_phone' => $validated['phone'],
             ]);
 
-            // Actualizar orden a completada
-            Order::where('id', $purchaseDetails['order_id'])->update(['status' => 'completed']);
+            $sessionId = uniqid();
+            $returnUrl = url('/planes/respuesta'); // URL absoluta
 
-            // Limpiar sesión
-            session()->forget(['purchase_details', 'current_order_id']);
+            $response = (new Transaction)->create(
+                $order->id, // buyOrder
+                $sessionId,
+                $validated['plan_price'],
+                $returnUrl
+            );
 
-            return view('tenants.default.webpay.success', [
-                'buyOrder' => $purchaseDetails['order_id'],
-                'amount' => $purchaseDetails['plan_price'],
-                'transactionDate' => now()->format('Y-m-d H:i:s')
+            return response()->json([
+                'url' => $response->getUrl(),
+                'token' => $response->getToken()
             ]);
 
         } catch (\Exception $e) {
-            return redirect()->route('plan.checkout.form', ['plan' => 'basico'])
-                ->with('error', 'Error: ' . $e->getMessage());
+            Log::error('Error procesando pago: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function handleFailure()
+    public function handleResponse(Request $request)
     {
-        $purchaseDetails = session('purchase_details');
+        $token = $request->input('token_ws') ?? $request->query('token_ws');
 
-        if (session('current_order_id')) {
-            Order::where('id', session('current_order_id'))->delete();
+        if (!$token) {
+            return view('webpay.cancelled');
         }
 
-        session()->forget(['purchase_details', 'current_order_id']);
+        try {
+            $response = (new Transaction)->commit($token);
+            $order = Order::findOrFail($response->getBuyOrder());
 
-        return view('tenants.default.webpay.failure');
+            if ($response->isApproved()) {
+                // Actualiza el monto desde la respuesta de Webpay (no desde la orden)
+                $amountFromWebpay = $response->getAmount(); // Importante
+
+                $order->update([
+                    'status' => 'completed',
+                    'amount' => $amountFromWebpay, // Guarda el monto real
+                    'transaction_code' => $response->getAuthorizationCode(),
+                    'transaction_date' => $response->getTransactionDate()
+                ]);
+
+                return view('webpay.success', [
+                    'buyOrder' => $order->id,
+                    'amount' => $amountFromWebpay, // Usa el monto de Webpay
+                    'authorizationCode' => $response->getAuthorizationCode(),
+                    'transactionDate' => $response->getTransactionDate(),
+                    'planName' => $order->plan_name
+                ]);
+            }
+
+
+            // Pago rechazado: pasa los datos clave a la vista
+            return view('webpay.failure', [
+                'buyOrder' => $order ? $order->id : 'N/A', // Siempre pasa buyOrder
+                'responseCode' => $response->getResponseCode(),
+                'errorMessage' => $this->getResponseMessage($response->getResponseCode()),
+                'isPlanPurchase' => true
+            ]);
+
+
+        } catch (\Exception $e) {
+            Log::error("Error en handleResponse: " . $e->getMessage());
+            return view('webpay.failure', [
+                'error' => $e->getMessage(),
+                'buyOrder' => 'N/A' // Asegura que la variable exista
+            ]);
+        }
+    }
+
+    protected function getResponseMessage($responseCode)
+    {
+        $messages = [
+            -1 => 'Transacción rechazada',
+            0 => 'Transacción aprobada',
+            1 => 'Transacción rechazada por tarjeta inválida',
+            2 => 'Transacción rechazada por fondos insuficientes',
+            3 => 'Transacción rechazada por tarjeta vencida',
+            4 => 'Transacción rechazada por tarjeta restringida',
+            5 => 'Transacción rechazada por error en el proceso',
+            6 => 'Transacción rechazada por intentos excedidos',
+            7 => 'Transacción rechazada por tarjeta bloqueada',
+            8 => 'Transacción rechazada por tarjeta reportada',
+            97 => 'Límite excedido en monto de transacciones',
+            98 => 'Límite excedido en frecuencia de transacciones',
+            99 => 'Transacción rechazada por error general'
+        ];
+
+        return $messages[$responseCode] ?? 'Error desconocido en la transacción';
     }
 }

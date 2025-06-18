@@ -16,9 +16,13 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
-        'total',
+        'customer_name',
+        'customer_email',
+        'customer_phone',
+        'plan_name',
+        'amount',
         'status',
-        'payment_method'
+        'reference'
     ];
 
     /**
