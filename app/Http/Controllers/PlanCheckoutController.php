@@ -213,9 +213,13 @@ class PlanCheckoutController extends Controller
     {
         $subdomain = $order->subdomain;
 
-        if (Tenant::where('id', $subdomain)->exists()) {
-            throw new \RuntimeException('El subdominio ya ha sido tomado');
+        if ($order->tenant_id && Tenant::find($order->tenant_id)) {
+            return [
+                'tenant' => Tenant::find($order->tenant_id),
+                'password' => null 
+            ];
         }
+
 
         $tenant = Tenant::create([
             'id' => $subdomain,
