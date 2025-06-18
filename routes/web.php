@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlanCheckoutController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +50,13 @@ Route::prefix('planes')->group(function () {
         ->name('plan.checkout.response')
         ->withoutMiddleware(['auth']);
 });
+
+Route::get('/subdomain/check', function (Request $request) {
+    $subdomain = Str::slug($request->query('subdomain'));
+    $exists = \App\Models\Tenant::where('id', $subdomain)->exists();
+    return response()->json(['exists' => $exists]);
+})->name('subdomain.check');
+
 
 // Rutas solo para usuarios que han iniciado sesión
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -22,7 +22,8 @@ class Order extends Model
         'plan_name',
         'amount',
         'status',
-        'reference'
+        'subdomain',
+
     ];
 
     /**

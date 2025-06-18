@@ -216,6 +216,22 @@
                                 </div>
                             </div>
 
+                            <div class="mb-4">
+                                <label for="subdomain" class="form-label fw-bold">Subdominio</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i
+                                            class="fas fa-map-marker-alt text-muted"></i></span>
+                                    <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
+                                        id="subdomain" name="subdomain" value="{{ old('subdomain') }}"
+                                        placeholder="Ej: miempresa" required>
+                                    @error('subdomain')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <small id="subdomain-feedback" class="form-text"></small>
+
+                            </div>
+
                             <div class="alert alert-light border mb-4" style="border-color: rgba(107, 58, 44, 0.2);">
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-envelope-open-text me-3"
@@ -324,6 +340,40 @@
             }
         });
     </script>
+    <script>
+        document.getElementById('subdomain').addEventListener('input', function () {
+            const subdomain = this.value.trim();
+            const feedback = document.getElementById('subdomain-feedback');
+            const payButton = document.getElementById('pay-button');
+
+            if (subdomain.length < 3) {
+                feedback.textContent = 'El subdominio debe tener al menos 3 caracteres.';
+                feedback.className = 'form-text text-warning';
+                payButton.disabled = true;
+                return;
+            }
+
+            fetch(`{{ route('subdomain.check') }}?subdomain=${encodeURIComponent(subdomain)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        feedback.textContent = 'El subdominio ya está ocupado.';
+                        feedback.className = 'form-text text-danger';
+                        payButton.disabled = true;
+                    } else {
+                        feedback.textContent = 'El subdominio está disponible.';
+                        feedback.className = 'form-text text-success';
+                        payButton.disabled = false;
+                    }
+                })
+                .catch(() => {
+                    feedback.textContent = 'Error al verificar el subdominio.';
+                    feedback.className = 'form-text text-danger';
+                    payButton.disabled = true;
+                });
+        });
+    </script>
+
 
 </body>
 

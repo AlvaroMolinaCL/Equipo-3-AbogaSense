@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Transbank\Webpay\WebpayPlus;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Illuminate\Support\Facades\Log;
@@ -81,6 +82,14 @@ class PlanCheckoutController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
+            'subdomain' => [
+                'required',
+                'string',
+                'max:50',
+                'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
+                Rule::unique('tenants', 'id'),
+                Rule::unique('domains', 'domain')
+            ],
             'plan_name' => 'required|string',
             'plan_price' => 'required|numeric'
         ]);
@@ -89,11 +98,12 @@ class PlanCheckoutController extends Controller
             $order = Order::create([
                 'amount' => $request->plan_price,
                 'status' => 'pending',
-                'type' => 'plan_purchase',
                 'plan_name' => $validated['plan_name'],
                 'customer_name' => $validated['name'],
                 'customer_email' => $validated['email'],
                 'customer_phone' => $validated['phone'],
+                'subdomain' => $validated['subdomain'],
+
             ]);
 
             $sessionId = uniqid();
@@ -195,39 +205,40 @@ class PlanCheckoutController extends Controller
 
     protected function createTenantFromOrder(Order $order)
     {
-        // Generar un ID único para el tenant basado en el email del cliente
-        $tenantId = Str::slug($order->customer_email);
+        $subdomain = $order->subdomain;
 
-        // Crear el tenant con datos básicos
+        if (Tenant::where('id', $subdomain)->exists()) {
+            throw new \RuntimeException('El subdominio ya ha sido tomado');
+        }
+
+
         $tenant = Tenant::create([
-            'id' => $tenantId,
-            'name' => $order->customer_name . ' - ' . $order->plan_name,
+            'id' => $subdomain,
+            'name' => $order->customer_name,
             'email' => $order->customer_email,
         ]);
 
-        // Crear el dominio principal
         $tenant->domains()->create([
-            'domain' => $tenantId . '.' . config('app.domain')
+            'domain' => $subdomain . '.' . config('app.domain')
         ]);
 
-        // Inicializar el tenant y ejecutar el seeder
         tenancy()->initialize($tenant);
 
-        $password = Str::random(12); 
+        $password = Str::random(12);
 
         (new TenantInitialSetupSeeder(
             name: $order->customer_name,
             email: $order->customer_email,
             password: $password,
         ))->run();
-        Log::info("Contraseña generada para tenant {$tenant->id}: {$password}");
 
+        Log::info("Contraseña generada para tenant {$tenant->id}: {$password}");
 
         tenancy()->end();
 
-        // Asociar el tenant con la orden
         $order->update(['tenant_id' => $tenant->id]);
 
         return $tenant;
     }
+
 }
