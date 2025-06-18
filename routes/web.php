@@ -12,6 +12,7 @@ use App\Http\Controllers\TenantPageController;
 use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlanCheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,10 @@ Route::post('/solicitar-superadmin', [PublicSuperAdminRequestController::class, 
 // Formulario de Registro de Super Administrador (con Token)
 Route::get('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'form']);
 Route::post('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'register']);
+
+// routes/web.php
+Route::get('/plan-checkout/{plan}', [PlanCheckoutController::class, 'showForm'])->name('plan.checkout.form');
+Route::post('/plan-checkout/pay', [PlanCheckoutController::class, 'processPayment'])->name('plan.checkout.pay');
 
 // Rutas solo para usuarios que han iniciado sesión
 Route::middleware(['auth', 'verified'])->group(function () {

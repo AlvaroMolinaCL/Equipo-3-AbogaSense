@@ -261,19 +261,25 @@
                         <div class="card-header py-4 text-center" style="background-color: #fdf5e5;">
                             <h4 class="mb-0" style="color: #4A1D0B;">Básico</h4>
                         </div>
-                        <div class="card-body text-center p-4">
-                            <h3 class="fw-bold mb-3" style="color: #6B3A2C;">$99/mes</h3>
+                        <div class="card-body text-start p-4">
+                            <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $79.990/mes</h3>
                             <ul class="list-unstyled mb-4">
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i> Página
                                     web personalizada</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Agendamiento básico</li>
+                                    Agendamiento de citas</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Gestión de clientes</li>
                                 <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Pasarela de pagos</li>
-                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot avanzado</li>
+                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de archivos
+                                </li>
+                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot inteligente
+                                </li>
+
                             </ul>
-                            <a href="#contact" class="btn btn-outline-dark w-100">Solicitar Información</a>
+                            <a href="{{ route('plan.checkout.form', ['plan' => 'basico']) }}"
+                                class="btn btn-outline-dark w-100"> Contratar Ahora
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -284,21 +290,25 @@
                             <h4 class="mb-0">Profesional</h4>
                             <span class="badge bg-white text-dark mt-2">Más Popular</span>
                         </div>
-                        <div class="card-body text-center p-4">
-                            <h3 class="fw-bold mb-3" style="color: #6B3A2C;">$199/mes</h3>
+                        <div class="card-body text-start p-4">
+                            <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $169.990/mes</h3>
                             <ul class="list-unstyled mb-4">
-                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i> Todo
-                                    en Básico</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i> Página
+                                    web personalizada</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
+                                    Agendamiento de citas</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
+                                    Gestión de clientes</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Pasarela de pagos integrada</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Chatbot básico</li>
-                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Reportes mensuales</li>
-                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot avanzado</li>
+                                    Gestión de archivos</li>
+                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot inteligente</li>
                             </ul>
-                            <a href="#contact" class="btn text-white w-100" style="background-color: #4A1D0B;">Contratar
-                                Ahora</a>
+                            <a href="{{ route('plan.checkout.form', ['plan' => 'profesional']) }}"
+                                class="btn text-white w-100" style="background-color: #4A1D0B;">
+                                Contratar Ahora
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -308,21 +318,27 @@
                         <div class="card-header py-4 text-center" style="background-color: #fdf5e5;">
                             <h4 class="mb-0" style="color: #4A1D0B;">Premium</h4>
                         </div>
-                        <div class="card-body text-center p-4">
-                            <h3 class="fw-bold mb-3" style="color: #6B3A2C;">$299/mes</h3>
+                        <div class="card-body text-start p-4">
+                            <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $239.990/mes</h3>
                             <ul class="list-unstyled mb-4">
-                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i> Todo
-                                    en Profesional</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i> Página
+                                    web personalizada</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Chatbot avanzado con IA</li>
+                                    Agendamiento de citas</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Integración CRM</li>
+                                    Gestión de clientes</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Reportes avanzados</li>
+                                    Pasarela de pagos integrada</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
+                                    Gestión de archivos</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
+                                    Chatbot inteligente</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Soporte prioritario</li>
                             </ul>
-                            <a href="#contact" class="btn btn-outline-dark w-100">Solicitar Información</a>
+                            <a href="{{ route('plan.checkout.form', ['plan' => 'premium']) }}"
+                                class="btn btn-outline-dark w-100"> Contratar Ahora
+                            </a>
                         </div>
                     </div>
                 </div>
