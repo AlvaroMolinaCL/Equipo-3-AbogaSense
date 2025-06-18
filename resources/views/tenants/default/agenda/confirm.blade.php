@@ -121,43 +121,78 @@
 </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const regionSelect = document.getElementById('residence_region_id');
-            const communeSelect = document.getElementById('residence_commune_id');
+     // Script para el filtrado de residencia
+    document.addEventListener('DOMContentLoaded', function () {
+        const regionSelect = document.getElementById('residence_region_id');
+        const communeSelect = document.getElementById('residence_commune_id');
 
-            function filterCommunes() {
-                const selectedRegion = regionSelect.value;
-                let foundSelected = false;
+        function filterCommunes() {
+            const selectedRegion = regionSelect.value;
+            let foundSelected = false;
 
-                Array.from(communeSelect.options).forEach(option => {
-                    if (option.value === '') {
-                        option.style.display = 'block';
-                        return;
-                    }
-
-                    const communeRegionId = option.getAttribute('data-region');
-                    if (communeRegionId === selectedRegion) {
-                        option.style.display = 'block';
-                        if (
-                            option.value === communeSelect.value
-                        ) {
-                            foundSelected = true;
-                        }
-                    } else {
-                        option.style.display = 'none';
-                    }
-                });
-
-                // Si la comuna actual no pertenece a la región, resetea el select
-                if (!foundSelected) {
-                    communeSelect.value = '';
+            Array.from(communeSelect.options).forEach(option => {
+                if (option.value === '') {
+                    option.style.display = 'block';
+                    return;
                 }
+
+                const communeRegionId = option.getAttribute('data-region');
+                if (communeRegionId === selectedRegion) {
+                    option.style.display = 'block';
+                    if (
+                        option.value === communeSelect.value
+                    ) {
+                        foundSelected = true;
+                    }
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+
+            if (!foundSelected) {
+                communeSelect.value = '';
             }
+        }
 
-            regionSelect.addEventListener('change', filterCommunes);
+        regionSelect.addEventListener('change', filterCommunes);
+        filterCommunes();
+    });
 
-            // Filtra al cargar por si ya hay región y comuna seleccionadas
-            filterCommunes();
-        });
+    // Script adicional para el filtrado del incidente
+    document.addEventListener('DOMContentLoaded', function () {
+        const incidentRegionSelect = document.getElementById('incident_region_id');
+        const incidentCommuneSelect = document.getElementById('incident_commune_id');
+
+        function filterIncidentCommunes() {
+            const selectedRegion = incidentRegionSelect.value;
+            let foundSelected = false;
+
+            Array.from(incidentCommuneSelect.options).forEach(option => {
+                if (option.value === '') {
+                    option.style.display = 'block';
+                    return;
+                }
+
+                const communeRegionId = option.getAttribute('data-region');
+                if (communeRegionId === selectedRegion) {
+                    option.style.display = 'block';
+                    if (
+                        option.value === incidentCommuneSelect.value
+                    ) {
+                        foundSelected = true;
+                    }
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+
+            if (!foundSelected) {
+                incidentCommuneSelect.value = '';
+            }
+        }
+
+        incidentRegionSelect.addEventListener('change', filterIncidentCommunes);
+        filterIncidentCommunes();
+    });
     </script>
 @endsection
