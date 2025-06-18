@@ -23,7 +23,7 @@ class TenantInitialSetupSeeder extends Seeder
     public function run(): void
     {
         // Crear rol si no existe
-        Role::firstOrCreate(['name' => 'Super Admin', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'Admin', 'guard_name' => 'web']);
 
         // Crear usuario inicial
         $user = User::create([
@@ -32,6 +32,6 @@ class TenantInitialSetupSeeder extends Seeder
             'password' => Hash::make($this->password)
         ]);
 
-        $user->assignRole('Super Admin');
+        $user->assignRole('Admin');
     }
 }

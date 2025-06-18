@@ -10,31 +10,32 @@ class PlanConfirmationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $customerName;
-    public $planName;
-    public $planPrice;
-    public $authorizationCode;
-    public $transactionDate;
+    public $customerName, $planName, $amount, $authorizationCode, $transactionDate;
+    public $loginEmail, $loginPassword, $tenantUrl;
 
-    public function __construct($customerName, $planName, $planPrice, $authorizationCode, $transactionDate)
+    public function __construct($customerName, $planName, $amount, $authorizationCode, $transactionDate, $loginEmail, $loginPassword, $tenantUrl)
     {
         $this->customerName = $customerName;
         $this->planName = $planName;
-        $this->planPrice = $planPrice;
+        $this->amount = $amount;
         $this->authorizationCode = $authorizationCode;
         $this->transactionDate = $transactionDate;
+        $this->loginEmail = $loginEmail;
+        $this->loginPassword = $loginPassword;
+        $this->tenantUrl = $tenantUrl;
     }
+
 
     public function build()
     {
         return $this->subject('Confirmación de compra de plan en AbogaSense')
-                    ->view('emails.plan_confirmation')
-                    ->with([
-                        'customerName' => $this->customerName,
-                        'planName' => $this->planName,
-                        'planPrice' => number_format($this->planPrice, 0, ',', '.'),
-                        'authorizationCode' => $this->authorizationCode,
-                        'transactionDate' => $this->transactionDate
-                    ]);
+            ->view('emails.plan_confirmation')
+            ->with([
+                'customerName' => $this->customerName,
+                'planName' => $this->planName,
+                'planPrice' => number_format($this->amount, 0, ',', '.'),
+                'authorizationCode' => $this->authorizationCode,
+                'transactionDate' => $this->transactionDate
+            ]);
     }
 }

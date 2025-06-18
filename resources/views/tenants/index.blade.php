@@ -33,7 +33,9 @@
                     <table class="table table-hover mb-0">
                         <thead style="background-color: #FDF5E5;">
                             <tr>
+                                <th class="text-center" style="color: #8C2D18;">Estado</th>
                                 <th class="text-center" style="color: #8C2D18;">Nombre</th>
+                                <th class="text-center" style="color: #8C2D18;">Plan</th>
                                 <th class="text-center" style="color: #8C2D18;">Email</th>
                                 <th class="text-center" style="color: #8C2D18;">Dominio(s)</th>
                                 <th class="text-center" style="color: #8C2D18;">Acciones</th>
@@ -42,7 +44,17 @@
                         <tbody class="text-center">
                             @forelse ($tenants as $tenant)
                                 <tr>
+                                    <td>
+                                        @if ($tenant->enabled)
+                                            <span class="badge bg-success">Habilitado</span>
+                                        @else
+                                            <span class="badge bg-secondary">Deshabilitado</span>
+                                        @endif
+                                    </td>
                                     <td>{{ $tenant->name }}</td>
+                                    <td>
+                                        {{ optional($tenant->order)->plan_name ?? 'N/A' }}
+                                    </td>
                                     <td>{{ $tenant->email }}</td>
                                     <td>
                                         @foreach ($tenant->domains as $domain)
@@ -84,6 +96,23 @@
                                                     <i class="bi bi-trash"></i> Eliminar
                                                 </button>
                                             </form>
+
+                                            {{-- Habilitar/Deshabilitar --}}
+                                            <form action="{{ route('tenants.toggleStatus', $tenant) }}" method="POST"
+                                                class="w-100">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                    class="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-1"
+                                                    style="background-color: #BF8A49; color: white;">
+                                                    @if ($tenant->enabled)
+                                                        <i class="bi bi-slash-circle"></i> Deshabilitar
+                                                    @else
+                                                        <i class="bi bi-check-circle"></i> Habilitar
+                                                    @endif
+                                                </button>
+                                            </form>
+
                                         </div>
                                     </td>
                                 </tr>

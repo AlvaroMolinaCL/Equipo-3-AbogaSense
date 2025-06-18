@@ -37,6 +37,7 @@ Route::middleware([
     'web',
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
+    'tenant.enabled',
 ])->group(function () {
     // Página "Inicio"
     Route::get('/', function () {
@@ -124,7 +125,6 @@ Route::middleware([
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
         Route::patch('/update/{item}', [CartController::class, 'update'])->name('cart.update');
         Route::delete('/cart/item/{id}', [CartController::class, 'remove'])->name('cart.remove.item');
-
 
 
         // Planes

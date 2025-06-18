@@ -127,5 +127,10 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->hasMany(Order::class, 'tenant_id', 'id');
     }
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'tenant_id', 'id');
+    }
+
 
 }

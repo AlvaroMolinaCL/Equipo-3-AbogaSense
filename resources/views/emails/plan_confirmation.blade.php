@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +14,23 @@
             margin: 0 auto;
             padding: 20px;
         }
+
         .header {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .logo {
             max-height: 60px;
             margin-bottom: 20px;
         }
+
         .content {
             background-color: #f9f9f9;
             padding: 30px;
             border-radius: 10px;
         }
+
         .details {
             background-color: white;
             padding: 20px;
@@ -33,12 +38,14 @@
             margin: 20px 0;
             border-left: 4px solid #4A1D0B;
         }
+
         .footer {
             margin-top: 30px;
             font-size: 12px;
             text-align: center;
             color: #777;
         }
+
         .btn {
             display: inline-block;
             padding: 10px 20px;
@@ -50,6 +57,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <img src="{{ asset('images/abogasense2.png') }}" alt="AbogaSense" class="logo">
@@ -58,7 +66,8 @@
 
     <div class="content">
         <p>Hola <strong>{{ $customerName }}</strong>,</p>
-        <p>Gracias por adquirir el plan <strong>{{ $planName }}</strong> en AbogaSense. A continuación encontrarás los detalles de tu compra:</p>
+        <p>Gracias por adquirir el plan <strong>{{ $planName }}</strong> en AbogaSense. A continuación encontrarás los
+            detalles de tu compra:</p>
 
         <div class="details">
             <h3 style="color: #6B3A2C; margin-top: 0;">Detalles de la compra</h3>
@@ -66,9 +75,14 @@
             <p><strong>Monto:</strong> ${{ $planPrice }} CLP</p>
             <p><strong>Código de autorización:</strong> {{ $authorizationCode }}</p>
             <p><strong>Fecha de transacción:</strong> {{ $transactionDate }}</p>
+            <p><strong>Correo de acceso:</strong> {{ $loginEmail }}</p>
+            <p><strong>Contraseña:</strong> {{ $loginPassword }}</p>
+            <p><strong>URL de acceso:</strong> <a href="https://{{ $tenantUrl }}">{{ $tenantUrl }}</a></p>
+
         </div>
 
-        <p>En los próximos días nos pondremos en contacto contigo para activar tu plan y configurar todos los servicios incluidos.</p>
+        <p>En los próximos días nos pondremos en contacto contigo para activar tu plan y configurar todos los servicios
+            incluidos.</p>
 
         <p>Si tienes alguna pregunta sobre tu compra, no dudes en contactarnos respondiendo a este correo.</p>
 
@@ -80,4 +94,5 @@
         <p>Este es un correo automático, por favor no lo respondas directamente.</p>
     </div>
 </body>
+
 </html>

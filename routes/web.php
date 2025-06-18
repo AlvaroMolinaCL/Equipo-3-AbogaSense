@@ -57,6 +57,8 @@ Route::get('/subdomain/check', function (Request $request) {
     return response()->json(['exists' => $exists]);
 })->name('subdomain.check');
 
+Route::patch('/tenants/{tenant}/toggle-status', [TenantController::class, 'toggleStatus'])->name('tenants.toggleStatus');
+
 
 // Rutas solo para usuarios que han iniciado sesión
 Route::middleware(['auth', 'verified'])->group(function () {

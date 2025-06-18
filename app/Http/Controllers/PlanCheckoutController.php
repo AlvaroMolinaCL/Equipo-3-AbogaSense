@@ -148,7 +148,9 @@ class PlanCheckoutController extends Controller
                 ]);
 
                 // Crear el tenant automáticamente
-                $tenant = $this->createTenantFromOrder($order);
+                $tenantData = $this->createTenantFromOrder($order);
+                $tenant = $tenantData['tenant'];
+                $password = $tenantData['password'];
 
                 // Enviar email de confirmación
                 Mail::to($order->customer_email)->send(
@@ -157,9 +159,13 @@ class PlanCheckoutController extends Controller
                         $order->plan_name,
                         $order->amount,
                         $response->getAuthorizationCode(),
-                        $response->getTransactionDate()
+                        $response->getTransactionDate(),
+                        $order->customer_email,
+                        $password,
+                        $tenant->id . '.' . config('app.domain')
                     )
                 );
+
 
                 return view('webpay.success', [
                     'buyOrder' => $order->id,
@@ -211,7 +217,6 @@ class PlanCheckoutController extends Controller
             throw new \RuntimeException('El subdominio ya ha sido tomado');
         }
 
-
         $tenant = Tenant::create([
             'id' => $subdomain,
             'name' => $order->customer_name,
@@ -236,9 +241,14 @@ class PlanCheckoutController extends Controller
 
         tenancy()->end();
 
-        $order->update(['tenant_id' => $tenant->id]);
+        $order->tenant_id = $tenant->id;
+        $order->save();
 
-        return $tenant;
+        return [
+            'tenant' => $tenant,
+            'password' => $password
+        ];
     }
+
 
 }
