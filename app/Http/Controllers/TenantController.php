@@ -15,8 +15,9 @@ class TenantController extends Controller
     public function index()
     {
         $tenants = Tenant::with('domains', 'order')
-            ->orderByDesc('enabled')
+            ->orderBy('enabled', 'desc')
             ->get();
+
         return view('tenants.index', ['tenants' => $tenants]);
 
     }
