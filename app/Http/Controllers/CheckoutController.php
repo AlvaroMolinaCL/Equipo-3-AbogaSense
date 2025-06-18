@@ -58,9 +58,8 @@ class CheckoutController extends Controller
         // Crear la orden con el total
         $order = Order::create([
             'user_id' => $user->id,
-            'total' => $total,
+            'amount' => $total,
             'status' => 'pending',
-            'payment_method' => 'webpay'
         ]);
 
         session(['current_order_id' => $order->id]);

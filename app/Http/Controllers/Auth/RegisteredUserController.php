@@ -26,14 +26,13 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $regions = Region::orderBy('order')->get();
-        $genres = Genre::orderBy('name')->get();
-
         if (tenant()) {
+            $regions = Region::orderBy('order')->get();
+            $genres = Genre::orderBy('name')->get();
             return view(tenantView('auth.register'), compact('regions', 'genres'));
         }
 
-        return view('tenants.default.auth.register', compact('regions', 'genres'));
+        return view('auth.register');
     }
 
 
@@ -44,60 +43,58 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $noUsersExist = User::count() === 0;
-
-        $rules = [
-            'name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'second_last_name' => 'nullable|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:8',
-            'phone_number' => 'required|string|max:15',
-
-            'genre_id' => ['nullable', 'exists:genres,id'],
-            'birth_date' => ['nullable', 'date'],
-            'residence_region_id' => ['nullable', 'exists:regions,id'],
-            'residence_commune_id' => ['nullable', 'exists:communes,id'],
-        ];
-
-        if (!tenant() && !$noUsersExist) {
-            $rules['access_token'] = 'required|string';
+        if (tenant()) {
+            // Reglas para tenant
+            $rules = [
+                'name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'second_last_name' => 'nullable|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|confirmed|min:8',
+                'phone_number' => 'required|string|max:15',
+                'genre_id' => ['nullable', 'exists:genres,id'],
+                'birth_date' => ['nullable', 'date'],
+                'residence_region_id' => ['nullable', 'exists:regions,id'],
+                'residence_commune_id' => ['nullable', 'exists:communes,id'],
+            ];
+        } else {
+            // Reglas para central
+            $rules = [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|confirmed|min:8',
+            ];
         }
 
         $request->validate($rules);
 
-        if (!tenant() && !$noUsersExist) {
-            $submittedToken = $request->access_token;
-            $currentToken = Cache::get('current_token');
-
-            if ($submittedToken !== $currentToken) {
-                return back()->withErrors(['access_token' => 'El token de acceso es incorrecto.'])->withInput();
-            }
-
-            $this->changeToken();
-        }
-
         // Crear el rol de Super Admin si no existe
         Role::firstOrCreate(['name' => 'Super Admin', 'guard_name' => 'web']);
 
-        $user = User::create([
+        // Datos básicos
+        $userData = [
             'name' => $request->name,
-            'last_name' => $request->last_name,
-            'second_last_name' => $request->second_last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'phone_number' => $request->phone_number,
-            'genre_id' => $request->genre_id ?? null,
-            'birth_date' => $request->birth_date ?? null,
-            'residence_region_id' => $request->residence_region_id ?? null,
-            'residence_commune_id' => $request->residence_commune_id ?? null,
-        ]);
+        ];
 
+        if (tenant()) {
+            // Campos extra solo para tenant
+            $userData['last_name'] = $request->last_name;
+            $userData['second_last_name'] = $request->second_last_name;
+            $userData['phone_number'] = $request->phone_number;
+            $userData['genre_id'] = $request->genre_id ?? null;
+            $userData['birth_date'] = $request->birth_date ?? null;
+            $userData['residence_region_id'] = $request->residence_region_id ?? null;
+            $userData['residence_commune_id'] = $request->residence_commune_id ?? null;
+        }
 
-        if (!tenant()) {
-            $user->assignRole('Super Admin');
-        } else {
+        $user = User::create($userData);
+
+        if (tenant()) {
             $user->assignRole('Usuario');
+        } else {
+            $user->assignRole('Super Admin');
         }
 
         Auth::login($user);
@@ -106,6 +103,7 @@ class RegisteredUserController extends Controller
             ? redirect('/')
             : redirect(RouteServiceProvider::HOME);
     }
+
 
 
     /**
