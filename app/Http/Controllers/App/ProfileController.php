@@ -17,16 +17,28 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $genres = \App\Models\Genre::all();
+        $regions = \App\Models\Region::all();
+        $communes = \App\Models\Commune::all();
+
         if (tenant()) {
             return view(tenantView('profile.edit'), [
-                'user' => $request->user(),
+                'user' => $user,
+                'genres' => $genres,
+                'regions' => $regions,
+                'communes' => $communes,
             ]);
         } else {
             return view('profile.edit', [
-                'user' => $request->user(),
+                'user' => $user,
+                'genres' => $genres,
+                'regions' => $regions,
+                'communes' => $communes,
             ]);
         }
     }
+
 
     /**
      * Update the user's profile information.

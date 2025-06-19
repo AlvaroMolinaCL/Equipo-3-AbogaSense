@@ -19,6 +19,7 @@ use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ScheduleBatchController;
+use App\Http\Controllers\TransbankController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,7 @@ Route::middleware([
     'web',
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
+    'tenant.enabled',
 ])->group(function () {
     // Página "Inicio"
     Route::get('/', function () {
@@ -50,7 +52,7 @@ Route::middleware([
     // Página "Contacto"
     Route::get('/contact', function () {
         return view(tenantView('contact'));
-    })->middleware('check.tenant.page.enabled:contact');
+    })->middleware('check.tenant.page.enabled:contact')->name('tenant.contact');
 
     // Página "Tips"
     Route::get('/tips', function () {
@@ -69,6 +71,13 @@ Route::middleware([
     Route::get('/api/client-slots', [AvailableSlotController::class, 'clientSlots']);
     Route::post('/api/apply-batch', [ScheduleBatchController::class, 'applyBatch']);
     Route::get('/api/batch-preview', [ScheduleBatchController::class, 'previewBatch']);
+
+    Route::get('/communes-by-region/{region}', function ($regionId) {
+        return \App\Models\Commune::where('region_id', $regionId)
+            ->orderBy('name')
+            ->get(['id', 'name']);
+    })->name('communes.byRegion');
+
 
     // Rutas solo para usuarios que han iniciado sesión
     Route::middleware(['auth'])->group(function () {
@@ -117,15 +126,25 @@ Route::middleware([
         Route::patch('/update/{item}', [CartController::class, 'update'])->name('cart.update');
         Route::delete('/cart/item/{id}', [CartController::class, 'remove'])->name('cart.remove.item');
 
-        // Rutas de Checkout
-        Route::prefix('checkout')->group(function () {
-            Route::get('/', [CheckoutController::class, 'index'])->name('checkout');
-            Route::post('/process', [CheckoutController::class, 'process'])->name('checkout.process');
-            Route::get('/success', [CheckoutController::class, 'success'])->name('checkout.success');
-        })->middleware(['web', 'auth']);
 
         // Planes
         Route::get('/plans', [ProductController::class, 'plans'])->name('products.plans');
+
+        // Rutas de Transbank
+        Route::post('/pagar', [TransbankController::class, 'createTransaction'])->name('transbank.create');
+        Route::match(['GET', 'POST'], '/webpay/response', [TransbankController::class, 'response'])->name('transbank.response');
+        Route::post('/agenda/initiate-payment', [AgendaController::class, 'initiatePayment'])
+            ->name('tenant.agenda.initiatePayment');
+
+        Route::get('checkout/confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+
+        // Rutas de checkout
+        Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+        Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+        Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
+
+        Route::get('/webpay/cancelled', [TransbankController::class, 'cancelled'])
+            ->name('transbank.cancelled');
     });
 
     // Rutas exclusivas para Administrador

@@ -12,19 +12,16 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->decimal('amount', 10, 2);
+            $table->string('customer_name');
+            $table->string('customer_email');
+            $table->string('customer_phone');
+            $table->string('plan_name');
+            $table->integer('amount');
             $table->string('status')->default('pending');
             $table->timestamps();
-        });
-
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('order_id')->constrained();
-            $table->foreignId('product_id')->constrained();
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2);
-            $table->timestamps();
+            $table->index('customer_email');
+            $table->index('status');
+            $table->index('created_at');
         });
     }
 

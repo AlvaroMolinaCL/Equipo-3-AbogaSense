@@ -16,9 +16,14 @@ class Order extends Model
      */
     protected $fillable = [
         'user_id',
-        'total',
+        'customer_name',
+        'customer_email',
+        'customer_phone',
+        'plan_name',
+        'amount',
         'status',
-        'payment_method'
+        'subdomain',
+
     ];
 
     /**
@@ -35,5 +40,14 @@ class Order extends Model
     public function items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class, 'tenant_id', 'id');
     }
 }
