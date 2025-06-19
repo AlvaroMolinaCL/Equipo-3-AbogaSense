@@ -91,7 +91,6 @@
     </div>
 
     <div class="footer">
-        <p>Si necesitas modificar o cancelar tu cita, por favor contáctanos.</p>
         <p>© {{ date('Y') }} {{ config('app.name') }}. Todos los derechos reservados.</p>
     </div>
 </body>
