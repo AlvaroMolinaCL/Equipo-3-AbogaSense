@@ -25,8 +25,8 @@
         <form action="{{ route('tenant.agenda.store') }}" method="POST">
             @csrf
             <input type="hidden" name="available_slot_id" value="{{ $slot->id }}">
-            <input type="hidden" name="questionnaire_response_id" value="{{ $questionnaireResponseId }}">
-
+<input type="hidden" name="questionnaire_response_id" value="{{ $questionnaireResponseId }}">
+    
             <div class="mb-3">
                 <label for="first_name" class="form-label">Nombre:</label>
                 <input type="text" class="form-control" id="first_name" name="first_name"
@@ -60,7 +60,7 @@
                         <option value="">Selecciona una región</option>
                         @foreach ($regions as $region)
                             <option value="{{ $region->id }}"
-                                {{ old('residence_region_id', optional($user->commune)->region_id) == $region->id ? 'selected' : '' }}>
+                                {{ old('residence_region_id', $user->residence_region_id) == $region->id ? 'selected' : '' }}>
                                 {{ $region->name }}
                             </option>
                         @endforeach
@@ -71,14 +71,19 @@
                     <select name="residence_commune_id" id="residence_commune_id" class="form-select" required>
                         <option value="">Selecciona una comuna</option>
                         @foreach ($communes as $commune)
-                            <option value="{{ $commune->id }}" data-region="{{ $commune->region_id }}"
-                                {{ old('residence_commune_id', $user->address_commune) == $commune->id ? 'selected' : '' }}>
+                            <option value="{{ $commune->id }}"
+                                data-region="{{ $commune->region_id }}"
+                                {{ (old('residence_commune_id') !== null 
+                                        ? old('residence_commune_id') == $commune->id 
+                                        : $user->residence_commune_id == $commune->id) ? 'selected' : '' }}>
                                 {{ $commune->name }}
                             </option>
                         @endforeach
                     </select>
                 </div>
+
             </div>
+
 
             <div class="row mt-3">
                 <div class="col-md-6">
@@ -109,31 +114,85 @@
 
             <button type="submit" class="btn text-white mt-4"
                 style="background-color: {{ tenantSetting('navbar_color_2', '#4A1D0B') }};">
-                <i class="bi bi-credit-card me-1"></i> Proceder al Pago
+                <i class="bi bi-credit-card me-1"></i> Continuar
             </button>
         </form>
     </div>
 </section>
 
-<script>
-    function filterCommunes(regionSelectId, communeSelectId) {
-        const regionId = document.getElementById(regionSelectId).value;
-        const communeSelect = document.getElementById(communeSelectId);
-        Array.from(communeSelect.options).forEach(option => {
-            if (!option.value) return;
-            option.style.display = option.getAttribute('data-region') == regionId ? '' : 'none';
-        });
-        communeSelect.value = '';
-    }
+    <script>
+     // Script para el filtrado de residencia
+    document.addEventListener('DOMContentLoaded', function () {
+        const regionSelect = document.getElementById('residence_region_id');
+        const communeSelect = document.getElementById('residence_commune_id');
 
-    document.getElementById('residence_region_id').addEventListener('change', function() {
-        filterCommunes('residence_region_id', 'residence_commune_id');
-    });
-    document.getElementById('incident_region_id').addEventListener('change', function() {
-        filterCommunes('incident_region_id', 'incident_commune_id');
+        function filterCommunes() {
+            const selectedRegion = regionSelect.value;
+            let foundSelected = false;
+
+            Array.from(communeSelect.options).forEach(option => {
+                if (option.value === '') {
+                    option.style.display = 'block';
+                    return;
+                }
+
+                const communeRegionId = option.getAttribute('data-region');
+                if (communeRegionId === selectedRegion) {
+                    option.style.display = 'block';
+                    if (
+                        option.value === communeSelect.value
+                    ) {
+                        foundSelected = true;
+                    }
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+
+            if (!foundSelected) {
+                communeSelect.value = '';
+            }
+        }
+
+        regionSelect.addEventListener('change', filterCommunes);
+        filterCommunes();
     });
 
-    filterCommunes('residence_region_id', 'residence_commune_id');
-    filterCommunes('incident_region_id', 'incident_commune_id');
-</script>
+    // Script adicional para el filtrado del incidente
+    document.addEventListener('DOMContentLoaded', function () {
+        const incidentRegionSelect = document.getElementById('incident_region_id');
+        const incidentCommuneSelect = document.getElementById('incident_commune_id');
+
+        function filterIncidentCommunes() {
+            const selectedRegion = incidentRegionSelect.value;
+            let foundSelected = false;
+
+            Array.from(incidentCommuneSelect.options).forEach(option => {
+                if (option.value === '') {
+                    option.style.display = 'block';
+                    return;
+                }
+
+                const communeRegionId = option.getAttribute('data-region');
+                if (communeRegionId === selectedRegion) {
+                    option.style.display = 'block';
+                    if (
+                        option.value === incidentCommuneSelect.value
+                    ) {
+                        foundSelected = true;
+                    }
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+
+            if (!foundSelected) {
+                incidentCommuneSelect.value = '';
+            }
+        }
+
+        incidentRegionSelect.addEventListener('change', filterIncidentCommunes);
+        filterIncidentCommunes();
+    });
+    </script>
 @endsection

@@ -101,6 +101,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
             'contact_linkedin',
             'google_analytics_id',
             'openrouter_api_key',
+            'enabled',
         ];
     }
 
@@ -123,5 +124,14 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->hasMany(TenantText::class);
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'tenant_id', 'id');
+    }
+    public function order()
+    {
+        return $this->hasOne(Order::class, 'tenant_id', 'id');
+    }
+
 
 }

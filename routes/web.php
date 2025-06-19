@@ -12,6 +12,9 @@ use App\Http\Controllers\TenantPageController;
 use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\App\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlanCheckoutController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +39,26 @@ Route::post('/solicitar-superadmin', [PublicSuperAdminRequestController::class, 
 // Formulario de Registro de Super Administrador (con Token)
 Route::get('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'form']);
 Route::post('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'register']);
+
+
+Route::prefix('planes')->group(function () {
+    Route::get('/plan-checkout/{plan}', [PlanCheckoutController::class, 'showForm'])->name('plan.checkout.form');
+    Route::post('/pagar', [PlanCheckoutController::class, 'processPayment'])->name('plan.checkout.pay');
+
+    // Ruta única que acepta GET y POST
+    Route::match(['get', 'post'], '/respuesta', [PlanCheckoutController::class, 'handleResponse'])
+        ->name('plan.checkout.response')
+        ->withoutMiddleware(['auth']);
+});
+
+Route::get('/subdomain/check', function (Request $request) {
+    $subdomain = Str::slug($request->query('subdomain'));
+    $exists = \App\Models\Tenant::where('id', $subdomain)->exists();
+    return response()->json(['exists' => $exists]);
+})->name('subdomain.check');
+
+Route::patch('/tenants/{tenant}/toggle-status', [TenantController::class, 'toggleStatus'])->name('tenants.toggleStatus');
+
 
 // Rutas solo para usuarios que han iniciado sesión
 Route::middleware(['auth', 'verified'])->group(function () {

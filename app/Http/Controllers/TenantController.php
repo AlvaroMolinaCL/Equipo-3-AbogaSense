@@ -14,8 +14,12 @@ class TenantController extends Controller
 {
     public function index()
     {
-        $tenants = Tenant::with('domains')->get();
+        $tenants = Tenant::with('domains', 'order')
+            ->orderBy('enabled', 'desc')
+            ->get();
+
         return view('tenants.index', ['tenants' => $tenants]);
+
     }
 
     public function create()
@@ -208,4 +212,13 @@ class TenantController extends Controller
 
         return redirect()->route('tenants.index')->with('success', 'Tenant y usuario actualizados correctamente.');
     }
+
+    public function toggleStatus(Tenant $tenant)
+    {
+        $tenant->enabled = !$tenant->enabled;
+        $tenant->save();
+
+        return redirect()->back()->with('message', 'Estado del tenant actualizado correctamente.');
+    }
+
 }
