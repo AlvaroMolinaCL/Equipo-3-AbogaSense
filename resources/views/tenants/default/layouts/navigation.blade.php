@@ -40,7 +40,7 @@
                             </li>
                             @continue
                         @endif
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url($page->page_key) }}">
                                 {{ $page->title ?? ucfirst($page->page_key) }}
@@ -60,8 +60,10 @@
                                 <li><a class="dropdown-item" href="{{ route('dashboard') }}">Panel de administración</a></li>
                             @endif
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Mi perfil</a></li>
-                            @if(Auth::user()->hasRole('Usuario'))
-                                <li><a class="dropdown-item" href="{{ route('files.index') }}">Mis archivos</a></li>
+                            @if (tenant()->hasFeature('archivos'))
+                                @if(Auth::user()->hasRole('Usuario'))
+                                    <li><a class="dropdown-item" href="{{ route('files.index') }}">Mis archivos</a></li>
+                                @endif
                             @endif
                             <li>
                                 <hr class="dropdown-divider">
@@ -81,13 +83,14 @@
 </nav>
 
 @push('styles')
-<style>
-    .navbar .badge {
-        font-size: 0.6rem;
-        padding: 0.25em 0.4em;
-    }
-    .fa-shopping-cart {
-        font-size: 1.2rem;
-    }
-</style>
+    <style>
+        .navbar .badge {
+            font-size: 0.6rem;
+            padding: 0.25em 0.4em;
+        }
+
+        .fa-shopping-cart {
+            font-size: 1.2rem;
+        }
+    </style>
 @endpush

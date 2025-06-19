@@ -270,7 +270,8 @@
                                     Agendamiento de citas</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Gestión de clientes</li>
-                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Pasarela de pagos</li>
+                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
+                                    Pasarela de pagos</li>
                                 <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de archivos
                                 </li>
                                 <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot inteligente
@@ -333,8 +334,6 @@
                                     Gestión de archivos</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Chatbot inteligente</li>
-                                <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Soporte prioritario</li>
                             </ul>
                             <a href="{{ route('plan.checkout.form', ['plan' => 'premium']) }}"
                                 class="btn btn-outline-dark w-100"> Contratar Ahora

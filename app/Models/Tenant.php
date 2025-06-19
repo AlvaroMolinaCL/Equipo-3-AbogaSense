@@ -132,6 +132,24 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     {
         return $this->hasOne(Order::class, 'tenant_id', 'id');
     }
+    public function hasFeature($feature)
+    {
+        $plan = optional($this->order)->plan_name;
+
+        $featuresByPlan = [
+            'Básico' => ['pagina', 'agendamiento', 'clientes', 'pagos'],
+            'Profesional' => ['pagina', 'agendamiento', 'clientes', 'pagos', 'archivos'],
+            'Premium' => ['pagina', 'agendamiento', 'clientes', 'pagos', 'archivos', 'chatbot', 'soporte'],
+        ];
+
+        if (isset($featuresByPlan[$plan])) {
+            return in_array($feature, $featuresByPlan[$plan]);
+        }
+ 
+        
+        return true;
+    }
+
 
 
 }

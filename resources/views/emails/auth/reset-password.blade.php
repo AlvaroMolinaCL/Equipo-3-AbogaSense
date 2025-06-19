@@ -9,7 +9,7 @@ Haz clic en el botón a continuación para crear una nueva contraseña de forma 
 🔑 Restablecer contraseña
 @endcomponent
 
-Este enlace es válido por **{{ $count }} minutos**.  
+Este enlace es válido por {{ $count }} minutos.  
 Si no solicitaste este cambio, puedes ignorar este mensaje; tu contraseña actual seguirá siendo válida.
 
 ---
