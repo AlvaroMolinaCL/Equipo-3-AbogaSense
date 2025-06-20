@@ -137,17 +137,17 @@
         }
 
         .btn-outline-tenant {
-            border: 1px solid {{ tenantSetting('navbar_color_2', '#8C2D18') }};
-            color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            border: 1px solid @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
+            color: @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
             background-color: transparent;
             transition: all 0.2s ease-in-out;
         }
 
         .btn-outline-tenant:hover,
         .btn-outline-tenant:focus {
-            background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
-            color: {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }};
-            border-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            background-color: @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
+            color: @php echo tenantSetting('navbar_text_color_2', '#FFFFFF') @endphp;
+            border-color: @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
             box-shadow: none;
             text-decoration: none;
         }
@@ -172,7 +172,7 @@
                         <h5 class="modal-title fw-bold" id="dayModalLabel" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
                             Horarios del día
                         </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="modal-date-input" name="date">
