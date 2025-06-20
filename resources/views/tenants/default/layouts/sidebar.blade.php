@@ -69,13 +69,30 @@
             </li>
         @endif
 
-        {{-- Mi Agenda --}}
+        {{-- Mi Agenda (Desplegable) --}}
         <li class="nav-item">
-            <a class="nav-link {{ Route::is('available-slots.index') ? 'active' : '' }}"
-                href="{{ route('available-slots.index') }}"
-                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">
+            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                href="#agendaMenu"
+                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};"
+                aria-expanded="{{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'true' : 'false' }}">
                 <span><i class="bi bi-calendar me-2"></i> Mi Agenda</span>
+                <i class="bi bi-chevron-down small"></i>
             </a>
+            <div class="collapse ps-3 {{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'show' : '' }}"
+                id="agendaMenu" data-bs-parent="#sidebarAccordion">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('available-slots.index') ? 'active' : '' }}"
+                            href="{{ route('available-slots.index') }}"
+                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Disponibilidad</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('appointments.index') ? 'active' : '' }}"
+                            href="{{ route('appointments.index') }}"
+                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Citas Agendadas</a>
+                    </li>
+                </ul>
+            </div>
         </li>
 
         {{-- Planes --}}

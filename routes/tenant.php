@@ -20,6 +20,7 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ScheduleBatchController;
 use App\Http\Controllers\TransbankController;
+use App\Http\Controllers\Tenant\AppointmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +89,9 @@ Route::middleware([
             Route::get('/agenda', [AgendaController::class, 'index'])->name('tenant.agenda.index');
             Route::post('/agenda', [AgendaController::class, 'store'])->name('tenant.agenda.store');
 
+            // Citas Agendadas
+            Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+
             // Confirmación de Cita
             Route::get('/agenda/confirmar', [AgendaController::class, 'confirm'])->name('tenant.agenda.confirm');
 
@@ -125,7 +129,6 @@ Route::middleware([
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
         Route::patch('/update/{item}', [CartController::class, 'update'])->name('cart.update');
         Route::delete('/cart/item/{id}', [CartController::class, 'remove'])->name('cart.remove.item');
-
 
         // Planes
         Route::get('/plans', [ProductController::class, 'plans'])->name('products.plans');
