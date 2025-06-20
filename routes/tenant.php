@@ -21,6 +21,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ScheduleBatchController;
 use App\Http\Controllers\TransbankController;
 use App\Http\Controllers\Tenant\AppointmentController;
+use App\Http\Controllers\Tenant\AppointmentApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -152,6 +153,9 @@ Route::middleware([
 
     // Rutas exclusivas para Administrador
     Route::middleware(['auth', 'role:Admin'])->group(function () {
+        // API para calendario de citas agendadas
+        Route::get('/api/appointments', [AppointmentApiController::class, 'index'])->name('appointments.api.index');
+
         // Rutas para la gestión de textos
         Route::put('/tenant/texts/update', [TenantTextController::class, 'update'])->name('tenant.texts.update');
         Route::get('/panel/textos', [TenantTextController::class, 'edit'])->name('tenant.texts.edit');
