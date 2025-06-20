@@ -135,6 +135,22 @@
             margin-left: 5px;
             line-height: 1;
         }
+
+        .btn-outline-tenant {
+            border: 1px solid {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            background-color: transparent;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-outline-tenant:hover,
+        .btn-outline-tenant:focus {
+            background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            color: {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }};
+            border-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            box-shadow: none;
+            text-decoration: none;
+        }
     </style>
 
     <section class="py-5" style="margin-top: 80px;">
@@ -153,8 +169,10 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="background-color: {{ tenantSetting('background_color_1', '#FDF5E5') }};">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="dayModalLabel">Horarios del día</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        <h5 class="modal-title fw-bold" id="dayModalLabel" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                            Horarios del día
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="modal-date-input" name="date">
@@ -255,11 +273,18 @@
                                     const start = formatTime(slot.start_time);
                                     const end = formatTime(slot.end_time);
                                     slotsList.innerHTML += `
-                                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                            <div><strong>${start} - ${end}</strong></div>
-                                            <a href="/agenda/confirmar?slot_id=${slot.id}" class="btn btn-sm btn-primary" title="Agendar este horario">Agendar</a>
+                                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <strong style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">${start} - ${end}</strong>
+                                            </div>
+                                            <a href="/agenda/confirmar?slot_id=${slot.id}"
+                                                class="btn btn-sm btn-outline-tenant"
+                                                title="Agendar este horario">
+                                                Agendar
+                                            </a>
                                         </div>
                                     `;
+
                                 });
                             }
                         });
