@@ -20,9 +20,6 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->foreignId('genre_id')->nullable()->constrained('genres');
             $table->date('birth_date')->nullable();
-            $table->string('address_street')->nullable();
-            $table->integer('address_number')->nullable();
-            $table->foreignId('address_commune')->nullable()->constrained('communes')->onUpdate('cascade');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
