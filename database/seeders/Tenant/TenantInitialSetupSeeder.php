@@ -64,8 +64,16 @@ class TenantInitialSetupSeeder extends Seeder
             ['email' => $this->email],
             [
                 'name' => $this->name,
+                'last_name' => null,
+                'second_last_name' => null,
+                'phone_number' => null,
+                'genre_id' => null,
+                'birth_date' => null,
+                'residence_region_id' => null,
+                'residence_commune_id' => null,
                 'password' => Hash::make($this->password),
                 'email_verified_at' => now(),
+                'remember_token' => null,
             ]
         );
 
