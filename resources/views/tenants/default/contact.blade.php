@@ -10,14 +10,14 @@
 @section('body-class', 'theme-light')
 
 @section('content')
-    <section class="py-5" style="margin-top: 80px;">
+    <section class="py-5 contact-section">
         <div class="container">
-            <h1 class="mb-4" style="font-family: {{ tenantSetting('heading_font', '') }}">{{ tenantPageName('contact', 'Contacto') }}</h1>
+            <h1 class="mb-4 contact-title">{{ tenantPageName('contact', 'Contacto') }}</h1>
             <p class="mb-4">
                 {!! tenantText(
                     'body_contact',
                     '
-                        <p style="text-align: justify;">
+                        <p class="contact-text">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel dapibus nunc.
                     ',
                 ) !!}
@@ -80,7 +80,21 @@
                         </div>
                     </a>
                 </div>
-            </div>                        
+            </div>
         </div>
     </section>
 @endsection
+
+@push('styles')
+<style>
+.contact-section {
+    margin-top: 80px;
+}
+.contact-title {
+    font-family: {{ tenantSetting('heading_font', '') }};
+}
+.contact-text {
+    text-align: justify;
+}
+</style>
+@endpush

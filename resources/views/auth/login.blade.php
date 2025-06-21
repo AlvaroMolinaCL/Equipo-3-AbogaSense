@@ -81,7 +81,7 @@
                                 </div>
 
                                 <div class="d-grid">
-                                    <button type="submit" class="btn text-white" style="background-color: #4A1D0B;">
+                                    <button type="submit" class="btn text-white login-btn">
                                         <i class="bi bi-box-arrow-in-right me-1"></i> Ingresar
                                     </button>
 
@@ -89,8 +89,7 @@
 
                                 @if (Route::has('password.request'))
                                     <div class="mt-3 text-center">
-                                        <a href="{{ route('password.request') }}" class="text-decoration-none"
-                                            style="color: #4A1D0B;">¿Olvidaste tu contraseña?</a>
+                                        <a href="{{ route('password.request') }}" class="text-decoration-none login-link">¿Olvidaste tu contraseña?</a>
                                     </div>
                                 @endif
                             </form>
@@ -110,7 +109,12 @@
             height: auto;
             width: auto;
         }
-
+        .login-btn {
+            background-color: #4A1D0B;
+        }
+        .login-link {
+            color: #4A1D0B;
+        }
         @media (max-width: 768px) {
             .logo-img {
                 max-width: 100%;

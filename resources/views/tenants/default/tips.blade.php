@@ -9,16 +9,30 @@
 
 @section('body-class', 'theme-dark')
 
+@push('styles')
+<style>
+.tips-section {
+    margin-top: 80px;
+}
+.tips-title {
+    font-family: {{ tenantSetting('heading_font', '') }};
+}
+.tips-text {
+    text-align: justify;
+}
+</style>
+@endpush
+
 @section('content')
-    <section class="py-5" style="margin-top: 80px;">
+    <section class="py-5 tips-section">
         <div class="container">
-            <h1 class="mb-4" style="font-family: {{ tenantSetting('heading_font', '') }}">
+            <h1 class="mb-4 tips-title">
                 {{ tenantPageName('tips', 'Tips') }}</h1>
-            <p class="mb-5">
+            <p class="mb-5 tips-text">
                 {!! tenantText(
                     'body_tips',
                     '
-                        <p style="text-align: justify;">
+                        <p class="tips-text">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vel dapibus nunc.
                     ',
                 ) !!}

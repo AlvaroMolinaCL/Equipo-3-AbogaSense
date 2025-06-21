@@ -15,6 +15,8 @@
             --light-brown: #F5E9E1;
             --dark-brown: #3A1A0A;
         }
+        .text-primary-color { color: var(--primary-color) !important; }
+        .text-secondary-color { color: var(--secondary-color) !important; }
         
         body {
             background-color: #f8f9fa;
@@ -142,7 +144,7 @@
                     </div>
                     <div class="card-body text-center pt-4 p-md-3">
                         <i class="fas fa-times-circle error-icon mb-4"></i>
-                        <h2 class="mb-3" style="color: var(--primary-color);">Pago Rechazado</h2>
+                        <h2 class="mb-3 text-primary-color">Pago Rechazado</h2>
                         
                         @if(isset($isPlanPurchase) && $isPlanPurchase)
                             <p class="lead mb-4">Lo sentimos, no pudimos procesar el pago de tu plan <strong>{{ $planName ?? '' }}</strong> en AbogaSense.</p>
@@ -163,7 +165,7 @@
 
                         <!-- Detalles del error -->
                         <div class="transaction-details mt-4 text-start p-4 rounded">
-                            <h5 class="mb-3" style="color: var(--secondary-color);"><i class="fas fa-bug me-2"></i>Detalles del error:</h5>
+                            <h5 class="mb-3 text-secondary-color"><i class="fas fa-bug me-2"></i>Detalles del error:</h5>
                             <div class="row">
                                 @if(isset($buyOrder))
                                     <div class="col-md-6 mb-2">

@@ -10,7 +10,7 @@
     <div class="container-fluid">
         {{-- Encabezado --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold mb-0" style="color: #8C2D18;">
+            <h3 class="fw-bold mb-0 dashboard-title">
                 <i class="bi bi-speedometer2 me-2"></i>{{ __('Panel de Control') }}
             </h3>
         </div>
@@ -19,7 +19,7 @@
         <div class="row mb-4 justify-content-center">
             {{-- Usuarios Registrados --}}
             <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card text-white h-100" style="background-color: #BF8A49;">
+                <div class="card text-white h-100 dashboard-card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
@@ -34,7 +34,7 @@
 
             {{-- Usuarios Nuevos Hoy --}}
             <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card text-white h-100" style="background-color: #BF8A49;">
+                <div class="card text-white h-100 dashboard-card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
@@ -49,7 +49,7 @@
 
             {{-- Tenants Activos --}}
             <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card text-white h-100" style="background-color: #BF8A49;">
+                <div class="card text-white h-100 dashboard-card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
@@ -64,7 +64,7 @@
 
             {{-- Tenants Nuevos Hoy --}}
             <div class="col-xl-3 col-md-6 mb-3">
-                <div class="card text-white h-100" style="background-color: #BF8A49;">
+                <div class="card text-white h-100 dashboard-card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
@@ -80,21 +80,20 @@
 
         {{-- Tabla de Usuarios --}}
         <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center"
-                style="background-color: #8C2D18; color: white;">
+            <div class="card-header d-flex justify-content-between align-items-center dashboard-header">
                 <h5 class="mb-0">Últimos Usuarios</h5>
-                <a href="{{ route('users.index') }}" class="btn btn-sm" style="background-color: #FDF5E5; color: #8C2D18;">
+                <a href="{{ route('users.index') }}" class="btn btn-sm dashboard-card">
                     <i class="bi bi-eye"></i> Ver Usuarios
                 </a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead style="background-color: #FDF5E5;">
+                    <table class="table table-hover mb-0 dashboard-table">
+                        <thead>
                             <tr>
-                                <th style="color: #8C2D18;">Nombre</th>
-                                <th style="color: #8C2D18;">Email</th>
-                                <th style="color: #8C2D18;">Registro</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Registro</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,23 +116,21 @@
 
         {{-- Tabla de Tenants --}}
         <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center"
-                style="background-color: #8C2D18; color: white;">
+            <div class="card-header d-flex justify-content-between align-items-center dashboard-header">
                 <h5 class="mb-0">Últimos Tenants</h5>
-                <a href="{{ route('tenants.index') }}" class="btn btn-sm"
-                    style="background-color: #FDF5E5; color: #8C2D18;">
+                <a href="{{ route('tenants.index') }}" class="btn btn-sm dashboard-card">
                     <i class="bi bi-eye"></i> Ver Tenants
                 </a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead style="background-color: #FDF5E5;">
+                    <table class="table table-hover mb-0 dashboard-table">
+                        <thead>
                             <tr>
-                                <th style="color: #8C2D18;">Nombre</th>
-                                <th style="color: #8C2D18;">Email</th>
-                                <th style="color: #8C2D18;">Dominio(s)</th>
-                                <th style="color: #8C2D18;">Registro</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Dominio(s)</th>
+                                <th>Registro</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -160,3 +157,29 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+<style>
+    .dashboard-title {
+        color: #8C2D18;
+    }
+    .dashboard-card {
+        background-color: #BF8A49;
+        color: white;
+    }
+    .dashboard-card .btn-sm {
+        background-color: #FDF5E5;
+        color: #8C2D18;
+    }
+    .dashboard-table thead {
+        background-color: #FDF5E5;
+    }
+    .dashboard-table th {
+        color: #8C2D18;
+    }
+    .dashboard-header {
+        background-color: #8C2D18;
+        color: white;
+    }
+</style>
+@endpush

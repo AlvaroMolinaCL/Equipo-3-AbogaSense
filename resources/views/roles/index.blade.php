@@ -10,30 +10,29 @@
     <div class="container-fluid">
         {{-- Encabezado --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold mb-0" style="color: #8C2D18;">
+            <h3 class="fw-bold mb-0 roles-title">
                 <i class="bi bi-person-check me-2"></i>{{ __('Roles') }}
             </h3>
-            <a href="{{ route('dashboard') }}" class="btn btn-sm" style="background-color: #F5E8D0; color: #8C2D18;">
+            <a href="{{ route('dashboard') }}" class="btn btn-sm roles-back-btn">
                 <i class="bi bi-arrow-left me-2"></i>Volver
             </a>
         </div>
 
         {{-- Tabla de Roles --}}
         <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center"
-                style="background-color: #8C2D18; color: white;">
+            <div class="card-header d-flex justify-content-between align-items-center roles-header">
                 <h5 class="mb-0">Listado de Roles</h5>
-                <a href="{{ route('roles.create') }}" class="btn btn-sm" style="background-color: #FDF5E5; color: #8C2D18;">
+                <a href="{{ route('roles.create') }}" class="btn btn-sm roles-new-btn">
                     <i class="bi bi-plus-circle"></i> Nuevo Rol
                 </a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
-                        <thead style="background-color: #FDF5E5;">
+                        <thead class="roles-table-head">
                             <tr>
-                                <th class="text-center" style="color: #8C2D18;">Nombre</th>
-                                <th class="text-center" style="color: #8C2D18;">Acciones</th>
+                                <th class="text-center roles-table-th">Nombre</th>
+                                <th class="text-center roles-table-th">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -50,8 +49,7 @@
                                             @else
                                                 {{-- Editar --}}
                                                 <a href="{{ route('roles.edit', $rol) }}"
-                                                    class="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-1"
-                                                    style="background-color: #8C2D18; color: white;">
+                                                    class="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-1 roles-edit-btn">
                                                     <i class="bi bi-pencil"></i> Editar
                                                 </a>
 
@@ -62,8 +60,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-1"
-                                                        style="background-color: #BF8A49; color: white;">
+                                                        class="btn btn-sm w-100 d-flex align-items-center justify-content-center gap-1 roles-delete-btn">
                                                         <i class="bi bi-trash"></i> Eliminar
                                                     </button>
                                                 </form>
@@ -83,3 +80,37 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+<style>
+.roles-title {
+    color: #8C2D18;
+}
+.roles-back-btn {
+    background-color: #F5E8D0;
+    color: #8C2D18;
+}
+.roles-header {
+    background-color: #8C2D18;
+    color: white;
+}
+.roles-new-btn {
+    background-color: #FDF5E5;
+    color: #8C2D18;
+}
+.roles-table-head {
+    background-color: #FDF5E5;
+}
+.roles-table-th {
+    color: #8C2D18;
+}
+.roles-edit-btn {
+    background-color: #8C2D18;
+    color: white;
+}
+.roles-delete-btn {
+    background-color: #BF8A49;
+    color: white;
+}
+</style>
+@endpush

@@ -26,12 +26,14 @@
             height: 3rem;
             margin: 2rem auto;
         }
+        .logo-redirect { height: 60px; }
+        .text-primary-dark { color: #4A1D0B !important; }
     </style>
 </head>
 <body>
     <div class="redirect-container">
-        <img src="{{ asset('images/abogasense2.png') }}" alt="AbogaSense" style="height: 60px;" class="mb-4">
-        <h3 class="mb-4" style="color: #4A1D0B;">Redireccionando a Webpay</h3>
+        <img src="{{ asset('images/abogasense2.png') }}" alt="AbogaSense" class="logo-redirect mb-4">
+        <h3 class="mb-4 text-primary-dark">Redireccionando a Webpay</h3>
         <div class="spinner-border text-primary spinner" role="status">
             <span class="visually-hidden">Cargando...</span>
         </div>

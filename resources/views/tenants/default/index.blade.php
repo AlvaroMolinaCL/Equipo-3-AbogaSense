@@ -9,6 +9,51 @@
 
 @section('body-class', 'theme-dark')
 
+@push('styles')
+<style>
+.hero-section {
+    position: relative;
+    min-height: 400px;
+    background: #222;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.hero-text {
+    color: #fff;
+    text-align: center;
+    z-index: 2;
+}
+.hero-section .btn-consulta {
+    background-color: {{ tenantSetting('button_color_sidebar', '#ffffff54') }};
+    color: #8C2D18;
+    font-weight: bold;
+}
+.about-img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+}
+.about-text {
+    text-align: justify;
+}
+.services-title {
+    font-family: {{ tenantSetting('heading_font', '') }};
+}
+.services-list li, .about-text, .card-text p {
+    text-align: justify;
+}
+.card-title {
+    font-weight: bold;
+}
+</style>
+@endpush
+
 @section('content')
     <section class="hero-section">
         <div class="hero-overlay">
@@ -35,30 +80,28 @@
                 {{-- Imagen: primer plano en móviles, segundo plano en pantallas grandes --}}
                 <div class="col-md-6 text-center order-1 order-md-2 mb-4 mb-md-0 fade-in-section">
                     <img src="{{ asset('images/about/' . tenantSetting('about_path', 'About_(Predeterminado).png')) }}"
-                        alt="{{ tenantSetting('name', 'Tenant') }}" class="rounded-circle img-fluid"
-                        style="width: 350px; height: 350px; object-fit: cover;">
+                        alt="{{ tenantSetting('name', 'Tenant') }}" class="rounded-circle img-fluid about-img">
                 </div>
 
                 {{-- Texto: segundo plano en móviles, primer plano en pantallas grandes --}}
-                <h1 class="mb-5 text-center">{{ tenantSetting('header_about_section_text', 'Sobre nosotros') }}</h1>
+                <h1 class="mb-5 text-center services-title">{{ tenantSetting('header_about_section_text', 'Sobre nosotros') }}</h1>
                 <div class="col-md-6 order-2 order-md-1 fade-in-section">
                     {!! tenantText(
                         'about_text',
                         '
-                            <p style="text-align: justify;">
+                            <p class="about-text">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a odio purus. Nullam nec commodo urna, vel dignissim enim. Aenean ac quam sit amet libero volutpat ornare.
                             </p>
-                            <p style="text-align: justify;">
+                            <p class="about-text">
                                 Nunc at odio ac magna sagittis varius. Maecenas ut orci vel felis maximus condimentum.
                             </p>
-                            <p style="text-align: justify;">
+                            <p class="about-text">
                                 Quisque vel quam tortor. Etiam iaculis tincidunt purus, eget congue urna volutpat sed.
                             </p>
                         ',
                     ) !!}
                     <div class="text-center">
                         <a href="/about" class="btn btn-consulta"
-                            style="background-color: {{ tenantSetting('button_color_sidebar', '#ffffff54') }};"
                             role="button">{{ tenantSetting('button_about_section_text', 'Conoce más') }}</a>
                     </div>
                 </div>
@@ -68,21 +111,20 @@
 
     <section id="section2" class="scroll-section py-5">
         <div class="container">
-            <h1 class="mb-5 text-center">{{ tenantSetting('header_services_section_text', 'Nuestros servicios') }}</h1>
+            <h1 class="mb-5 text-center services-title">{{ tenantSetting('header_services_section_text', 'Nuestros servicios') }}</h1>
             <div class="row g-4">
                 {{-- Recuadro 1 --}}
                 <div class="col-md-4">
                     <div class="card h-100 shadow-sm border-0 fade-in-section">
                         <img src="{{ asset('images/services/' . (tenant()->services_path_1 ?? 'Servicio_(Predeterminado).png')) }}"
                             class="card-img-top" alt="Asesoría jurídica integral">
-
                         <div class="card-body">
-                            <h5 class="card-title" style="font-weight: bold;">
+                            <h5 class="card-title">
                                 {!! tenantText('service1_title', 'Servicio 1') !!}
                             </h5>
                             {!! tenantText(
                                 'service1_body',
-                                '<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a odio purus.</p>',
+                                '<p class="about-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a odio purus.</p>',
                             ) !!}
                         </div>
                     </div>
@@ -93,16 +135,14 @@
                     <div class="card h-100 shadow-sm border-0 fade-in-section">
                         <img src="{{ asset('images/services/' . tenantSetting('services_path_2', 'Servicio_(Predeterminado).png')) }}"
                             class="card-img-top" alt="Representación judicial">
-
                         <div class="card-body">
-                            <h5 class="card-title" style="font-weight: bold;">
+                            <h5 class="card-title">
                                 {!! tenantText('service2_title', 'Servicio 2') !!}
                             </h5>
                             {!! tenantText(
                                 'service2_body',
-                                '<p style="text-align: justify;">Nullam nec commodo urna, vel dignissim enim. Aenean ac quam sit amet libero volutpat ornare.</p>',
+                                '<p class="about-text">Nullam nec commodo urna, vel dignissim enim. Aenean ac quam sit amet libero volutpat ornare.</p>',
                             ) !!}
-
                         </div>
                     </div>
                 </div>
@@ -113,21 +153,19 @@
                         <img src="{{ asset('images/services/' . tenantSetting('services_path_3', 'Servicio_(Predeterminado).png')) }}"
                             class="card-img-top" alt="Capacitaciones y charlas">
                         <div class="card-body">
-                            <h5 class="card-title" style="font-weight: bold;">
+                            <h5 class="card-title">
                                 {!! tenantText('service3_title', 'Servicio 3') !!}
                             </h5>
                             {!! tenantText(
                                 'service3_body',
-                                '<p style="text-align: justify;">Praesent tempus accumsan urna. Sed vel tempor nulla, et sodales enim. Vivamus a dictum urna, ut cursus leo.</p>',
+                                '<p class="about-text">Praesent tempus accumsan urna. Sed vel tempor nulla, et sodales enim. Vivamus a dictum urna, ut cursus leo.</p>',
                             ) !!}
-
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-center mt-4">
                 <a href="/services" class="btn btn-consulta fade-in-section"
-                    style="background-color: {{ tenantSetting('button_color_sidebar', '#ffffff54') }};"
                     role="button">{{ tenantSetting('button_services_section_text', 'Conoce más') }}</a>
             </div>
         </div>

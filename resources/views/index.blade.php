@@ -4,17 +4,17 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero-section" style="background-color: #fdf5e5; border-bottom: 10px solid #6B3A2C;">
+    <section class="hero-section hero-section-custom">
         <div class="container py-5">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold mb-4" style="color: #4A1D0B;">Potencia tu Despacho Legal con una Página Web
+                    <h1 class="display-4 fw-bold mb-4 text-primary-dark">Potencia tu Despacho Legal con una Página Web
                         Profesional</h1>
-                    <p class="lead mb-4" style="color: #6B3A2C;">Solución todo-en-uno para gestión de clientes,
+                    <p class="lead mb-4 text-secondary-dark">Solución todo-en-uno para gestión de clientes,
                         agendamiento, pagos y más</p>
 
                     <div class="d-flex gap-3 mb-4">
-                        <a href="login" class="btn btn-lg text-white" style="background-color: #4A1D0B;">
+                        <a href="login" class="btn btn-lg text-white bg-primary-dark">
                             <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
                         </a>
                         <a href="#featuresCarousel" class="btn btn-lg btn-outline-dark">
@@ -202,10 +202,10 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
                         <div class="d-flex mb-3 align-items-center">
-                            <img src="{{ asset('images/reseñas/reseña_1.jpg') }}" class="rounded-circle me-3 flex-shrink-0"
-                                style="width: 60px; height: 60px; object-fit: cover;" alt="Dra. Martínez">
+                            <img src="{{ asset('images/reseñas/reseña_1.jpg') }}" class="rounded-circle me-3 flex-shrink-0 avatar-60"
+                                alt="Dra. Martínez">
                             <div>
-                                <h5 class="mb-1" style="color: #4A1D0B;">Dra. Martínez</h5>
+                                <h5 class="mb-1 text-primary-dark">Dra. Martínez</h5>
                                 <p class="text-muted small mb-0">Derecho Familiar</p>
                             </div>
                         </div>
@@ -217,10 +217,10 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
                         <div class="d-flex mb-3">
-                            <img src="{{ asset('images/reseñas/reseña_2.jpg') }}" class="rounded-circle me-3 flex-shrink-0"
-                                style="width: 60px; height: 60px; object-fit: cover;" alt="Dr. López">
+                            <img src="{{ asset('images/reseñas/reseña_2.jpg') }}" class="rounded-circle me-3 flex-shrink-0 avatar-60"
+                                alt="Dr. López">
                             <div>
-                                <h5 class="mb-1" style="color: #4A1D0B;">Dr. López</h5>
+                                <h5 class="mb-1 text-primary-dark">Dr. López</h5>
                                 <p class="text-muted small mb-0">Derecho Corporativo</p>
                             </div>
                         </div>
@@ -232,10 +232,10 @@
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0 shadow-sm rounded-4 p-4">
                         <div class="d-flex mb-3 align-items-center">
-                            <img src="{{ asset('images/reseñas/reseña_3.jpeg') }}" class="rounded-circle me-3 flex-shrink-0"
-                                style="width: 60px; height: 60px; object-fit: cover;" alt="Dra. Rodríguez">
+                            <img src="{{ asset('images/reseñas/reseña_3.jpeg') }}" class="rounded-circle me-3 flex-shrink-0 avatar-60"
+                                alt="Dra. Rodríguez">
                             <div>
-                                <h5 class="mb-1" style="color: #4A1D0B;">Dra. Rodríguez</h5>
+                                <h5 class="mb-1 text-primary-dark">Dra. Rodríguez</h5>
                                 <p class="text-muted small mb-0">Derecho Penal</p>
                             </div>
                         </div>
@@ -258,8 +258,8 @@
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4">
                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-                        <div class="card-header py-4 text-center" style="background-color: #fdf5e5;">
-                            <h4 class="mb-0" style="color: #4A1D0B;">Básico</h4>
+                        <div class="card-header py-4 text-center bg-light-custom">
+                            <h4 class="mb-0 text-primary-dark">Básico</h4>
                         </div>
                         <div class="card-body text-start p-4">
                             <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $79.990/mes</h3>
@@ -316,8 +316,8 @@
 
                 <div class="col-lg-4">
                     <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
-                        <div class="card-header py-4 text-center" style="background-color: #fdf5e5;">
-                            <h4 class="mb-0" style="color: #4A1D0B;">Premium</h4>
+                        <div class="card-header py-4 text-center bg-light-custom">
+                            <h4 class="mb-0 text-primary-dark">Premium</h4>
                         </div>
                         <div class="card-body text-start p-4">
                             <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $239.990/mes</h3>
@@ -461,6 +461,37 @@
 
 @section('styles')
     <style>
+        .hero-section-custom {
+            background-color: #fdf5e5;
+            border-bottom: 10px solid #6B3A2C;
+        }
+
+        .text-primary-dark {
+            color: #4A1D0B !important;
+        }
+
+        .text-secondary-dark {
+            color: #6B3A2C !important;
+        }
+
+        .bg-primary-dark {
+            background-color: #4A1D0B !important;
+        }
+
+        .bg-light-custom {
+            background-color: #fdf5e5 !important;
+        }
+
+        .border-primary-dark {
+            border: 3px solid #6B3A2C !important;
+        }
+
+        .avatar-60 {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+        }
+
         .hero-section {
             padding: 6rem 0;
         }

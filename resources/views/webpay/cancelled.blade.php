@@ -17,6 +17,14 @@
             --dark-brown: #3A1A0A;
         }
 
+        .text-primary-color {
+            color: var(--primary-color) !important;
+        }
+
+        .text-secondary-color {
+            color: var(--secondary-color) !important;
+        }
+
         body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -184,7 +192,7 @@
                     </div>
                     <div class="card-body text-center p-4 p-md-5">
                         <i class="fas fa-exclamation-triangle warning-icon mb-4"></i>
-                        <h2 class="mb-3" style="color: var(--primary-color);">Pago Cancelado</h2>
+                        <h2 class="mb-3 text-primary-color">Pago Cancelado</h2>
 
                         <div class="alert alert-warning" role="alert">
                             <i class="fas fa-info-circle me-2"></i>
@@ -193,8 +201,7 @@
 
                         <!-- Detalles de la transacción cancelada -->
                         <div class="transaction-details mt-4 text-start p-4 rounded">
-                            <h5 class="mb-3" style="color: var(--secondary-color);"><i
-                                    class="fas fa-info-circle me-2"></i>Información:</h5>
+                            <h5 class="mb-3 text-secondary-color"><i class="fas fa-info-circle me-2"></i>Información:</h5>
                             <div class="transaction-items">
                                 <div class="transaction-item">
                                     <span class="transaction-label">Estado:</span>

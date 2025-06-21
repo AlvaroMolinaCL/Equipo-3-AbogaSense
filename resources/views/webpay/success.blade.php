@@ -17,6 +17,14 @@
             --dark-brown: #3A1A0A;
         }
 
+        .text-primary-color {
+            color: var(--primary-color) !important;
+        }
+
+        .text-secondary-color {
+            color: var(--secondary-color) !important;
+        }
+
         body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -148,7 +156,7 @@
                     </div>
                     <div class="card-body text-center pt-4 p-md-3">
                         <i class="fas fa-check-circle success-icon mb-4"></i>
-                        <h2 class="mb-3" style="color: var(--primary-color);">¡Pago Completado Exitosamente!</h2>
+                        <h2 class="mb-3 text-primary-color">¡Pago Completado Exitosamente!</h2>
 
                         @if(isset($isPlanPurchase) && $isPlanPurchase)
                             <p class="lead mb-4">Gracias por adquirir el plan <strong
@@ -160,7 +168,7 @@
 
                             <!-- Beneficios del plan -->
                             <div class="benefits-container mt-4 text-start bg-white p-4 rounded border">
-                                <h5 class="mb-3" style="color: var(--secondary-color);"><i
+                                <h5 class="mb-3 text-secondary-color"><i
                                         class="fas fa-star me-2"></i>Beneficios de tu plan:</h5>
                                 <ul class="benefits-list">
                                     <li>Acceso completo a todas las funciones premium</li>
@@ -178,7 +186,7 @@
 
                         <!-- Detalles de la transacción - Versión vertical -->
                         <div class="transaction-details mt-4 text-start p-4 rounded">
-                            <h5 class="mb-3" style="color: var(--secondary-color);"><i
+                            <h5 class="mb-3 text-secondary-color"><i
                                     class="fas fa-receipt me-2"></i>Detalles de la transacción:</h5>
                             <div class="transaction-items">
                                 <div class="transaction-item">

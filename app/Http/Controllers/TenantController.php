@@ -222,3 +222,5 @@ class TenantController extends Controller
     }
 
 }
+
+// Archivo movido a app/Http/Controllers/Tenant/TenantController.php
