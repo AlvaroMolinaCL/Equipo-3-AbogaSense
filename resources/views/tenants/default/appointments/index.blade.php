@@ -116,6 +116,58 @@
                 events: '/api/appointments',
             });
             calendar.render();
+            const appointmentsModal = new bootstrap.Modal(document.getElementById('appointmentsModal'));
+            const appointmentsList = document.getElementById('appointments-list-modal');
+            const modalDateTitle = document.getElementById('appointmentsModalLabel');
+
+            calendar.on('dateClick', function (info) {
+                const selectedDate = info.dateStr;
+                const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const fechaFormateada = new Date(selectedDate).toLocaleDateString('es-CL', opcionesFecha);
+                modalDateTitle.textContent = `Citas para el ${fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1)}`;
+
+                appointmentsList.innerHTML = '<p class="text-muted">Cargando citas...</p>';
+                appointmentsModal.show();
+
+                fetch(`/api/appointments?date=${selectedDate}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            appointmentsList.innerHTML = '<p class="text-muted">No se registran citas para este día.</p>';
+                        } else {
+                            data.sort((a, b) => a.start_time.localeCompare(b.start_time));
+                            appointmentsList.innerHTML = '';
+                            data.forEach((appointment, index) => {
+                                const start = appointment.start_time.slice(0, 5);
+                                const end = appointment.end_time.slice(0, 5);
+                                const isLast = index === data.length - 1;
+                                appointmentsList.innerHTML += `
+                                    <div class="d-flex justify-content-between align-items-center py-2 ${!isLast ? 'border-bottom' : ''}">
+                                        <div>
+                                            <strong>${start} - ${end}</strong> <span class="ms-2">${appointment.client_name}</span>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        }
+                    });
+            });
+
         });
     </script>
+    {{-- Modal para mostrar citas agendadas --}}
+    <div class="modal fade" id="appointmentsModal" tabindex="-1" aria-labelledby="appointmentsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="background-color: {{ tenantSetting('background_color_1', '#FDF5E5') }};">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="appointmentsModalLabel">Citas del día</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="modal-date-input">
+                    <div id="appointments-list-modal"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
