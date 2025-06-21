@@ -11,7 +11,7 @@
             <div class="shadow-lg rounded-4 overflow-hidden"
                 style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }}; border-left: 10px solid {{ tenantSetting('navbar_color_1', '#6B3A2C') }};">
 
-                <!-- Logo arriba del formulario -->
+                {{-- Logo arriba del formulario --}}
                 <div class="text-center py-3"
                     style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }};">
                     <img src="{{ asset(tenantSetting('logo_path_1', 'logo/default1.png')) }}" alt="Logo del despacho"
@@ -20,7 +20,7 @@
 
                 <div class="p-3 bg-white">
 
-                    <!-- Encabezado -->
+                    {{-- Encabezado --}}
                     <div class="text-center mb-4">
                         <h3
                             style="color: {{ tenantSetting('navbar_color_1', '#4A1D0B') }}; ; font-family: {{ tenantSetting('heading_font', 'serif') }}">
@@ -36,18 +36,18 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <!-- Nombre -->
+                        {{-- Nombre --}}
                         <div class="mb-3">
-                            <label for="name" class="form-label">Nombre <span class="text-danger">*</span></label>
+                            <label for="name" class="form-label">Nombres <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Por ejemplo: Alejandra" id="name" name="name" value="{{ old('name') }}"
+                                placeholder="Por ejemplo: Alejandra Andrea" id="name" name="name" value="{{ old('name') }}"
                                 required autofocus>
                             @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Apellido Paterno -->
+                        {{-- Apellido Paterno --}}
                         <div class="mb-3">
                             <label for="last_name" class="form-label">Apellido Paterno <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('last_name') is-invalid @enderror"
@@ -58,18 +58,18 @@
                             @enderror
                         </div>
 
-                        <!-- Apellido Materno -->
+                        {{-- Apellido Materno --}}
                         <div class="mb-3">
                             <label for="second_last_name" class="form-label">Apellido Materno <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('second_last_name') is-invalid @enderror"
-                                placeholder="Por ejemplo: González" id="second_last_name" name="second_last_name"
+                                placeholder="Por ejemplo: Soto" id="second_last_name" name="second_last_name"
                                 value="{{ old('second_last_name') }}" required>
                             @error('second_last_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Email -->
+                        {{-- Email --}}
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
@@ -80,18 +80,18 @@
                             @enderror
                         </div>
 
-                        <!-- Número de teléfono -->
+                        {{-- Teléfono --}}
                         <div class="mb-3">
-                            <label for="phone_number" class="form-label">Número de Teléfono <span class="text-danger">*</span></label>
+                            <label for="phone_number" class="form-label">Teléfono <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('phone_number') is-invalid @enderror"
-                                placeholder="Por ejemplo: +56912345678" id="phone_number" name="phone_number" required
+                                placeholder="Por ejemplo: 912345678" id="phone_number" name="phone_number" required
                                 value="{{ old('phone_number') }}">
                             @error('phone_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <!-- Género -->
+                        {{-- Género --}}
                         <div class="mb-3">
                             <label for="genre_id" class="form-label">Género</label>
                             <select class="form-select @error('genre_id') is-invalid @enderror" id="genre_id" name="genre_id">
@@ -108,7 +108,7 @@
                         </div>
 
 
-                        <!-- Fecha de nacimiento -->
+                        {{-- Fecha de Nacimiento --}}
                         <div class="mb-3">
                             <label for="birth_date" class="form-label">Fecha de Nacimiento</label>
                             <input type="date" class="form-control @error('birth_date') is-invalid @enderror"
@@ -118,7 +118,7 @@
                             @enderror
                         </div>
 
-                        <!-- Región -->
+                        {{-- Región --}}
                         <div class="mb-3">
                             <label for="residence_region_id" class="form-label">Región de Residencia</label>
                             <select class="form-select @error('residence_region_id') is-invalid @enderror"
@@ -135,7 +135,7 @@
                             @enderror
                         </div>
 
-                        <!-- Comuna -->
+                        {{-- Comuna --}}
                         <div class="mb-3">
                             <label for="residence_commune_id" class="form-label">Comuna de Residencia</label>
                             <select class="form-select @error('residence_commune_id') is-invalid @enderror"
@@ -148,7 +148,7 @@
                         </div>
 
 
-                        <!-- Contraseña -->
+                        {{-- Contraseña --}}
                         <div class="mb-3">
                             <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -158,7 +158,7 @@
                             @enderror
                         </div>
 
-                        <!-- Confirmar Contraseña -->
+                        {{-- Confirmar Contraseña --}}
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Confirmar Contraseña <span class="text-danger">*</span></label>
                             <input type="password" class="form-control"
@@ -166,7 +166,7 @@
                                 name="password_confirmation" required>
                         </div>
 
-                        <!-- Botón -->
+                        {{-- Botón --}}
                         <div class="d-grid">
                             <button type="submit" class="btn text-white"
                                 style="background-color: {{ tenantSetting('navbar_color_1', '#4A1D0B') }};">
@@ -174,7 +174,7 @@
                             </button>
                         </div>
 
-                        <!-- Link a login -->
+                        {{-- Link a Nogin --}}
                         <div class="mt-4 text-center">
                             <p class="text-muted">¿Ya tienes una cuenta?
                                 <a href="{{ route('login') }}" class="text-decoration-none"

@@ -71,4 +71,22 @@ class User extends Authenticatable
     {
         Mail::to($this->email)->send(new ResetPasswordMail($token, $this->email));
     }
+
+    public function setPhoneNumberAttribute($value)
+    {
+        $phone = preg_replace('/\D/', '', $value);
+
+        if (strlen($phone) === 9 && $phone[0] === '9') {
+            $phone = '56' . $phone;
+        } elseif (strlen($phone) === 11 && substr($phone, 0, 2) === '56') {
+            // Se mantiene el número tal cual si ya tiene el prefijo
+        }
+
+        $this->attributes['phone_number'] = $phone;
+    }
+
+    public function getPhoneNumberForFormAttribute()
+    {
+        return preg_replace('/^56/', '', $this->phone_number ?? '');
+    }
 }
