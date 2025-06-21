@@ -144,8 +144,10 @@
                                 appointmentsList.innerHTML += `
                                     <div class="d-flex justify-content-between align-items-center py-2 ${!isLast ? 'border-bottom' : ''}">
                                         <div>
-                                            <strong>${start} - ${end}</strong> <span class="ms-2">${appointment.client_name}</span>
+                                            <strong>${appointment.start_time} - ${appointment.end_time}</strong>
+                                            <span class="ms-2">${appointment.client_name}</span>
                                         </div>
+                                        <a href="/appointments/${appointment.id}" class="btn btn-sm btn-outline-primary">Ver detalles</a>
                                     </div>
                                 `;
                             });

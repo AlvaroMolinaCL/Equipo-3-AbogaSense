@@ -25,12 +25,10 @@ class AppointmentApiController extends Controller
                     $slot = $appointment->availableSlot;
 
                     return [
-                        'start_time'    => substr($slot->start_time, 0, 5),
-                        'end_time'      => substr($slot->end_time, 0, 5),
-                        'client_name'   => "{$appointment->first_name} {$appointment->last_name} {$appointment->second_last_name}",
-                        'email'         => $appointment->email,
-                        'phone_number'  => $appointment->phone_number,
-                        'description'   => $appointment->description,
+                        'id'           => $appointment->id,
+                        'start_time'   => substr($slot->start_time, 0, 5),
+                        'end_time'     => substr($slot->end_time, 0, 5),
+                        'client_name'  => "{$appointment->first_name} {$appointment->last_name} {$appointment->second_last_name}",
                     ];
                 })
                 ->values();

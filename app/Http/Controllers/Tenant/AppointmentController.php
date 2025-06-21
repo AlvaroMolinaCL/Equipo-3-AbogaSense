@@ -12,4 +12,11 @@ class AppointmentController extends Controller
     {
         return view('tenants.default.appointments.index');
     }
+
+    public function show($id)
+    {
+        $appointment = Appointment::with('availableSlot')->findOrFail($id);
+
+        return view('tenants.default.appointments.show', compact('appointment'));
+    }
 }
