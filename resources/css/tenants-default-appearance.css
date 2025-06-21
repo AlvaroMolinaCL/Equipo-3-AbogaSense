@@ -1,9 +1,0 @@
-/* Estilos personalizados para tenants/default/appearance.blade.php */
-
-.appearance-title {
-    font-family: var(--appearance-heading-font, inherit);
-}
-.appearance-section {
-    margin-top: 80px;
-}
-/* Agrega aquí las clases migradas desde los estilos inline y bloques <style> del Blade */

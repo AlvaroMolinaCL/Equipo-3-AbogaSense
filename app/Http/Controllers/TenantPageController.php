@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Tenant;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Tenant;
 use App\Models\TenantPage;
 use Illuminate\Http\Request;
@@ -99,5 +98,3 @@ class TenantPageController extends Controller
         return redirect()->route('tenants.index', $tenant)->with('success', 'Configuración actualizada correctamente.');
     }
 }
-
-// Archivo movido a app/Http/Controllers/Tenant/TenantPageController.php

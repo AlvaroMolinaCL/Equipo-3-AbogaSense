@@ -14,6 +14,17 @@ use App\Models\Cart;
 
 class TransbankController extends Controller
 {
+    public function __construct()
+    {
+        if (config('app.env') == 'production') {
+            WebpayPlus::configureForProduction(
+                config('services.transbank.commerce_code'),
+                config('services.transbank.api_key')
+            );
+        } else {
+            WebpayPlus::configureForTesting();
+        }
+    }
     public function createTransaction(Request $request)
     {
         $request->validate([

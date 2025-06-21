@@ -10,30 +10,32 @@
     <div class="container-fluid">
         {{-- Encabezado --}}
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold mb-0 domains-index-title">
+            <h3 class="fw-bold mb-0" style="color: #8C2D18;">
                 <i class="bi bi-globe-americas me-2"></i>{{ __('Dominios') }}
             </h3>
-            <a href="{{ route('dashboard') }}" class="btn btn-sm domains-index-back-btn">
+            <a href="{{ route('dashboard') }}" class="btn btn-sm" style="background-color: #F5E8D0; color: #8C2D18;">
                 <i class="bi bi-arrow-left me-2"></i>Volver
             </a>
         </div>
 
         {{-- Tabla de Dominios --}}
         <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-header d-flex justify-content-between align-items-center domains-index-header">
+            <div class="card-header d-flex justify-content-between align-items-center"
+                style="background-color: #8C2D18; color: white;">
                 <h5 class="mb-0">Listado de Dominios</h5>
-                <a href="{{ route('domains.create') }}" class="btn btn-sm domains-index-new-btn">
+                <a href="{{ route('domains.create') }}" class="btn btn-sm"
+                    style="background-color: #FDF5E5; color: #8C2D18;">
                     <i class="bi bi-plus-circle"></i> Nuevo Dominio
                 </a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
-                        <thead class="domains-index-table-head">
+                        <thead style="background-color: #FDF5E5;">
                             <tr>
-                                <th class="text-center domains-index-table-th">Dominio Personalizado</th>
-                                <th class="text-center domains-index-table-th">Tenant</th>
-                                <th class="text-center domains-index-table-th">Acciones</th>
+                                <th class="text-center" style="color: #8C2D18;">Dominio Personalizado</th>
+                                <th class="text-center" style="color: #8C2D18;">Tenant</th>
+                                <th class="text-center" style="color: #8C2D18;">Acciones</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -45,7 +47,8 @@
                                         <div class="d-flex flex-wrap justify-content-center align-items-center gap-2">
                                             {{-- Editar --}}
                                             <a href="{{ route('domains.edit', $domain) }}"
-                                                class="btn btn-sm d-flex align-items-center justify-content-center gap-1 domains-index-edit-btn">
+                                                class="btn btn-sm d-flex align-items-center justify-content-center gap-1"
+                                                style="background-color: #8C2D18; color: white; min-width: 100px;">
                                                 <i class="bi bi-pencil"></i> Editar
                                             </a>
 
@@ -55,7 +58,8 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="btn btn-sm d-flex align-items-center justify-content-center gap-1 domains-index-delete-btn">
+                                                    class="btn btn-sm d-flex align-items-center justify-content-center gap-1"
+                                                    style="background-color: #BF8A49; color: white; min-width: 100px;">
                                                     <i class="bi bi-trash"></i> Eliminar
                                                 </button>
                                             </form>
@@ -74,39 +78,3 @@
         </div>
     </div>
 @endsection
-
-@push('styles')
-<style>
-.domains-index-title {
-    color: #8C2D18;
-}
-.domains-index-back-btn {
-    background-color: #F5E8D0;
-    color: #8C2D18;
-}
-.domains-index-header {
-    background-color: #8C2D18;
-    color: white;
-}
-.domains-index-new-btn {
-    background-color: #FDF5E5;
-    color: #8C2D18;
-}
-.domains-index-table-head {
-    background-color: #FDF5E5;
-}
-.domains-index-table-th {
-    color: #8C2D18;
-}
-.domains-index-edit-btn {
-    background-color: #8C2D18;
-    color: white;
-    min-width: 100px;
-}
-.domains-index-delete-btn {
-    background-color: #BF8A49;
-    color: white;
-    min-width: 100px;
-}
-</style>
-@endpush

@@ -122,5 +122,3 @@ class TenantTextController extends Controller
     }
 }
 
-// Archivo movido a app/Http/Controllers/Tenant/TenantTextController.php
-

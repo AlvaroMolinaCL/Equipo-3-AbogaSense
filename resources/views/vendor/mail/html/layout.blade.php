@@ -34,12 +34,6 @@
         .content-cell {
             padding: 35px;
         }
-
-        .mail-content-cell {
-            background-color: #ffffff;
-            border: 1px solid #e5e5e5;
-            border-radius: 4px;
-        }
     </style>
 </head>
 
@@ -56,7 +50,8 @@
                             <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0"
                                 role="presentation">
                                 <tr>
-                                    <td class="content-cell mail-content-cell">
+                                    <td class="content-cell"
+                                        style="background-color: #ffffff; border: 1px solid #e5e5e5; border-radius: 4px;">
                                         {{ Illuminate\Mail\Markdown::parse($slot) }}
                                         {{ $subcopy ?? '' }}
                                     </td>

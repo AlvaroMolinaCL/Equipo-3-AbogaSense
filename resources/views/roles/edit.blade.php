@@ -10,33 +10,33 @@
     <div class="container-fluid">
         {{-- Encabezado --}}
         <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-            <h3 class="fw-bold mb-0 roles-edit-title">
+            <h3 class="fw-bold mb-0" style="color: #8C2D18;">
                 <i class="bi bi-person-gear me-2"></i>Editar Rol
             </h3>
-            <a href="{{ route('roles.index') }}" class="btn btn-sm roles-edit-back-btn">
+            <a href="{{ route('roles.index') }}" class="btn btn-sm" style="background-color: #F5E8D0; color: #8C2D18;">
                 <i class="bi bi-arrow-left me-2"></i>Volver
             </a>
         </div>
 
         {{-- Formulario --}}
-        <div class="card shadow border-0 roles-edit-card">
+        <div class="card shadow border-0" style="background-color: #FDF5E5;">
             <div class="card-body p-4">
                 <form method="POST" action="{{ route('roles.update', $role->id) }}"
                     class="bg-white p-4 rounded-3 shadow-sm">
                     @csrf
                     @method('PUT')
 
-                    <h5 class="fw-medium mb-3 roles-edit-info-title">
+                    <h5 class="fw-medium mb-3" style="color: #8C2D18;">
                         <i class="bi bi-info-circle me-2"></i>Información del Rol
                     </h5>
 
                     {{-- Nombre --}}
                     <div class="mb-4">
-                        <label for="rol_name" class="form-label fw-medium roles-edit-label">
+                        <label for="rol_name" class="form-label fw-medium" style="color: #8C2D18;">
                             <i class="bi bi-globe me-1"></i>Nombre
                         </label>
                         <div class="input-group">
-                            <span class="input-group-text roles-edit-input-group-text">
+                            <span class="input-group-text" style="background-color: #F5E8D0; color: #8C2D18;">
                                 <i class="bi bi-fonts"></i>
                             </span>
                             <input id="rol_name" type="text" class="form-control border-start-0" name="rol_name"
@@ -51,7 +51,7 @@
 
                     {{-- Permisos --}}
                     <div class="mb-4">
-                        <label class="form-label fw-medium roles-edit-label">
+                        <label class="form-label fw-medium" style="color: #8C2D18;">
                             <i class="bi bi-shield-lock me-1"></i>Permisos del Rol
                         </label>
                         <div class="row">
@@ -72,7 +72,8 @@
 
                     {{-- Botón Guardar --}}
                     <div class="mt-4 pt-3 border-top text-center">
-                        <button type="submit" class="btn fw-medium py-1 roles-edit-save-btn">
+                        <button type="submit" class="btn fw-medium py-1"
+                            style="background-color: #8C2D18; color: white; width: 200px;">
                             <i class="bi bi-save me-2"></i>Actualizar Rol
                         </button>
                     </div>
@@ -81,33 +82,3 @@
         </div>
     </div>
 @endsection
-
-@push('styles')
-<style>
-.roles-edit-title {
-    color: #8C2D18;
-}
-.roles-edit-back-btn {
-    background-color: #F5E8D0;
-    color: #8C2D18;
-}
-.roles-edit-card {
-    background-color: #FDF5E5;
-}
-.roles-edit-info-title {
-    color: #8C2D18;
-}
-.roles-edit-label {
-    color: #8C2D18;
-}
-.roles-edit-input-group-text {
-    background-color: #F5E8D0;
-    color: #8C2D18;
-}
-.roles-edit-save-btn {
-    background-color: #8C2D18;
-    color: white;
-    width: 200px;
-}
-</style>
-@endpush

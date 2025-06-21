@@ -61,7 +61,7 @@
 
                         <!-- Botón -->
                         <div class="d-grid">
-                            <button type="submit" class="btn text-white reset-password-btn">
+                            <button type="submit" class="btn text-white" style="background-color: #4A1D0B;">
                                 <i class="bi bi-arrow-repeat me-1"></i> Restablecer contraseña
                             </button>
                         </div>
@@ -69,7 +69,7 @@
                         <!-- Link a login -->
                         <div class="mt-4 text-center">
                             <small class="text-muted">¿Ya la restableciste?</small><br>
-                            <a href="{{ route('login') }}" class="text-decoration-none reset-password-link">
+                            <a href="{{ route('login') }}" class="text-decoration-none" style="color: #4A1D0B;">
                                 Iniciar sesión
                             </a>
                         </div>
@@ -79,14 +79,3 @@
         </div>
     </div>
 @endsection
-
-@push('styles')
-<style>
-.reset-password-btn {
-    background-color: #4A1D0B;
-}
-.reset-password-link {
-    color: #4A1D0B;
-}
-</style>
-@endpush

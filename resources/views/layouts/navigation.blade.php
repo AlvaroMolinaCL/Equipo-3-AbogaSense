@@ -1,11 +1,16 @@
-<nav class="navbar navbar-light flex-column p-3 h-100 nav-sidebar-bg">
+<nav class="navbar navbar-light flex-column p-3 h-100" style="background-color:rgb(68, 30, 8) ;">
     <a class="navbar-brand mx-auto d-none d-lg-block p-0 mb-3" href="{{ route('dashboard') }}">
-        <img src="{{ asset('images/abogasense3.png') }}" alt="Logo" class="nav-sidebar-logo">
+        <img src="{{ asset('images/abogasense3.png') }}" alt="Logo" style="height: 60px;">
     </a>
 
     {{-- Botón Inicio --}}
     <div class="px-3 mb-3 mt-3">
-        <a href="{{ route('tenants.default.index') }}" class="btn w-100 nav-sidebar-btn">
+        <a href="{{ route('tenants.default.index') }}" class="btn w-100"
+            style="background-color: #BF8A49;
+              color: white;
+              border-radius: 0.375rem;
+              text-align: center;
+              display: block;">
             <i class="bi bi-house-door-fill me-2"></i> Inicio
         </a>
     </div>
@@ -52,13 +57,14 @@
     </ul>
 
     {{-- Información de Usuario --}}
-    <div class="mt-auto border-top pt-3 nav-sidebar-border">
+    <div class="mt-auto border-top pt-3" style="border-color: #BF8A49 !important;">
         <div class="text-left">
-            <strong class="nav-sidebar-user">{{ Auth::user()->name }}</strong><br>
-            <small class="nav-sidebar-email">{{ Auth::user()->email }}</small>
+            <strong style="color: white;">{{ Auth::user()->name }}</strong><br>
+            <small style="color: #BF8A49;">{{ Auth::user()->email }}</small>
         </div>
         <div class="dropup mt-2">
-            <button class="btn btn-sm w-100 dropdown-toggle nav-sidebar-account-btn" type="button" data-bs-toggle="dropdown">
+            <button class="btn btn-sm w-100 dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                style="background-color: #BF8A49; color: white; border-color: #BF8A49;">
                 Cuenta
             </button>
             <ul class="dropdown-menu w-100">
@@ -73,38 +79,3 @@
         </div>
     </div>
 </nav>
-
-@push('styles')
-<style>
-.nav-sidebar-bg {
-    background-color: rgb(68, 30, 8) !important;
-}
-.nav-sidebar-logo {
-    height: 60px;
-}
-.nav-sidebar-btn {
-    background-color: #BF8A49;
-    color: white;
-    border-radius: 0.375rem;
-    text-align: center;
-    display: block;
-}
-.nav-link[style] {
-    color: white !important;
-}
-.nav-sidebar-border {
-    border-color: #BF8A49 !important;
-}
-.nav-sidebar-user {
-    color: white;
-}
-.nav-sidebar-email {
-    color: #BF8A49;
-}
-.nav-sidebar-account-btn {
-    background-color: #BF8A49;
-    color: white;
-    border-color: #BF8A49;
-}
-</style>
-@endpush

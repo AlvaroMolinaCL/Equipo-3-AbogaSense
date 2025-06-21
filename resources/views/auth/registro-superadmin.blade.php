@@ -64,7 +64,7 @@
 
                         <!-- Botón -->
                         <div class="d-grid">
-                            <button type="submit" class="btn text-white registro-superadmin-btn">
+                            <button type="submit" class="btn text-white" style="background-color: #4A1D0B;">
                                 <i class="bi bi-check2-circle me-1"></i> Crear Cuenta
                             </button>
                         </div>
@@ -72,7 +72,7 @@
                         <!-- Link a login -->
                         <div class="mt-4 text-center">
                             <small class="text-muted">¿Ya tienes una cuenta?</small><br>
-                            <a href="{{ route('login') }}" class="text-decoration-none registro-superadmin-link">
+                            <a href="{{ route('login') }}" class="text-decoration-none" style="color: #4A1D0B;">
                                 Iniciar sesión
                             </a>
                         </div>
@@ -82,14 +82,3 @@
         </div>
     </div>
 @endsection
-
-@push('styles')
-<style>
-.registro-superadmin-btn {
-    background-color: #4A1D0B;
-}
-.registro-superadmin-link {
-    color: #4A1D0B;
-}
-</style>
-@endpush
