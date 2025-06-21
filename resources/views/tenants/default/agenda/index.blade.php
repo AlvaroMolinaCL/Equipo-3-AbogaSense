@@ -24,9 +24,7 @@
 
         .fc .fc-daygrid-day-frame {
             padding: 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: block;
         }
 
         .fc .fc-daygrid-event {
@@ -34,76 +32,131 @@
             padding: 2px 4px;
             border: none;
             border-radius: 4px;
-            background-color:
-                {{ tenantSetting('navbar_color_2', '#8C2D18') }}
-            ;
-            color:
-                {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }}
-            ;
+            background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            color: {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }};
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             width: 100%;
             max-width: 100%;
+            box-sizing: border-box;
         }
 
-        .fc .fc-col-header-cell-cushion,
-        .fc .fc-toolbar-title,
+        .fc .fc-daygrid-event-harness {
+            display: flex;
+            justify-content: center;
+            max-width: 100%;
+            width: 100%;
+            flex: 1 1 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .fc .fc-event-main {
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .fc .fc-event-title {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .fc .fc-col-header-cell-cushion {
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            text-transform: capitalize;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: {{ tenantSetting('text_color_1', '#8C2D18') }};
+        }
+
         .fc .fc-daygrid-day-number {
-            color:
-                {{ tenantSetting('text_color_1', '#8C2D18') }}
-            ;
+            color: {{ tenantSetting('text_color_1', '#8C2D18') }};
+            font-weight: normal;
+        }
+
+        .fc .fc-toolbar-title {
+            text-transform: capitalize;
+            color: {{ tenantSetting('text_color_1', '#8C2D18') }};
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: bold;
         }
 
         .fc .fc-daygrid-more-link {
-            margin-top: 5px;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 2px;
             padding: 2px 6px;
             font-size: 0.8rem;
             font-weight: 500;
-            background-color:
-                {{ tenantSetting('navbar_color_2', '#8C2D18') }}
-            ;
-            color:
-                {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }}
-            ;
+            text-align: center;
+            background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
+            color: {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }};
             border-radius: 4px;
             text-decoration: none !important;
+            pointer-events: auto;
         }
 
-        .fc .fc-daygrid-more-link:hover {
-            background-color:
-                {{ tenantSetting('navbar_color_2', '#8C2D18') }}
-            ;
-            color:
-                {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }}
-            ;
+        .fc .fc-daygrid-more-link:hover,
+        .fc .fc-daygrid-more-link:focus {
+            background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }} !important;
+            color: {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }} !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
         }
 
         .fc-daygrid-event-harness+.fc-daygrid-more-link {
             align-self: center;
         }
 
-        .fc .fc-col-header-cell-cushion {
-            text-transform: capitalize;
-            font-weight: bold;
-            font-size: 0.95rem;
-            color:
-                {{ tenantSetting('text_color_1', '#8C2D18') }}
-            ;
+        .fc-event-title .icon-in-progress {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 0.85rem;
+            color: #ffc107;
+            margin-left: 5px;
+            line-height: 1;
         }
 
-        .fc .fc-toolbar-title {
-            text-transform: capitalize;
-            color:
-                {{ tenantSetting('text_color_1', '#8C2D18') }}
-            ;
+        .btn-outline-tenant {
+            border: 1px solid @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
+            color: @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
+            background-color: transparent;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-outline-tenant:hover,
+        .btn-outline-tenant:focus {
+            background-color: @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
+            color: @php echo tenantSetting('navbar_text_color_2', '#FFFFFF') @endphp;
+            border-color: @php echo tenantSetting('navbar_color_2', '#8C2D18') @endphp;
+            box-shadow: none;
+            text-decoration: none;
         }
     </style>
 
     <section class="py-5" style="margin-top: 80px;">
         <div class="container">
-            <h3 class="mb-4" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">Selecciona un horario disponible
+            <h3 class="fw-bold mt-3 mb-4" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-calendar-event me-2"></i>{{ __('Selecciona un Horario Disponible') }}
             </h3>
             <a href="{{ route('tenants.default.index') }}" class="btn btn-outline-secondary mb-3">
                 <i class="bi bi-arrow-left"></i> Volver al Inicio
@@ -116,7 +169,9 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content" style="background-color: {{ tenantSetting('background_color_1', '#FDF5E5') }};">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="dayModalLabel">Horarios del día</h5>
+                        <h5 class="modal-title fw-bold" id="dayModalLabel" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                            Horarios del día
+                        </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                     </div>
                     <div class="modal-body">
@@ -218,11 +273,18 @@
                                     const start = formatTime(slot.start_time);
                                     const end = formatTime(slot.end_time);
                                     slotsList.innerHTML += `
-                                        <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-                                            <div><strong>${start} - ${end}</strong></div>
-                                            <a href="/agenda/confirmar?slot_id=${slot.id}" class="btn btn-sm btn-primary" title="Agendar este horario">Agendar</a>
+                                        <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <strong style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">${start} - ${end}</strong>
+                                            </div>
+                                            <a href="/agenda/confirmar?slot_id=${slot.id}"
+                                                class="btn btn-sm btn-outline-tenant"
+                                                title="Agendar este horario">
+                                                Agendar
+                                            </a>
                                         </div>
                                     `;
+
                                 });
                             }
                         });

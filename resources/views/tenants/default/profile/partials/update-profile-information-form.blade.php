@@ -14,7 +14,7 @@
         <div class="mb-4">
             <label for="name" class="form-label fw-medium"
                 style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
-                <i class="bi bi-person me-1"></i>{{ __('Nombre Completo') }}
+                <i class="bi bi-person me-1"></i>{{ __('Nombres') }}
             </label>
             <div class="input-group">
                 <span class="input-group-text"
@@ -22,7 +22,7 @@
                     <i class="bi bi-fonts"></i>
                 </span>
                 <input id="name" type="text" class="form-control border-start-0"
-                    placeholder="Por ejemplo: Alejandra Pereira"
+                    placeholder="Por ejemplo: Alejandra Andrea"
                     style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};" name="name"
                     value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
             </div>
@@ -131,8 +131,8 @@
                 </span>
                 <input type="text" class="form-control border-start-0"
                     style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};"
-                    placeholder="Por ejemplo: +56912345678" id="phone_number" name="phone_number"
-                    value="{{ old('phone_number', $user->phone_number) }}">
+                    placeholder="Por ejemplo: 912345678" id="phone_number" name="phone_number"
+                    value="{{ old('phone_number', $user->phone_number_for_form) }}">
             </div>
             @error('phone_number')
                 <div class="text-danger small mt-2">

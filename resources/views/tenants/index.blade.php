@@ -53,7 +53,7 @@
                                     </td>
                                     <td>{{ $tenant->name }}</td>
                                     <td>
-                                        {{ optional($tenant->order)->plan_name ?? 'N/A' }}
+                                        {{ optional($tenant->order)->plan_name ?? 'Personalizado' }}
                                     </td>
                                     <td>{{ $tenant->email }}</td>
                                     <td>

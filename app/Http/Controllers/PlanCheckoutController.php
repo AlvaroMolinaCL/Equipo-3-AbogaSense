@@ -40,7 +40,9 @@ class PlanCheckoutController extends Controller
                 'features' => [
                     'Página web personalizada',
                     'Agendamiento de citas',
-                    'Gestión de clientes'
+                    'Gestión de clientes',
+                    'Pasarela de pagos integrada',
+
                 ]
             ],
             'profesional' => [
@@ -63,9 +65,7 @@ class PlanCheckoutController extends Controller
                     'Gestión de clientes',
                     'Pasarela de pagos integrada',
                     'Gestión de archivos',
-                    'Chatbot inteligente',
-                    'Soporte prioritario'
-                ]
+                    'Chatbot inteligente',                ]
             ],
         ];
 
@@ -216,7 +216,7 @@ class PlanCheckoutController extends Controller
         if ($order->tenant_id && Tenant::find($order->tenant_id)) {
             return [
                 'tenant' => Tenant::find($order->tenant_id),
-                'password' => null 
+                'password' => null
             ];
         }
 

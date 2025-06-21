@@ -12,6 +12,9 @@ class FileController extends Controller
 {
     public function index()
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $user = auth()->user();
         $files = File::where('uploaded_by', $user->id)->get();
 
@@ -20,11 +23,17 @@ class FileController extends Controller
 
     public function create()
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         return view('tenants.default.files.create');
     }
 
     public function store(Request $request)
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $request->validate(['file' => 'required|file']);
         $user = Auth::user();
         $path = $request->file('file')->store("tenants/{$user->tenant_id}/uploads");
@@ -41,6 +50,9 @@ class FileController extends Controller
 
     public function download(File $file)
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $user = Auth::user();
 
         if (
@@ -56,6 +68,9 @@ class FileController extends Controller
 
     public function share(Request $request, File $file)
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $request->validate(['user_ids' => 'nullable|array']);
 
         $currentlyShared = $file->shared_with ?: [];
@@ -76,6 +91,9 @@ class FileController extends Controller
 
     public function preview(File $file)
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $user = Auth::user();
 
         if (
@@ -94,6 +112,9 @@ class FileController extends Controller
 
     public function destroy(File $file)
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $user = auth()->user();
 
         if ($user->hasRole('Admin') || $file->uploaded_by === $user->id) {
@@ -108,6 +129,9 @@ class FileController extends Controller
 
     public function sharedFiles(Request $request)
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $user = auth()->user();
         $usuarioLogueadoId = $user->id;
         $search = $request->input('search');
@@ -164,6 +188,9 @@ class FileController extends Controller
 
     public function sharedByUser(User $user)
     {
+        if (!tenant()->hasFeature('archivos')) {
+            return redirect()->route('dashboard')->with('error', 'Tu plan no incluye la gestión de archivos.');
+        }
         $authUser = auth()->user();
 
         if ($authUser->hasRole('Admin')) {

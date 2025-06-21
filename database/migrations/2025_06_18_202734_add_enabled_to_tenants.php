@@ -8,14 +8,17 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('tenants', function (Blueprint $table) {
             $table->boolean('enabled')->default(false);
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::table('tenants', function (Blueprint $table) {
             $table->dropColumn('enabled');

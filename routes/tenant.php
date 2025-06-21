@@ -20,6 +20,8 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ScheduleBatchController;
 use App\Http\Controllers\TransbankController;
+use App\Http\Controllers\Tenant\AppointmentController;
+use App\Http\Controllers\Tenant\AppointmentApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,6 +90,9 @@ Route::middleware([
             Route::get('/agenda', [AgendaController::class, 'index'])->name('tenant.agenda.index');
             Route::post('/agenda', [AgendaController::class, 'store'])->name('tenant.agenda.store');
 
+            // Citas Agendadas
+            Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+
             // Confirmación de Cita
             Route::get('/agenda/confirmar', [AgendaController::class, 'confirm'])->name('tenant.agenda.confirm');
 
@@ -126,7 +131,6 @@ Route::middleware([
         Route::patch('/update/{item}', [CartController::class, 'update'])->name('cart.update');
         Route::delete('/cart/item/{id}', [CartController::class, 'remove'])->name('cart.remove.item');
 
-
         // Planes
         Route::get('/plans', [ProductController::class, 'plans'])->name('products.plans');
 
@@ -149,6 +153,9 @@ Route::middleware([
 
     // Rutas exclusivas para Administrador
     Route::middleware(['auth', 'role:Admin'])->group(function () {
+        // API para calendario de citas agendadas
+        Route::get('/api/appointments', [AppointmentApiController::class, 'index'])->name('appointments.api.index');
+
         // Rutas para la gestión de textos
         Route::put('/tenant/texts/update', [TenantTextController::class, 'update'])->name('tenant.texts.update');
         Route::get('/panel/textos', [TenantTextController::class, 'edit'])->name('tenant.texts.edit');

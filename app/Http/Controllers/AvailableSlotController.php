@@ -73,34 +73,80 @@ class AvailableSlotController extends Controller
         );
     }
 
+    // Función para filtrar en el calendario los horarios expirados y próximos a comenzar.
+    public function clientSlots(Request $request)
+    {
+        $query = AvailableSlot::with('appointments');
+
+        $today = now()->format('Y-m-d');
+        // $currentTime = now()->addMinutes(60)->format('H:i:s'); Margen de anticipación de una hora.
+        // $currentTime = now()->format('H:i:s'); eliminar margen.
+        $currentTime = now()->addMinutes(30)->format('H:i:s'); // Margen de anticipación de media hora.
+
+        if ($request->has('date')) {
+            $date = $request->query('date');
+            $query->where('date', $date);
+
+            if ($date === $today) {
+                $query->where('start_time', '>=', $currentTime); // 🔴 Hoy: solo horarios con al menos 30 minutos de anticipación
+            }
+        } else {
+            $query->where(function ($q) use ($today, $currentTime) {
+                $q->where('date', '>', $today)
+                ->orWhere(function ($subq) use ($today, $currentTime) {
+                    $subq->where('date', $today)
+                        ->where('start_time', '>=', $currentTime); // 🔴 Hoy: misma lógica
+                });
+            });
+        }
+
+        $usedSlotIds = Appointment::pluck('available_slot_id')->toArray();
+        $query->whereNotIn('id', $usedSlotIds)->orderBy('start_time');
+
+        return response()->json(
+            $query->get()->map(function ($slot) {
+                return [
+                    'id' => $slot->id,
+                    'title' => substr($slot->start_time, 0, 5) . ' - ' . substr($slot->end_time, 0, 5),
+                    'start' => $slot->date,
+                    'start_time' => $slot->start_time,
+                    'end_time' => $slot->end_time,
+                    'available' => true,
+                ];
+            })
+        );
+    }
+
+    /*
+    Función clientSlots() que desactiva toda la lógica de anticipación.
 
     public function clientSlots(Request $request)
     {
         $query = AvailableSlot::with('appointments');
 
         $today = now()->format('Y-m-d');
-        $currentTime = now()->format('H:i:s');
+        $nowTime = now()->format('H:i:s');
 
         if ($request->has('date')) {
             $date = $request->query('date');
             $query->where('date', $date);
 
-            // Si es hoy, aplicar filtro por hora actual
+            // Solo si es hoy, ocultar los horarios que ya terminaron
             if ($date === $today) {
-                $query->where('start_time', '>=', $currentTime);
+                $query->where('end_time', '>', $nowTime);
             }
         } else {
-            // Cuando no se filtra por día: excluir slots de hoy con hora expirada
-            $query->where(function ($q) use ($today, $currentTime) {
+            $query->where(function ($q) use ($today, $nowTime) {
                 $q->where('date', '>', $today)
-                ->orWhere(function ($subq) use ($today, $currentTime) {
+                ->orWhere(function ($subq) use ($today, $nowTime) {
                     $subq->where('date', $today)
-                        ->where('start_time', '>=', $currentTime);
+                        ->where('end_time', '>', $nowTime);
                 });
             });
         }
 
         $usedSlotIds = Appointment::pluck('available_slot_id')->toArray();
+
         $query->whereNotIn('id', $usedSlotIds)->orderBy('start_time');
 
         return response()->json(
@@ -116,7 +162,8 @@ class AvailableSlotController extends Controller
             })
         );
     }
-
+    */
+    
     public function create()
     {
         return view('tenants.default.available-slots.create');

@@ -1,7 +1,8 @@
 <style>
     .navbar-nav .nav-link.active {
         background-color:
-            {{ tenantSetting('button_color_sidebar', '#BF8A49') }} !important;
+            {{ tenantSetting('button_color_sidebar', '#BF8A49') }}
+            !important;
         border-radius: 0.375rem;
     }
 </style>
@@ -14,8 +15,7 @@
     </a>
     {{-- Botón Inicio --}}
     <div class="px-3 mb-3 mt-3">
-        <a href="{{ route('tenants.default.index') }}" class="btn w-100"
-            style="background-color: {{ tenantSetting('button_color_sidebar', '#BF8A49') }};
+        <a href="{{ route('tenants.default.index') }}" class="btn w-100" style="background-color: {{ tenantSetting('button_color_sidebar', '#BF8A49') }};
               color: {{ tenantSetting('navbar_text_color_1', 'white') }};
               border-radius: 0.375rem;
               text-align: center;
@@ -41,39 +41,58 @@
             </a>
         </li>
 
-        {{-- Archivos --}}
+        @if (tenant()->hasFeature('archivos'))
+            {{-- Archivos --}}
+            <li class="nav-item">
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                    href="#filesMenu" style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};"
+                    aria-expanded="false">
+                    <span><i class="bi bi-file-text me-2"></i> Archivos</span>
+                    <i class="bi bi-chevron-down small"></i>
+                </a>
+                <div class="collapse ps-3 {{ Route::is('files.*') ? 'show' : '' }}" id="filesMenu"
+                    data-bs-parent="#sidebarAccordion">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::is('files.index') ? 'active' : '' }}"
+                                href="{{ route('files.index') }}"
+                                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Mis Archivos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Route::is('files.shared.files') ? 'active' : '' }}"
+                                href="{{ route('files.shared.files') }}"
+                                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Archivos
+                                Compartidos</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        @endif
+
+        {{-- Mi Agenda (Desplegable) --}}
         <li class="nav-item">
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-                href="#filesMenu" style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};"
-                aria-expanded="false">
-                <span><i class="bi bi-file-text me-2"></i> Archivos</span>
+                href="#agendaMenu"
+                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};"
+                aria-expanded="{{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'true' : 'false' }}">
+                <span><i class="bi bi-calendar me-2"></i> Mi Agenda</span>
                 <i class="bi bi-chevron-down small"></i>
             </a>
-            <div class="collapse ps-3 {{ Route::is('files.*') ? 'show' : '' }}" id="filesMenu"
-                data-bs-parent="#sidebarAccordion">
+            <div class="collapse ps-3 {{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'show' : '' }}"
+                id="agendaMenu" data-bs-parent="#sidebarAccordion">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::is('files.index') ? 'active' : '' }}"
-                            href="{{ route('files.index') }}"
-                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Mis Archivos</a>
+                        <a class="nav-link {{ Route::is('available-slots.index') ? 'active' : '' }}"
+                            href="{{ route('available-slots.index') }}"
+                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Disponibilidad</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ Route::is('files.shared.files') ? 'active' : '' }}"
-                            href="{{ route('files.shared.files') }}"
-                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Archivos
-                            Compartidos</a>
+                        <a class="nav-link {{ Route::is('appointments.index') ? 'active' : '' }}"
+                            href="{{ route('appointments.index') }}"
+                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Citas Agendadas</a>
                     </li>
                 </ul>
             </div>
-        </li>
-
-        {{-- Mi Agenda --}}
-        <li class="nav-item">
-            <a class="nav-link {{ Route::is('available-slots.index') ? 'active' : '' }}"
-                href="{{ route('available-slots.index') }}"
-                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">
-                <span><i class="bi bi-calendar me-2"></i> Mi Agenda</span>
-            </a>
         </li>
 
         {{-- Planes --}}
@@ -118,8 +137,7 @@
                 style="color: {{ tenantSetting('navbar_text_color_1', '#BF8A49') }};">{{ Auth::user()->email }}</small>
         </div>
         <div class="dropup mt-2">
-            <button class="btn btn-sm w-100 dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                style="background-color: {{ tenantSetting('button_color_sidebar', '#BF8A49') }};
+            <button class="btn btn-sm w-100 dropdown-toggle" type="button" data-bs-toggle="dropdown" style="background-color: {{ tenantSetting('button_color_sidebar', '#BF8A49') }};
                color: {{ tenantSetting('navbar_text_color_1', 'white') }};
                border: 1px solid {{ tenantSetting('navbar_text_color_1', 'white') }};">
                 Cuenta

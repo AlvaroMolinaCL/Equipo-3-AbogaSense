@@ -1,16 +1,19 @@
 @component('mail::message')
-# ¡Hola!
+# 👋 ¡Hola!
 
-Recibimos una solicitud para restablecer la contraseña de tu cuenta.
+Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en **AbogaSense**.
+
+Haz clic en el botón a continuación para crear una nueva contraseña de forma segura:
 
 @component('mail::button', ['url' => $url])
-Restablecer contraseña
+🔑 Restablecer contraseña
 @endcomponent
 
-Este enlace para restablecer la contraseña expirará en {{ $count }} minutos.
+Este enlace es válido por {{ $count }} minutos.  
+Si no solicitaste este cambio, puedes ignorar este mensaje; tu contraseña actual seguirá siendo válida.
 
-Si no solicitaste este cambio, puedes ignorar este mensaje.
+---
 
-Gracias,<br>
-AbogaSense
+Gracias por confiar en nosotros,  
+**El equipo de AbogaSense**
 @endcomponent
