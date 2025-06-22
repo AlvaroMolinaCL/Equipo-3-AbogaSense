@@ -43,7 +43,7 @@
                 </div>
                 {{-- Logo para Pantallas Grandes --}}
                 <div class="col-lg-6 d-none d-lg-block">
-                    <img src="{{ asset('images/abogasense1.png') }}" alt="Logo Abogasense" class="img-fluid rounded-3">
+                    <img src="{{ asset('images/abogasense1.png') }}" alt="Logo Abogasense" class="img-fluid rounded-3" style="max-width: 95%;">
                 </div>
             </div>
             {{-- Sellos de Confianza --}}
