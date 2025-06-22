@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $user = User::firstOrCreate(
-            ['email' => 'superadmin@example.com'],
+            ['email' => 'abogasense@example.com'],
             [
                 'name' => 'Super Administrador',
                 'email_verified_at' => now(),
