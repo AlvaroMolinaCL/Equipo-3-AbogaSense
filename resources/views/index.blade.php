@@ -12,10 +12,10 @@
                     <div class="text-center mb-4 d-block d-lg-none">
                         <img src="{{ asset('images/abogasense2.png') }}" alt="Logo Abogasense" class="logo-mobile">
                     </div>
-                    <h1 class="display-4 fw-bold mb-4" style="color: #4A1D0B;">Potencia tu Despacho Legal con una Página Web
-                        Profesional</h1>
-                    <p class="lead mb-4" style="color: #6B3A2C;">Solución todo-en-uno para gestión de clientes,
-                        agendamiento, pagos y más</p>
+                    <h1 class="display-4 fw-bold mb-4" style="color: #4A1D0B;">Potencia tu presencia digital como abogado
+                    </h1>
+                    <p class="lead fw-bold mb-4" style="color: #6B3A2C;">Solución todo-en-uno para gestión de clientes,
+                        agendamiento, pagos y más.</p>
 
                     <div class="d-flex gap-3 mb-4">
                         <a href="login" class="btn btn-lg text-white" style="background-color: #4A1D0B;">
@@ -33,7 +33,7 @@
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                            <span>Pasarela de Pagos</span>
+                            <span>Pasarela de Pago</span>
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
@@ -43,8 +43,7 @@
                 </div>
                 {{-- Logo para Pantallas Grandes --}}
                 <div class="col-lg-6 d-none d-lg-block">
-                    <img src="{{ asset('images/abogasense1.png') }}" alt="Dashboard para abogados"
-                        class="img-fluid rounded-3">
+                    <img src="{{ asset('images/abogasense1.png') }}" alt="Logo Abogasense" class="img-fluid rounded-3">
                 </div>
             </div>
             {{-- Sellos de Confianza --}}
@@ -68,9 +67,13 @@
     {{-- SECCIÓN 2: Características --}}
     <section class="scroll-section" id="section2" style="background-color: #fff;">
         <div class="container h-100 d-flex flex-column justify-content-center">
-            <div class="section-header">
-                <h2 class="section-title">Todo lo que tu Despacho Legal Necesita</h2>
-                <p class="section-subtitle">Una solución completa diseñada específicamente para abogados</p>
+            <div class="text-center mb-4">
+                <img src="{{ asset('images/abogasense2.png') }}" alt="Logo Abogasense" class="logo-mobile">
+            </div>
+            <div class="text-center mb-5">
+                <h2 class="fw-bold" style="color: #4A1D0B;">Todo lo que tu presencia digital necesita</h2>
+                <p class="lead fw-bold" style="color: #6B3A2C;">Una solución completa diseñada para abogados y sus despachos
+                </p>
             </div>
             <div class="carousel-container">
                 <div class="carousel-track" id="carouselTrack">
@@ -84,9 +87,9 @@
                         </div>
                         <div class="feature-card-body">
                             <ul class="feature-list">
-                                <li><i class="bi bi-check-circle-fill"></i> Reservas online 24/7</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Integración en calendario</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Control de disponibilidad</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Gestión de agenda flexible</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Sistema de reserva para clientes</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Confirmación y control de reservas</li>
                             </ul>
                         </div>
                     </div>
@@ -100,8 +103,8 @@
                         </div>
                         <div class="feature-card-body">
                             <ul class="feature-list">
-                                <li><i class="bi bi-check-circle-fill"></i> Base de datos organizada</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Historial de casos</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Seguimiento de casos</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Notificaciones por correo</li>
                                 <li><i class="bi bi-check-circle-fill"></i> Documentos compartidos</li>
                             </ul>
                         </div>
@@ -116,24 +119,24 @@
                         </div>
                         <div class="feature-card-body">
                             <ul class="feature-list">
-                                <li><i class="bi bi-check-circle-fill"></i> Pasarela de pagos segura</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Confirmación de pagos</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Seguimiento de pagos</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Pasarela de pago segura (Webpay)</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Confirmación inmediata de pagos</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Seguimiento de pagos y cobros</li>
                             </ul>
                         </div>
                     </div>
-                    {{-- Tarjeta 4: Chatbot Legal --}}
+                    {{-- Tarjeta 4: Chatbot Inteligente --}}
                     <div class="feature-card">
                         <div class="feature-card-header">
                             <h4 class="feature-card-title">
                                 <i class="bi bi-robot"></i>
-                                Chatbot Legal
+                                Chatbot Inteligente
                             </h4>
                         </div>
                         <div class="feature-card-body">
                             <ul class="feature-list">
                                 <li><i class="bi bi-check-circle-fill"></i> Respuestas automáticas</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Derivación a abogado</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Personalizable por cada abogado</li>
                                 <li><i class="bi bi-check-circle-fill"></i> Disponible 24/7</li>
                             </ul>
                         </div>
@@ -149,8 +152,8 @@
                         <div class="feature-card-body">
                             <ul class="feature-list">
                                 <li><i class="bi bi-check-circle-fill"></i> Logo y colores corporativos</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Adaptado a tu especialidad</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Optimizado para móviles</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Editor de páginas intuitivo</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Optimizado para todos los dispositivos</li>
                             </ul>
                         </div>
                     </div>
@@ -164,9 +167,9 @@
                         </div>
                         <div class="feature-card-body">
                             <ul class="feature-list">
-                                <li><i class="bi bi-check-circle-fill"></i> Reporte de nuevos usuarios</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Eficiencia de tiempo</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Gestión de documentos</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Panel de control con métricas</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Gráficos de rendimiento</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Reporte de usuarios registrados</li>
                             </ul>
                         </div>
                     </div>
@@ -185,9 +188,12 @@
     {{-- SECCIÓN 3: Testimonios --}}
     <section class="scroll-section" id="section3" style="background-color: #fdf5e5;">
         <div class="container h-100 d-flex flex-column justify-content-center">
+            <div class="text-center mb-4">
+                <img src="{{ asset('images/abogasense2.png') }}" alt="Logo Abogasense" class="logo-mobile">
+            </div>
             <div class="text-center mb-5">
-                <h2 class="fw-bold" style="color: #4A1D0B;">Abogados que Confían en Nosotros</h2>
-                <p class="lead" style="color: #6B3A2C;">Lo que dicen nuestros clientes</p>
+                <h2 class="fw-bold" style="color: #4A1D0B;">Abogados que confían en nosotros</h2>
+                <p class="lead fw-bold" style="color: #6B3A2C;">Lo que dicen nuestros clientes sobre AbogaSense</p>
             </div>
             {{-- Sección para Pantallas Grandes --}}
             <div class="row g-4 justify-content-center d-none d-lg-flex">
@@ -203,9 +209,8 @@
                                 <p class="text-muted small mb-0">Derecho Familiar</p>
                             </div>
                         </div>
-                        <p class="mb-0">"Desde que implementé esta plataforma, mis clientes pueden agendar citas a
-                            cualquier
-                            hora y mis ingresos aumentaron un 30%."</p>
+                        <p class="mb-0">"Desde que implementamos AbogaSense en el despacho, la cantidad de clientes que
+                            atendemos aumentó un 30% respecto al 2024."</p>
                     </div>
                 </div>
                 {{-- Testimonio 2 --}}
@@ -217,11 +222,11 @@
                                 style="width: 60px; height: 60px; object-fit: cover;" alt="Dr. López">
                             <div>
                                 <h5 class="mb-1" style="color: #4A1D0B;">Dr. López</h5>
-                                <p class="text-muted small mb-0">Derecho Corporativo</p>
+                                <p class="text-muted small mb-0">Derecho Civil</p>
                             </div>
                         </div>
-                        <p class="mb-0">"El chatbot responde preguntas básicas de clientes potenciales, lo que me ahorra
-                            horas de llamadas innecesarias cada semana."</p>
+                        <p class="mb-0">"El chatbot responde preguntas cotidianas de mis clientes, lo que me permite
+                            destinar mayor tiempo a mis casos."</p>
                     </div>
                 </div>
                 {{-- Testimonio 3 --}}
@@ -236,8 +241,8 @@
                                 <p class="text-muted small mb-0">Derecho Penal</p>
                             </div>
                         </div>
-                        <p class="mb-0">"La pasarela de pagos ha simplificado enormemente el cobro de honorarios. Mis
-                            clientes aprecian la facilidad de pago en línea."</p>
+                        <p class="mb-0">"La pasarela de pago ha simplificado enormemente el cobro de mis honorarios. Mis
+                            clientes aprecian la facilidad del pago en línea."</p>
                     </div>
                 </div>
             </div>
@@ -258,9 +263,9 @@
                                             <p class="text-muted small mb-0">Derecho Familiar</p>
                                         </div>
                                     </div>
-                                    <p class="mb-0">"Desde que implementé esta plataforma, mis clientes pueden agendar
-                                        citas a cualquier
-                                        hora y mis ingresos aumentaron un 30%."</p>
+                                    <p class="mb-0">"Desde que implementamos AbogaSense en el despacho, la cantidad de
+                                        clientes que
+                                        atendemos aumentó un 30% respecto al 2024."</p>
                                 </div>
                             </div>
                             {{-- Testimonio 2 --}}
@@ -272,12 +277,12 @@
                                             style="width: 60px; height: 60px; object-fit: cover;" alt="Dr. López">
                                         <div>
                                             <h5 class="mb-1" style="color: #4A1D0B;">Dr. López</h5>
-                                            <p class="text-muted small mb-0">Derecho Corporativo</p>
+                                            <p class="text-muted small mb-0">Derecho Civil</p>
                                         </div>
                                     </div>
-                                    <p class="mb-0">"El chatbot responde preguntas básicas de clientes potenciales, lo
-                                        que me ahorra
-                                        horas de llamadas innecesarias cada semana."</p>
+                                    <p class="mb-0">"El chatbot responde preguntas cotidianas de mis clientes, lo que me
+                                        permite
+                                        destinar mayor tiempo a mis casos."</p>
                                 </div>
                             </div>
                             {{-- Testimonio 3 --}}
@@ -292,9 +297,9 @@
                                             <p class="text-muted small mb-0">Derecho Penal</p>
                                         </div>
                                     </div>
-                                    <p class="mb-0">"La pasarela de pagos ha simplificado enormemente el cobro de
+                                    <p class="mb-0">"La pasarela de pago ha simplificado enormemente el cobro de mis
                                         honorarios. Mis
-                                        clientes aprecian la facilidad de pago en línea."</p>
+                                        clientes aprecian la facilidad del pago en línea."</p>
                                 </div>
                             </div>
                         </div>
@@ -324,8 +329,8 @@
     <section class="scroll-section" id="section4" style="background-color: #fff;">
         <div class="container h-100 d-flex flex-column justify-content-center">
             <div class="text-center mb-5">
-                <h2 class="fw-bold" style="color: #4A1D0B;">Planes a Medida para tu Despacho</h2>
-                <p class="lead" style="color: #6B3A2C;">Elige el paquete que mejor se adapte a tus necesidades</p>
+                <h2 class="fw-bold" style="color: #4A1D0B;">Planes a medida</h2>
+                <p class="lead fw-bold" style="color: #6B3A2C;">Elige el plan que mejor se adapte a tus necesidades</p>
             </div>
             {{-- Sección para Pantallas Grandes --}}
             <div class="row g-4 justify-content-center d-none d-lg-flex">
@@ -339,14 +344,15 @@
                             <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $79.990/mes</h3>
                             <ul class="list-unstyled mb-4">
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Página web personalizada</li>
+                                    Plataforma web personalizable</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Agendamiento de citas</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Gestión de clientes</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Pasarela de pagos</li>
-                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de archivos</li>
+                                    Pasarela de pago segura (Webpay)</li>
+                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de documentos
+                                </li>
                                 <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot inteligente</li>
                             </ul>
                             <a href="{{ route('plan.checkout.form', ['plan' => 'basico']) }}"
@@ -367,15 +373,15 @@
                             <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $169.990/mes</h3>
                             <ul class="list-unstyled mb-4">
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Página web personalizada</li>
+                                    Plataforma web personalizable</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Agendamiento de citas</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Gestión de clientes</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Pasarela de pagos integrada</li>
+                                    Pasarela de pago segura (Webpay)</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Gestión de archivos</li>
+                                    Gestión de documentos</li>
                                 <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot inteligente</li>
                             </ul>
                             <a href="{{ route('plan.checkout.form', ['plan' => 'profesional']) }}"
@@ -395,15 +401,15 @@
                             <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $239.990/mes</h3>
                             <ul class="list-unstyled mb-4">
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Página web personalizada</li>
+                                    Plataforma web personalizada</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Agendamiento de citas</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Gestión de clientes</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Pasarela de pagos integrada</li>
+                                    Pasarela de pago segura (Webpay)</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Gestión de archivos</li>
+                                    Gestión de documentos</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Chatbot inteligente</li>
                             </ul>
@@ -429,15 +435,15 @@
                                         <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $79.990/mes</h3>
                                         <ul class="list-unstyled mb-4">
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Página web personalizada</li>
+                                                    style="color: #6B3A2C;"></i> Plataforma web personalizable</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Agendamiento de citas</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Gestión de clientes</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Pasarela de pagos</li>
+                                                    style="color: #6B3A2C;"></i> Pasarela de pago segura (Webpay)</li>
                                             <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de
-                                                archivos</li>
+                                                documentos</li>
                                             <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot
                                                 inteligente</li>
                                         </ul>
@@ -459,15 +465,15 @@
                                         <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $169.990/mes</h3>
                                         <ul class="list-unstyled mb-4">
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Página web personalizada</li>
+                                                    style="color: #6B3A2C;"></i> Plataforma web personalizable</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Agendamiento de citas</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Gestión de clientes</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Pasarela de pagos integrada</li>
+                                                    style="color: #6B3A2C;"></i> Pasarela de pago segura (Webpay)</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Gestión de archivos</li>
+                                                    style="color: #6B3A2C;"></i> Gestión de documentos</li>
                                             <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot
                                                 inteligente</li>
                                         </ul>
@@ -488,15 +494,15 @@
                                         <h3 class="fw-bold mb-3 text-center" style="color: #6B3A2C;">CLP $239.990/mes</h3>
                                         <ul class="list-unstyled mb-4">
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Página web personalizada</li>
+                                                    style="color: #6B3A2C;"></i> Plataforma web personalizable</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Agendamiento de citas</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Gestión de clientes</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Pasarela de pagos integrada</li>
+                                                    style="color: #6B3A2C;"></i> Pasarela de pago segura (Webpay)</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Gestión de archivos</li>
+                                                    style="color: #6B3A2C;"></i> Gestión de documentos</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Chatbot inteligente</li>
                                         </ul>
@@ -533,6 +539,9 @@
     <section class="scroll-section" id="section5" style="background-color: #4A1D0B;">
         <div class="container h-100 d-flex flex-column justify-content-center">
             <div class="row justify-content-center">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold" style="color: #fff;">Preguntas frecuentes</h2>
+                </div>
                 <div class="col-lg-8">
                     <div class="accordion" id="faqAccordion">
                         {{-- FAQ 1 --}}
@@ -541,14 +550,14 @@
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"
                                     style="background-color: #fdf5e5; color: #4A1D0B;">
-                                    ¿Cuánto tiempo toma implementar la solución?
+                                    ¿En cuánto tiempo tendré disponible mi plataforma?
                                 </button>
                             </h3>
                             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                                 data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Normalmente implementamos tu página web profesional en 4-7 días laborales después de
-                                    recibir toda la información necesaria (logo, contenido, fotos, etc.).
+                                <div class="accordion-body" style="background-color: #fdf5e5; color: #4A1D0B;">
+                                    Una vez pagado el plan elegido, tu plataforma estará disponible inmediatamente para que
+                                    la personalices con logo, colores y textos a elección.
                                 </div>
                             </div>
                         </div>
@@ -563,8 +572,9 @@
                             </h3>
                             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                                 data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Sí, ofrecemos servicio de migración de datos sin costo adicional. Solo necesitas
+                                <div class="accordion-body" style="background-color: #fdf5e5; color: #4A1D0B;">
+                                    Sí, ofrecemos servicio de migración de datos sin costo adicional para nuestros clientes.
+                                    Solo necesitas
                                     proporcionarnos tus datos en formato Excel o CSV y nosotros nos encargamos del resto,
                                     manteniendo toda la información segura y organizada.
                                 </div>
@@ -581,9 +591,9 @@
                             </h3>
                             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                                 data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
+                                <div class="accordion-body" style="background-color: #fdf5e5; color: #4A1D0B;">
                                     Contamos con la integración de Webpay, por lo que tus
-                                    clientes podrán pagar con tarjeta de crédito/débito y transferencias bancarias.
+                                    clientes podrán pagar con tarjeta de crédito/débito de forma 100% segura.
                                 </div>
                             </div>
                         </div>
@@ -598,8 +608,9 @@
                             </h3>
                             <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
                                 data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Sí, incluimos una sesión de capacitación virtual de 1 hora con cada implementación,
+                                <div class="accordion-body" style="background-color: #fdf5e5; color: #4A1D0B;">
+                                    Sí, incluimos una sesión de capacitación virtual de 1 hora en cada uno de nuestros
+                                    planes,
                                     además de videotutoriales paso a paso y documentación detallada. También ofrecemos
                                     soporte prioritario por correo para resolver cualquier duda rápidamente.
                                 </div>
@@ -616,10 +627,11 @@
                             </h3>
                             <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
                                 data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Absolutamente. Tu página web y panel de control están completamente optimizados para
-                                    smartphones y tablets. Tus clientes podrán agendar citas, hacer pagos y comunicarse
-                                    desde cualquier dispositivo sin problemas.
+                                <div class="accordion-body" style="background-color: #fdf5e5; color: #4A1D0B;">
+                                    Absolutamente, tu plataforma web están completamente optimizados para
+                                    cualquier tipo de pantalla, ya sea smartphones o tablets. Tus clientes podrán agendar
+                                    citas, realizar pagos y comunicarse
+                                    con tu plataforma desde cualquier dispositivo sin problemas.
                                 </div>
                             </div>
                         </div>
@@ -628,9 +640,12 @@
             </div>
             <div class="flex-grow-1"></div>
             <div class="text-center mt-5">
-                <h3 class="text-white mt-2">Transforma tu Práctica Legal Hoy Mismo</h3>
-                <p class="lead text-white">Más de 200 abogados ya confían en nuestra plataforma para gestionar sus
-                    despachos</p>
+                <h3 class="text-white mt-2">¿Estás listo para dar el salto profesional que necesitabas?</h3>
+                <p class="lead text-white">Sé parte de los más de 200 abogados que ya confían en AbogaSense para
+                    centralizar su trabajo.</p>
+                <a href="#section4" class="btn btn-lg btn-outline-light" style="background-color: #6B3A2C; color: #fff;">
+                    <i class="bi bi-check-circle-fill me-1"></i> Contratar Plan
+                </a>
             </div>
             <div class="flex-grow-1"></div>
         </div>
