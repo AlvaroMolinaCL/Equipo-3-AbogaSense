@@ -6,23 +6,24 @@ use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\AppearanceController;
 use App\Http\Controllers\AvailableSlotController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CaseController;
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ScheduleBatchController;
 use App\Http\Controllers\TenantTextController;
+use App\Http\Controllers\TransbankController;
 use App\Http\Controllers\App\ProfileController;
 use App\Http\Controllers\App\UserController;
+use App\Http\Controllers\Tenant\AppointmentApiController;
+use App\Http\Controllers\Tenant\AppointmentController;
 use App\Http\Controllers\Tenant\RoleController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use App\Http\Controllers\ChatbotController;
-use App\Http\Controllers\ScheduleBatchController;
-use App\Http\Controllers\TransbankController;
-use App\Http\Controllers\Tenant\AppointmentController;
-use App\Http\Controllers\Tenant\AppointmentApiController;
-use App\Http\Controllers\CaseController;
+
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -80,10 +81,8 @@ Route::middleware([
             ->get(['id', 'name']);
     })->name('communes.byRegion');
 
-
     // Rutas solo para usuarios que han iniciado sesión
     Route::middleware(['auth'])->group(function () {
-
         // Sistema de Agendamiento
         Route::middleware(['check.tenant.page.enabled:agenda'])->group(function () {
             // Agenda
@@ -134,15 +133,17 @@ Route::middleware([
 
         // Planes
         Route::get('/plans', [ProductController::class, 'plans'])->name('products.plans');
-        //Casos
+
+        // Casos
         Route::prefix('cases')->group(function () {
-        Route::get('/', [CaseController::class, 'index'])->name('cases.index');
-        Route::get('/create', [CaseController::class, 'create'])->name('cases.create');
-        Route::post('/', [CaseController::class, 'store'])->name('cases.store');
-        Route::get('/{case}/edit', [CaseController::class, 'edit'])->name('cases.edit');
-        Route::put('/{case}', [CaseController::class, 'update'])->name('cases.update');
+            Route::get('/', [CaseController::class, 'index'])->name('cases.index');
+            Route::get('/create', [CaseController::class, 'create'])->name('cases.create');
+            Route::post('/', [CaseController::class, 'store'])->name('cases.store');
+            Route::get('/{case}/edit', [CaseController::class, 'edit'])->name('cases.edit');
+            Route::put('/{case}', [CaseController::class, 'update'])->name('cases.update');
         });
-        // Rutas de Transbank
+
+        // Transbank
         Route::post('/pagar', [TransbankController::class, 'createTransaction'])->name('transbank.create');
         Route::match(['GET', 'POST'], '/webpay/response', [TransbankController::class, 'response'])->name('transbank.response');
         Route::post('/agenda/initiate-payment', [AgendaController::class, 'initiatePayment'])
@@ -150,7 +151,7 @@ Route::middleware([
 
         Route::get('checkout/confirm', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
 
-        // Rutas de checkout
+        // Checkout
         Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
         Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
         Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
@@ -164,7 +165,7 @@ Route::middleware([
         // API para calendario de citas agendadas
         Route::get('/api/appointments', [AppointmentApiController::class, 'index'])->name('appointments.api.index');
 
-        // Rutas para la gestión de textos
+        // Gestión de Textos
         Route::put('/tenant/texts/update', [TenantTextController::class, 'update'])->name('tenant.texts.update');
         Route::get('/panel/textos', [TenantTextController::class, 'edit'])->name('tenant.texts.edit');
 
@@ -177,7 +178,7 @@ Route::middleware([
         Route::get('/available-slots/{slot}/edit', [AvailableSlotController::class, 'edit'])->name('available-slots.edit');
         Route::put('/available-slots/{slot}', [AvailableSlotController::class, 'update'])->name('available-slots.update');
 
-        // Cargas de horarios (schedule_batches)
+        // Cargas de Horarios
         Route::get('/schedule-batches/create', [ScheduleBatchController::class, 'create'])->name('schedule-batches.create');
         Route::post('/schedule-batches', [ScheduleBatchController::class, 'store'])->name('schedule-batches.store');
         Route::get('/schedule-batches/{id}/edit', [ScheduleBatchController::class, 'edit'])->name('schedule-batches.edit');

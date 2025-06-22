@@ -53,8 +53,7 @@
                                             </a>
 
                                             {{-- Eliminar --}}
-                                            <form action="{{ route('domains.destroy', $domain) }}" method="POST"
-                                                onsubmit="return confirm('¿Estás seguro de eliminar este dominio?')">
+                                            <form action="{{ route('domains.destroy', $domain) }}" method="POST" class="form-eliminar-dominio">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
@@ -78,3 +77,29 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('form.form-eliminar-dominio').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡Esta acción no se puede deshacer!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#8C2D18',
+                        cancelButtonColor: '#BF8A49',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+@endpush

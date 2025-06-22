@@ -19,7 +19,6 @@ class TenantController extends Controller
             ->get();
 
         return view('tenants.index', ['tenants' => $tenants]);
-
     }
 
     public function create()
@@ -102,7 +101,7 @@ class TenantController extends Controller
 
         tenancy()->end();
 
-        return redirect()->route('tenants.index');
+        return redirect()->route('tenants.index')->with('success', 'Tenant creado con éxito.');
     }
 
     public function destroy(Tenant $tenant)
@@ -110,7 +109,7 @@ class TenantController extends Controller
         $tenant->domains()->delete();
         $tenant->delete();
 
-        return redirect()->route('tenants.index')->with('success', 'Tenant eliminado con éxito');
+        return redirect()->route('tenants.index')->with('success', 'Tenant eliminado con éxito.');
     }
 
     public function edit(Tenant $tenant)
@@ -210,7 +209,7 @@ class TenantController extends Controller
 
         tenancy()->end();
 
-        return redirect()->route('tenants.index')->with('success', 'Tenant y usuario actualizados correctamente.');
+        return redirect()->route('tenants.index')->with('success', 'Tenant actualizado con éxito.');
     }
 
     public function toggleStatus(Tenant $tenant)
@@ -218,7 +217,6 @@ class TenantController extends Controller
         $tenant->enabled = !$tenant->enabled;
         $tenant->save();
 
-        return redirect()->back()->with('message', 'Estado del tenant actualizado correctamente.');
+        return redirect()->back()->with('success', 'Estado del tenant actualizado con éxito.');
     }
-
 }

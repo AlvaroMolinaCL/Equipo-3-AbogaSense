@@ -95,6 +95,6 @@ class TenantPageController extends Controller
             );
         }
 
-        return redirect()->route('tenants.index', $tenant)->with('success', 'Configuración actualizada correctamente.');
+        return redirect()->route('tenants.index', $tenant)->with('success', 'Configuración del tenant actualizada con éxito.');
     }
 }

@@ -13,7 +13,7 @@
 
         <div class="mb-4">
             <label for="name" class="form-label fw-medium" style="color: #8C2D18;">
-                <i class="bi bi-person me-1"></i>{{ __('Nombre Completo') }}
+                <i class="bi bi-person me-1"></i>{{ __('Nombres') }}
             </label>
             <div class="input-group">
                 <span class="input-group-text" style="background-color: #F5E8D0; color: #8C2D18;">
@@ -23,11 +23,34 @@
                     placeholder="Por ejemplo: Juan Pérez" style="background-color: #FDF5E5;" name="name"
                     value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
             </div>
-            @error('name')
-                <div class="text-danger small mt-2">
-                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
-                </div>
-            @enderror
+        </div>
+
+        <div class="mb-4">
+            <label for="last_name" class="form-label fw-medium" style="color: #8C2D18;">
+                <i class="bi bi-person me-1"></i>{{ __('Apellido Paterno') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text" style="background-color: #F5E8D0; color: #8C2D18;">
+                    <i class="bi bi-fonts"></i>
+                </span>
+                <input id="last_name" type="text" class="form-control border-start-0"
+                    placeholder="Por ejemplo: Juan Pérez" style="background-color: #FDF5E5;" name="last_name"
+                    value="{{ old('last_name', $user->last_name) }}" required autofocus autocomplete="last_name">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="second_last_name" class="form-label fw-medium" style="color: #8C2D18;">
+                <i class="bi bi-person me-1"></i>{{ __('Apellido Materno') }}
+            </label>
+            <div class="input-group">
+                <span class="input-group-text" style="background-color: #F5E8D0; color: #8C2D18;">
+                    <i class="bi bi-fonts"></i>
+                </span>
+                <input id="second_last_name" type="text" class="form-control border-start-0"
+                    placeholder="Por ejemplo: Juan Pérez" style="background-color: #FDF5E5;" name="second_last_name"
+                    value="{{ old('second_last_name', $user->second_last_name) }}" required autofocus autocomplete="second_last_name">
+            </div>
         </div>
 
         <div class="mb-4">
@@ -42,11 +65,6 @@
                     placeholder="Por ejemplo: miemail@gmail.com" id="email" name="email"
                     value="{{ old('email', $user->email) }}" required autocomplete="email">
             </div>
-            @error('email')
-                <div class="text-danger small mt-2">
-                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
-                </div>
-            @enderror
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div class="mt-3 p-3" style="background-color: #FDF5E5; border-radius: 8px;">
@@ -83,3 +101,62 @@
         </div>
     </form>
 </section>
+
+@push('scripts')
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const profileForm = document.querySelector('form[action="{{ route('profile.update') }}"]');
+        if (profileForm) {
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(profileForm);
+                formData.append('_method', 'PATCH');
+                fetch(profileForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(async response => {
+                    if (!response.ok) {
+                        const data = await response.json();
+                        if (data.errors) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                html: Object.values(data.errors).map(arr => arr.join('<br>')).join('<br>'),
+                                confirmButtonColor: '#8C2D18'
+                            });
+                        } else {
+                            throw new Error();
+                        }
+                    } else {
+                        const data = await response.json();
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Éxito!',
+                                text: data.success,
+                                confirmButtonColor: '#8C2D18'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    }
+                })
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrió un error inesperado.',
+                        confirmButtonColor: '#8C2D18'
+                    });
+                });
+            });
+        }
+    });
+    </script>
+@endpush

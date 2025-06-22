@@ -57,7 +57,7 @@ class UserController extends Controller
         $user = User::create($validateData);
         $user->roles()->sync($request->input('roles'));
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario creado con éxito.');
     }
 
     public function edit(User $user)
@@ -82,14 +82,13 @@ class UserController extends Controller
         $user->update($validateData);
         $user->roles()->sync($request->input('roles'));
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado con éxito.');
     }
 
     public function destroy(\App\Models\User $user)
     {
         $user->delete();
 
-        return redirect()->route('users.index')
-            ->with('success', 'Usuario eliminado correctamente.');
+        return redirect()->route('users.index')->with('success', 'Usuario eliminado con éxito.');
     }
 }

@@ -3,17 +3,16 @@
 use App\Http\Controllers\AdminSuperAdminRequestController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DomainController;
+use App\Http\Controllers\PlanCheckoutController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicSuperAdminRequestController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SuperAdminInvitationController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\TenantPageController;
-use App\Http\Controllers\Admin\TokenController;
 use App\Http\Controllers\App\UserController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PlanCheckoutController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 /*
@@ -40,17 +39,16 @@ Route::post('/solicitar-superadmin', [PublicSuperAdminRequestController::class, 
 Route::get('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'form']);
 Route::post('/registro-superadmin/{token}', [SuperAdminInvitationController::class, 'register']);
 
-
+// Checkout de Planes
 Route::prefix('planes')->group(function () {
     Route::get('/plan-checkout/{plan}', [PlanCheckoutController::class, 'showForm'])->name('plan.checkout.form');
     Route::post('/pagar', [PlanCheckoutController::class, 'processPayment'])->name('plan.checkout.pay');
-
-    // Ruta única que acepta GET y POST
     Route::match(['get', 'post'], '/respuesta', [PlanCheckoutController::class, 'handleResponse'])
         ->name('plan.checkout.response')
         ->withoutMiddleware(['auth']);
 });
 
+// Verificación de Subdominio
 Route::get('/subdomain/check', function (Request $request) {
     $subdomain = Str::slug($request->query('subdomain'));
     $exists = \App\Models\Tenant::where('id', $subdomain)->exists();
@@ -93,14 +91,12 @@ Route::middleware(['auth', 'verified', 'role:Super Admin'])->group(function () {
     Route::resource('users', UserController::class);
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
 
-
     // Gestión de Roles
     Route::resource('roles', RoleController::class);
 
     // Gestión de Solicitudes de Super Administrador
     Route::get('solicitudes-superadmin', [AdminSuperAdminRequestController::class, 'index']);
     Route::post('solicitudes-superadmin/{id}/aprobar', [AdminSuperAdminRequestController::class, 'approve'])->name('admin.solicitudes.aprobar');
-
 });
 
 require __DIR__ . '/auth.php';

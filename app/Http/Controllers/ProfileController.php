@@ -14,24 +14,23 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-public function edit(Request $request): View
-{
-    if (tenant()) {
-        return view(tenantView('profile.edit'), [
-            'user' => $request->user(),
-        ]);
-    } else {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+    public function edit(Request $request): View
+    {
+        if (tenant()) {
+            return view(tenantView('profile.edit'), [
+                'user' => $request->user(),
+            ]);
+        } else {
+            return view('profile.edit', [
+                'user' => $request->user(),
+            ]);
+        }
     }
-}
-
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request)
     {
         $request->user()->fill($request->validated());
 
@@ -41,7 +40,11 @@ public function edit(Request $request): View
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        if ($request->ajax()) {
+            return response()->json(['success' => 'Perfil actualizado con éxito.']);
+        }
+
+        return Redirect::route('profile.edit')->with('success', 'Perfil actualizado con éxito.');
     }
 
     /**

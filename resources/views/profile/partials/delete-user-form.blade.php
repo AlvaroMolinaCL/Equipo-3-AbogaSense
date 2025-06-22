@@ -51,11 +51,6 @@
                                 <i class="bi bi-eye"></i>
                             </button>
                         </div>
-                        @error('password', 'userDeletion')
-                            <div class="text-danger small mt-2">
-                                <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
-                            </div>
-                        @enderror
                     </div>
                 </div>
 
@@ -87,4 +82,53 @@
             }
         }
     </script>
+
+    @push('scripts')
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteForm = document.querySelector('#confirmUserDeletion form[action="{{ route('profile.destroy') }}"]');
+            if (deleteForm) {
+                deleteForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(deleteForm);
+                    formData.append('_method', 'DELETE');
+                    fetch(deleteForm.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: formData
+                    })
+                    .then(async response => {
+                        if (!response.ok) {
+                            const data = await response.json();
+                            if (data.errors) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    html: Object.values(data.errors).map(arr => arr.join('<br>')).join('<br>'),
+                                    confirmButtonColor: '#8C2D18'
+                                });
+                            } else {
+                                throw new Error();
+                            }
+                        } else {
+                            window.location.href = '/';
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Ocurrió un error inesperado.',
+                            confirmButtonColor: '#8C2D18'
+                        });
+                    });
+                });
+            }
+        });
+        </script>
+    @endpush
 </section>

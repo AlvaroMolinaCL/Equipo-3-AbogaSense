@@ -23,11 +23,6 @@
                     <i class="bi bi-eye"></i>
                 </button>
             </div>
-            @error('current_password', 'updatePassword')
-                <div class="text-danger small mt-2">
-                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
-                </div>
-            @enderror
         </div>
 
         <div class="mb-4">
@@ -46,11 +41,6 @@
                     <i class="bi bi-eye"></i>
                 </button>
             </div>
-            @error('password', 'updatePassword')
-                <div class="text-danger small mt-2">
-                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
-                </div>
-            @enderror
         </div>
 
         <div class="mb-4">
@@ -69,11 +59,6 @@
                     <i class="bi bi-eye"></i>
                 </button>
             </div>
-            @error('password_confirmation', 'updatePassword')
-                <div class="text-danger small mt-2">
-                    <i class="bi bi-exclamation-circle me-1"></i>{{ $message }}
-                </div>
-            @enderror
         </div>
 
         <div class="mt-4 pt-3 border-top text-center">
@@ -107,3 +92,62 @@
         }
     </script>
 </section>
+
+@push('scripts')
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordForm = document.querySelector('form[action="{{ route('password.update') }}"]');
+        if (passwordForm) {
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(passwordForm);
+                formData.append('_method', 'PUT');
+                fetch(passwordForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: formData
+                })
+                .then(async response => {
+                    if (!response.ok) {
+                        const data = await response.json();
+                        if (data.errors) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                html: Object.values(data.errors).map(arr => arr.join('<br>')).join('<br>'),
+                                confirmButtonColor: '#8C2D18'
+                            });
+                        } else {
+                            throw new Error();
+                        }
+                    } else {
+                        const data = await response.json();
+                        if (data.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Éxito!',
+                                text: data.success,
+                                confirmButtonColor: '#8C2D18'
+                            }).then(() => {
+                                passwordForm.reset();
+                            });
+                        }
+                    }
+                })
+                .catch(() => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrió un error inesperado.',
+                        confirmButtonColor: '#8C2D18'
+                    });
+                });
+            });
+        }
+    });
+    </script>
+@endpush

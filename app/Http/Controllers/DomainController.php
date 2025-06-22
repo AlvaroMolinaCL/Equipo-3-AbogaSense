@@ -32,14 +32,14 @@ class DomainController extends Controller
             'tenant_id' => $request->input('tenant'),
         ]);
 
-        return redirect()->route('domains.index');
+        return redirect()->route('domains.index')->with('success', 'Dominio creado con éxito.');
     }
 
     public function destroy(Domain $domain)
     {
         $domain->delete();
 
-        return redirect()->route('domains.index')->with('success', 'Dominio eliminado con éxito');
+        return redirect()->route('domains.index')->with('success', 'Dominio eliminado con éxito.');
     }
 
     public function edit(Domain $domain)
@@ -60,6 +60,6 @@ class DomainController extends Controller
             'tenant_id' => $request->input('tenant'),
         ]);
 
-        return redirect()->route('domains.index');
+        return redirect()->route('domains.index')->with('success', 'Dominio actualizado con éxito.');
     }
 }
