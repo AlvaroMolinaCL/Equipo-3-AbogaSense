@@ -19,74 +19,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    @yield('styles')
+
     <style>
         :root {
             --primary-color: #6B3A2C;
-            /* Color principal (marrón) */
             --primary-light: #F1E8E5;
-            /* Versión clara para fondos */
             --primary-dark: #5A3024;
-            /* Versión oscura para hover */
             --text-dark: #333333;
-            /* Texto principal */
             --text-light: #6C757D;
-            /* Texto secundario */
             --bg-light: #F9F5F3;
-            /* Fondo de sección */
             --white: #FFFFFF;
-            /* Blanco puro */
         }
 
-        /* Estructura principal */
-        .features-carousel {
-            padding: 80px 0;
-            background-color: var(--bg-light);
-            position: relative;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Encabezado */
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title {
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .section-subtitle {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Contenedor del carrusel */
         .carousel-container {
             position: relative;
-            padding: 0 60px;
+            padding: 40px 60px 40px 60px;
+            overflow: hidden;
         }
 
-        /* Track (contiene las cards) */
         .carousel-track {
             display: flex;
             transition: transform 0.5s ease-in-out;
             gap: 25px;
-            padding: 10px 0;
+            justify-content: flex-start;
         }
 
-        /* Cards individuales */
         .feature-card {
-            flex: 0 0 calc(33.333% - 17px);
+            flex: 0 0 auto;
+            max-width: none;
+            min-width: 0;
             background: var(--white);
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(107, 58, 44, 0.08);
@@ -100,7 +62,6 @@
             box-shadow: 0 12px 25px rgba(107, 58, 44, 0.15);
         }
 
-        /* Encabezado de card */
         .feature-card-header {
             padding: 22px;
             background-color: var(--primary-light);
@@ -117,7 +78,6 @@
             gap: 12px;
         }
 
-        /* Cuerpo de card */
         .feature-card-body {
             padding: 22px;
         }
@@ -146,7 +106,6 @@
             font-size: 1.1rem;
         }
 
-        /* Botones de navegación */
         .carousel-nav {
             position: absolute;
             top: 50%;
@@ -189,7 +148,6 @@
             box-shadow: none;
         }
 
-        /* Indicadores */
         .carousel-indicators {
             display: flex;
             justify-content: center;
@@ -211,28 +169,21 @@
             transform: scale(1.2);
         }
 
-        /* Responsive */
         @media (max-width: 992px) {
             .feature-card {
-                flex: 0 0 calc(50% - 13px);
-            }
-
-            .section-title {
-                font-size: 1.8rem;
+                flex: 0 0 auto;
+                max-width: none;
             }
         }
 
         @media (max-width: 768px) {
-            .features-carousel {
-                padding: 60px 0;
-            }
-
             .carousel-container {
-                padding: 0 40px;
+                padding: 40px 60px 40px 60px;
             }
 
             .feature-card {
-                flex: 0 0 100%;
+                flex: 0 0 auto;
+                max-width: none;
             }
 
             .carousel-nav {
@@ -243,15 +194,7 @@
 
         @media (max-width: 576px) {
             .carousel-container {
-                padding: 0 30px;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
-            }
-
-            .section-subtitle {
-                font-size: 1rem;
+                padding: 40px 60px 40px 60px;
             }
         }
     </style>
@@ -259,7 +202,6 @@
 
 <body class="@yield('body-class', 'theme-light')">
     <div class="min-h-screen">
-
         {{-- Aquí insertamos la navbar si la vista desea incluirla --}}
         @hasSection('navbar')
             @yield('navbar')
@@ -271,40 +213,72 @@
         </main>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const track = document.getElementById('carouselTrack');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const indicatorsContainer = document.getElementById('indicators');
-
-            const cards = document.querySelectorAll('.feature-card');
+            const cards = Array.from(document.querySelectorAll('.feature-card'));
             const cardCount = cards.length;
-            const cardsPerView = 3;
-            const groupCount = Math.ceil(cardCount / cardsPerView);
 
+            let cardsPerView = 3;
+            let groupCount = 0;
             let currentGroup = 0;
 
-            // Crear indicadores
-            for (let i = 0; i < groupCount; i++) {
-                const indicator = document.createElement('div');
-                indicator.classList.add('indicator');
-                if (i === 0) indicator.classList.add('active');
-                indicator.addEventListener('click', () => goToGroup(i));
-                indicatorsContainer.appendChild(indicator);
+            function getCardsPerView() {
+                if (window.innerWidth <= 768) {
+                    return 1;
+                } else if (window.innerWidth <= 992) {
+                    return 2;
+                } else {
+                    return 3;
+                }
             }
 
-            // Actualizar carrusel
-            function updateCarousel() {
-                const cardWidth = cards[0].offsetWidth + 20; // Incluye el gap
-                const offset = -currentGroup * cardsPerView * cardWidth;
-                track.style.transform = `translateX(${offset}px)`;
+            function updateIndicators() {
+                indicatorsContainer.innerHTML = '';
+                for (let i = 0; i < groupCount; i++) {
+                    const indicator = document.createElement('div');
+                    indicator.classList.add('indicator');
+                    if (i === currentGroup) indicator.classList.add('active');
+                    indicator.addEventListener('click', () => goToGroup(i));
+                    indicatorsContainer.appendChild(indicator);
+                }
+            }
 
-                // Actualizar indicadores
-                document.querySelectorAll('.indicator').forEach((ind, index) => {
-                    ind.classList.toggle('active', index === currentGroup);
+            function updateCarousel() {
+                cardsPerView = getCardsPerView();
+                groupCount = Math.ceil(cardCount / cardsPerView);
+
+                if (currentGroup > groupCount - 1) currentGroup = groupCount - 1;
+
+                const container = track.parentElement;
+                const style = window.getComputedStyle(container);
+                const paddingLeft = parseFloat(style.paddingLeft) || 0;
+                const paddingRight = parseFloat(style.paddingRight) || 0;
+                const containerWidth = container.offsetWidth - paddingLeft - paddingRight;
+
+                const trackStyle = window.getComputedStyle(track);
+                const gap = parseFloat(trackStyle.gap) || 0;
+                const totalGap = gap * (cardsPerView - 1);
+
+                const cardsArea = containerWidth - totalGap;
+                const cardWidth = cardsArea / cardsPerView;
+
+                cards.forEach(card => {
+                    card.style.minWidth = card.style.maxWidth = cardWidth + 'px';
                 });
 
-                // Manejar estado de los botones
+                let offset;
+                if (currentGroup === groupCount - 1 && cardCount % cardsPerView !== 0) {
+                    offset = -((cardCount - cardsPerView) * (cardWidth + gap));
+                } else {
+                    offset = -(currentGroup * cardsPerView * (cardWidth + gap));
+                }
+                track.style.transform = `translateX(${offset}px)`;
+
+                updateIndicators();
+
                 prevBtn.disabled = currentGroup === 0;
                 nextBtn.disabled = currentGroup === groupCount - 1;
             }
@@ -314,7 +288,6 @@
                 updateCarousel();
             }
 
-            // Event listeners para botones
             prevBtn.addEventListener('click', () => {
                 if (currentGroup > 0) {
                     currentGroup--;
@@ -329,13 +302,13 @@
                 }
             });
 
-            // Manejar redimensionamiento
             window.addEventListener('resize', updateCarousel);
 
-            // Inicializar
             updateCarousel();
         });
     </script>
+
+    @yield('scripts')
 </body>
 
 </html>
