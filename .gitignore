@@ -11,6 +11,7 @@
 /public/images/services
 /public/storage
 /public/tenancy
+/storage/tenant_*
 /storage/*.key
 /vendor
 .env
