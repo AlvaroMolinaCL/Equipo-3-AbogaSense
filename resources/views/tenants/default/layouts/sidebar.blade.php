@@ -118,12 +118,15 @@
                 <span><i class="bi bi-people me-2"></i> Usuarios</span>
             </a>
         </li>
+
         {{-- Casos --}}
-        <li class="nav-item">
-            <a class="nav-link {{ Route::is('cases.index') ? 'active' : '' }}" href="{{ route('cases.index') }}"
-                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">
-                <span><i class="bi bi-person-check me-2"></i> Casos</span>
+        <li>
+            <a class="nav-link {{ Route::is('cases.index') ? 'active' : '' }}"
+               href="{{ route('cases.index', ['tenantId' => request()->route('tenantId')]) }}"
+               style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">
+               <span><i class="bi bi-person-check me-2"></i> Casos</span>
             </a>
+
         </li>
     </ul>
 

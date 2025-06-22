@@ -22,7 +22,7 @@ use App\Http\Controllers\ScheduleBatchController;
 use App\Http\Controllers\TransbankController;
 use App\Http\Controllers\Tenant\AppointmentController;
 use App\Http\Controllers\Tenant\AppointmentApiController;
-
+use App\Http\Controllers\CaseController;
 /*
 |--------------------------------------------------------------------------
 | Tenant Routes
@@ -134,7 +134,14 @@ Route::middleware([
 
         // Planes
         Route::get('/plans', [ProductController::class, 'plans'])->name('products.plans');
-
+        //Casos
+        Route::prefix('cases')->group(function () {
+        Route::get('/', [CaseController::class, 'index'])->name('cases.index');
+        Route::get('/create', [CaseController::class, 'create'])->name('cases.create');
+        Route::post('/', [CaseController::class, 'store'])->name('cases.store');
+        Route::get('/{case}/edit', [CaseController::class, 'edit'])->name('cases.edit');
+        Route::put('/{case}', [CaseController::class, 'update'])->name('cases.update');
+        });
         // Rutas de Transbank
         Route::post('/pagar', [TransbankController::class, 'createTransaction'])->name('transbank.create');
         Route::match(['GET', 'POST'], '/webpay/response', [TransbankController::class, 'response'])->name('transbank.response');
