@@ -92,6 +92,7 @@ Route::middleware([
 
             // Citas Agendadas
             Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+            Route::get('/appointments/{id}', [AppointmentController::class, 'show'])->name('appointments.show');
 
             // Confirmación de Cita
             Route::get('/agenda/confirmar', [AgendaController::class, 'confirm'])->name('tenant.agenda.confirm');
