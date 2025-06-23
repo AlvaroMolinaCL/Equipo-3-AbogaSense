@@ -14,7 +14,7 @@
                 <!-- Logo -->
                 <div class="text-center py-3"
                     style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }};">
-                    <img src="{{ asset(tenantSetting('logo_path_1', 'logo/default1.png')) }}" alt="Logo del despacho"
+                    <img src="{{ asset(tenantSetting('logo_path_1', '/images/logo/Logo_1_(Predeterminado).png')) }}" alt="Logo del despacho"
                         style="height: 100px;" class="img-fluid">
                 </div>
 

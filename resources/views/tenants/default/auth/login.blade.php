@@ -16,7 +16,7 @@
                         <div class="col-md-6 d-none d-md-block p-0"
                             style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }};">
                             <div class="h-100 w-100 d-flex align-items-center justify-content-center">
-                                <img src="{{ asset(tenantSetting('logo_path_1', 'logo/default1.png')) }}"
+                                <img src="{{ asset(tenantSetting('logo_path_1', '/images/logo/Logo_1_(Predeterminado).png')) }}"
                                     alt="Logo del despacho" class="img-fluid logo-img">
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                     <div class="text-center"
                                         style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }}; border-radius: 12px;">
                                         <img class="py-3"
-                                            src="{{ asset(tenantSetting('logo_path_1', 'logo/default2.png')) }}"
+                                            src="{{ asset(tenantSetting('logo_path_2', '/images/logo/Logo_2_(Predeterminado).png')) }}"
                                             alt="Logo móvil" style="height: 100px;" class="img-fluid mb-2">
                                     </div>
                                     <div class="p-3 text-center">
@@ -68,9 +68,6 @@
                                             class="form-control @error('email') is-invalid @enderror"
                                             placeholder="Por ejemplo: miemail@gmail.com" name="email"
                                             value="{{ old('email') }}" required autofocus>
-                                        @error('email')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
@@ -78,9 +75,6 @@
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror"
                                             placeholder="Ingrese su contraseña" name="password" required>
-                                        @error('password')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </div>
 
                                     <div class="mb-3 form-check">

@@ -5,16 +5,14 @@
 @section('body-class', 'theme-light')
 
 @section('content')
-    <div class="container py-3 d-flex align-items-center justify-content-center"
-        style="min-height: 100vh; margin-top: 40px;">
+    <div class="container py-3 d-flex align-items-center justify-content-center" style="min-height: 100vh; margin-top: 40px;">
         <div class="col-md-8 col-10 col-lg-6">
             <div class="shadow-lg rounded-4 overflow-hidden"
                 style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }}; border-left: 10px solid {{ tenantSetting('navbar_color_1', '#6B3A2C') }};">
 
                 {{-- Logo arriba del formulario --}}
-                <div class="text-center py-3"
-                    style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }};">
-                    <img src="{{ asset(tenantSetting('logo_path_1', 'logo/default1.png')) }}" alt="Logo del despacho"
+                <div class="text-center py-3" style="background-color: {{ tenantSetting('background_color_1', '#fdf5e5') }};">
+                    <img src="{{ asset(tenantSetting('logo_path_1', '/images/logo/Logo_1_(Predeterminado).png')) }}" alt="Logo del despacho"
                         style="height: 100px;" class="img-fluid">
                 </div>
 
@@ -40,44 +38,35 @@
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombres <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                placeholder="Por ejemplo: Alejandra Andrea" id="name" name="name" value="{{ old('name') }}"
-                                required autofocus>
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                                placeholder="Por ejemplo: Alejandra Andrea" id="name" name="name"
+                                value="{{ old('name') }}" required autofocus>
                         </div>
 
                         {{-- Apellido Paterno --}}
                         <div class="mb-3">
-                            <label for="last_name" class="form-label">Apellido Paterno <span class="text-danger">*</span></label>
+                            <label for="last_name" class="form-label">Apellido Paterno <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('last_name') is-invalid @enderror"
                                 placeholder="Por ejemplo: Pereira" id="last_name" name="last_name"
                                 value="{{ old('last_name') }}" required>
-                            @error('last_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         {{-- Apellido Materno --}}
                         <div class="mb-3">
-                            <label for="second_last_name" class="form-label">Apellido Materno <span class="text-danger">*</span></label>
+                            <label for="second_last_name" class="form-label">Apellido Materno <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('second_last_name') is-invalid @enderror"
                                 placeholder="Por ejemplo: Soto" id="second_last_name" name="second_last_name"
                                 value="{{ old('second_last_name') }}" required>
-                            @error('second_last_name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         {{-- Email --}}
                         <div class="mb-3">
-                            <label for="email" class="form-label">Correo Electrónico <span class="text-danger">*</span></label>
+                            <label for="email" class="form-label">Correo Electrónico <span
+                                    class="text-danger">*</span></label>
                             <input type="email" class="form-control @error('email') is-invalid @enderror"
                                 placeholder="Por ejemplo: miemail@gmail.com" id="email" name="email"
                                 value="{{ old('email') }}" required>
-                            @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         {{-- Teléfono --}}
@@ -86,36 +75,28 @@
                             <input type="text" class="form-control @error('phone_number') is-invalid @enderror"
                                 placeholder="Por ejemplo: 912345678" id="phone_number" name="phone_number" required
                                 value="{{ old('phone_number') }}">
-                            @error('phone_number')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         {{-- Género --}}
                         <div class="mb-3">
                             <label for="genre_id" class="form-label">Género</label>
-                            <select class="form-select @error('genre_id') is-invalid @enderror" id="genre_id" name="genre_id">
+                            <select class="form-select @error('genre_id') is-invalid @enderror" id="genre_id"
+                                name="genre_id">
                                 <option value="">Seleccione...</option>
-                                @foreach($genres as $genre)
-                                    <option value="{{ $genre->id }}" {{ old('genre_id') == $genre->id ? 'selected' : '' }}>
+                                @foreach ($genres as $genre)
+                                    <option value="{{ $genre->id }}"
+                                        {{ old('genre_id') == $genre->id ? 'selected' : '' }}>
                                         {{ $genre->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('genre_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
-
 
                         {{-- Fecha de Nacimiento --}}
                         <div class="mb-3">
                             <label for="birth_date" class="form-label">Fecha de Nacimiento</label>
                             <input type="date" class="form-control @error('birth_date') is-invalid @enderror"
                                 id="birth_date" name="birth_date" value="{{ old('birth_date') }}">
-                            @error('birth_date')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         {{-- Región --}}
@@ -125,14 +106,12 @@
                                 id="residence_region_id" name="residence_region_id">
                                 <option value="">Seleccione una región</option>
                                 @foreach ($regions as $region)
-                                    <option value="{{ $region->id }}" {{ old('residence_region_id') == $region->id ? 'selected' : '' }}>
+                                    <option value="{{ $region->id }}"
+                                        {{ old('residence_region_id') == $region->id ? 'selected' : '' }}>
                                         {{ $region->name }}
                                     </option>
                                 @endforeach
                             </select>
-                            @error('residence_region_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         {{-- Comuna --}}
@@ -142,15 +121,12 @@
                                 id="residence_commune_id" name="residence_commune_id">
                                 <option value="">Seleccione una comuna</option>
                             </select>
-                            @error('residence_commune_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
-
 
                         {{-- Contraseña --}}
                         <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña <span class="text-danger">*</span></label>
+                            <label for="password" class="form-label">Contraseña <span
+                                    class="text-danger">*</span></label>
                             <input type="password" class="form-control @error('password') is-invalid @enderror"
                                 placeholder="Ingrese una contraseña segura" id="password" name="password" required>
                             @error('password')
@@ -160,7 +136,8 @@
 
                         {{-- Confirmar Contraseña --}}
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Confirmar Contraseña <span class="text-danger">*</span></label>
+                            <label for="password_confirmation" class="form-label">Confirmar Contraseña <span
+                                    class="text-danger">*</span></label>
                             <input type="password" class="form-control"
                                 placeholder="Confirme la contraseña ingresada anteriormente" id="password_confirmation"
                                 name="password_confirmation" required>
@@ -194,33 +171,33 @@
             </div>
         </div>
     </div>
-    <script>
-document.getElementById('residence_region_id').addEventListener('change', function() {
-    const regionId = this.value;
-    const communeSelect = document.getElementById('residence_commune_id');
-    
-    // Limpia las comunas actuales
-    communeSelect.innerHTML = '<option value="">Cargando comunas...</option>';
 
-    if (regionId) {
-        fetch(`/communes-by-region/${regionId}`)
-            .then(response => response.json())
-            .then(communes => {
+    <script>
+        document.getElementById('residence_region_id').addEventListener('change', function() {
+            const regionId = this.value;
+            const communeSelect = document.getElementById('residence_commune_id');
+
+            communeSelect.innerHTML = '<option value="">Cargando comunas...</option>';
+
+            if (regionId) {
+                fetch(`/communes-by-region/${regionId}`)
+                    .then(response => response.json())
+                    .then(communes => {
+                        communeSelect.innerHTML = '<option value="">Seleccione una comuna</option>';
+                        communes.forEach(commune => {
+                            const option = document.createElement('option');
+                            option.value = commune.id;
+                            option.textContent = commune.name;
+                            communeSelect.appendChild(option);
+                        });
+                    })
+                    .catch(() => {
+                        communeSelect.innerHTML = '<option value="">Error al cargar comunas</option>';
+                    });
+            } else {
                 communeSelect.innerHTML = '<option value="">Seleccione una comuna</option>';
-                communes.forEach(commune => {
-                    const option = document.createElement('option');
-                    option.value = commune.id;
-                    option.textContent = commune.name;
-                    communeSelect.appendChild(option);
-                });
-            })
-            .catch(() => {
-                communeSelect.innerHTML = '<option value="">Error al cargar comunas</option>';
-            });
-    } else {
-        communeSelect.innerHTML = '<option value="">Seleccione una comuna</option>';
-    }
-});
-</script>
+            }
+        });
+    </script>
 
 @endsection
