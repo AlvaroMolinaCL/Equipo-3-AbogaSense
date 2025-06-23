@@ -32,7 +32,6 @@
                                     <h3 style="color: #4A1D0B;">
                                         <i class="bi bi-shield-lock-fill me-2"></i> Panel Administrativo
                                     </h3>
-                                    <p class="text-muted">Acceso Exclusivo para Super Administradores</p>
                                 </div>
                             </div>
 
@@ -41,7 +40,6 @@
                                 <h3 style="color: #4A1D0B;">
                                     <i class="bi bi-shield-lock-fill me-2"></i> Panel Administrativo
                                 </h3>
-                                <p class="text-muted">Acceso Exclusivo para Super Administradores</p>
                             </div>
 
                             @if (session('error'))

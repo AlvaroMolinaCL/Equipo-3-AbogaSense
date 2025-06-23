@@ -146,7 +146,7 @@
 
                 <div class="checkout-card card mb-4">
                     <div class="card-header text-center text-white">
-                        <h3 class="mb-0"><i class="fas fa-shopping-bag me-2"></i>Resumen de tu Compra</h3>
+                        <h3 class="mb-0"><i class="fas fa-shopping-bag me-2"></i>Resumen de tu compra</h3>
                     </div>
 
                     <div class="card-body p-4 p-md-5">
@@ -180,7 +180,7 @@
                                     <span class="input-group-text bg-white"><i
                                             class="fas fa-user text-muted"></i></span>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        id="name" name="name" value="{{ old('name') }}" placeholder="Ej: María González"
+                                        id="name" name="name" value="{{ old('name') }}" placeholder="Por ejemplo: Andrea González"
                                         required>
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -195,7 +195,7 @@
                                             class="fas fa-envelope text-muted"></i></span>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror"
                                         id="email" name="email" value="{{ old('email') }}"
-                                        placeholder="Ej: tuemail@example.com" required>
+                                        placeholder="Por ejemplo: tuemail@example.com" required>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -207,8 +207,9 @@
                                 <div class="input-group">
                                     <span class="input-group-text bg-white"><i
                                             class="fas fa-phone text-muted"></i></span>
+                                <span class="input-group-text">+56</span>
                                     <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                        id="phone" name="phone" value="{{ old('phone') }}" placeholder="+56912345678"
+                                        id="phone" name="phone" value="{{ old('phone') }}" placeholder="912345678"
                                         required>
                                     @error('phone')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -223,7 +224,8 @@
                                             class="fas fa-map-marker-alt text-muted"></i></span>
                                     <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
                                         id="subdomain" name="subdomain" value="{{ old('subdomain') }}"
-                                        placeholder="Ej: miempresa" required>
+                                        placeholder="Por ejemplo: mibuffet (quedará como mibuffet.{{ config('app.domain') }})" required>
+                                    <span class="input-group-text">.{{ config('app.domain') }}</span>
                                     @error('subdomain')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

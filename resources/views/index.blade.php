@@ -15,14 +15,20 @@
                     <h1 class="display-4 fw-bold mb-4" style="color: #4A1D0B;">Potencia tu presencia digital como abogado
                     </h1>
                     <p class="lead fw-bold mb-4" style="color: #6B3A2C;">Solución todo-en-uno para gestión de clientes,
-                        agendamiento, pagos y más.</p>
+                        agendamiento, pagos y más. ¡Te invitamos a conocer AbogaSense!</p>
 
                     <div class="d-flex gap-3 mb-4">
-                        <a href="login" class="btn btn-lg text-white" style="background-color: #4A1D0B;">
-                            <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
-                        </a>
-                        <a href="#section2" class="btn btn-lg btn-outline-dark">
-                            <i class="bi bi-star-fill me-1"></i> Funciones
+                        @if (Auth::check())
+                            <a href="dashboard" class="btn btn-lg text-white" style="background-color: #4A1D0B;">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Ir a Panel de Control
+                            </a>
+                        @else
+                            <a href="login" class="btn btn-lg text-white" style="background-color: #4A1D0B;">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Iniciar Sesión
+                            </a>
+                        @endif
+                        <a href="#section4" class="btn btn-lg btn-outline-dark">
+                            <i class="bi bi-star-fill me-1"></i> Contratar Plan
                         </a>
                     </div>
 
@@ -105,7 +111,7 @@
                             <ul class="feature-list">
                                 <li><i class="bi bi-check-circle-fill"></i> Seguimiento de casos</li>
                                 <li><i class="bi bi-check-circle-fill"></i> Notificaciones por correo</li>
-                                <li><i class="bi bi-check-circle-fill"></i> Documentos compartidos</li>
+                                <li><i class="bi bi-check-circle-fill"></i> Archivos compartidos</li>
                             </ul>
                         </div>
                     </div>
@@ -351,7 +357,7 @@
                                     Gestión de clientes</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Pasarela de pago segura (Webpay)</li>
-                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de documentos
+                                <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de archivos
                                 </li>
                                 <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot inteligente</li>
                             </ul>
@@ -381,7 +387,7 @@
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Pasarela de pago segura (Webpay)</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Gestión de documentos</li>
+                                    Gestión de archivos</li>
                                 <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot inteligente</li>
                             </ul>
                             <a href="{{ route('plan.checkout.form', ['plan' => 'profesional']) }}"
@@ -409,7 +415,7 @@
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Pasarela de pago segura (Webpay)</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
-                                    Gestión de documentos</li>
+                                    Gestión de archivos</li>
                                 <li class="mb-3"><i class="bi bi-check-circle-fill me-2" style="color: #6B3A2C;"></i>
                                     Chatbot inteligente</li>
                             </ul>
@@ -443,7 +449,7 @@
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Pasarela de pago segura (Webpay)</li>
                                             <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Gestión de
-                                                documentos</li>
+                                                archivos</li>
                                             <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot
                                                 inteligente</li>
                                         </ul>
@@ -473,7 +479,7 @@
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Pasarela de pago segura (Webpay)</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Gestión de documentos</li>
+                                                    style="color: #6B3A2C;"></i> Gestión de archivos</li>
                                             <li class="mb-3"><i class="bi bi-x-circle me-2 text-muted"></i> Chatbot
                                                 inteligente</li>
                                         </ul>
@@ -502,7 +508,7 @@
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Pasarela de pago segura (Webpay)</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
-                                                    style="color: #6B3A2C;"></i> Gestión de documentos</li>
+                                                    style="color: #6B3A2C;"></i> Gestión de archivos</li>
                                             <li class="mb-3"><i class="bi bi-check-circle-fill me-2"
                                                     style="color: #6B3A2C;"></i> Chatbot inteligente</li>
                                         </ul>

@@ -21,7 +21,6 @@
                         <h3 style="color: #4A1D0B;">
                             <i class="bi bi-person-plus-fill me-2"></i> Crear Nueva Cuenta
                         </h3>
-                        <p class="text-muted">Registro Exclusivo para Super Administradores</p>
                     </div>
 
                     @php

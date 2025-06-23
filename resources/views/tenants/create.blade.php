@@ -69,10 +69,10 @@
                         @enderror
                     </div>
 
-                    {{-- Dominio --}}
+                    {{-- Subdominio --}}
                     <div class="mb-4">
                         <label for="domain_name" class="form-label fw-medium" style="color: #8C2D18;">
-                            <i class="bi bi-globe me-1"></i>Dominio
+                            <i class="bi bi-globe me-1"></i>Subdominio
                         </label>
                         <div class="input-group">
                             <span class="input-group-text" style="background-color: #F5E8D0; color: #8C2D18;">

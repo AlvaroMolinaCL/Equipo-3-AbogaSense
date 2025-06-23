@@ -36,11 +36,10 @@ class PlanCheckoutController extends Controller
                 'name' => 'Básico',
                 'price' => 79990,
                 'features' => [
-                    'Página web personalizada',
+                    'Plataforma web personalizable',
                     'Agendamiento de citas',
                     'Gestión de clientes',
-                    'Pasarela de pagos integrada',
-
+                    'Pasarela de pago segura (Webpay)',
                 ]
             ],
             'profesional' => [
@@ -50,7 +49,7 @@ class PlanCheckoutController extends Controller
                     'Página web personalizada',
                     'Agendamiento de citas',
                     'Gestión de clientes',
-                    'Pasarela de pagos integrada',
+                    'Pasarela de pago segura (Webpay)',
                     'Gestión de archivos'
                 ]
             ],
@@ -61,9 +60,10 @@ class PlanCheckoutController extends Controller
                     'Página web personalizada',
                     'Agendamiento de citas',
                     'Gestión de clientes',
-                    'Pasarela de pagos integrada',
+                    'Pasarela de pago segura (Webpay)',
                     'Gestión de archivos',
-                    'Chatbot inteligente',                ]
+                    'Chatbot inteligente'
+                ]
             ],
         ];
 
@@ -105,7 +105,7 @@ class PlanCheckoutController extends Controller
             ]);
 
             $sessionId = uniqid();
-            $returnUrl = url('/planes/respuesta'); // URL absoluta
+            $returnUrl = url('/planes/respuesta');
 
             $response = (new Transaction)->create(
                 $order->id, // buyOrder
