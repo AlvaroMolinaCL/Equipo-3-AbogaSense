@@ -59,6 +59,48 @@
             </div>
         </div>
 
+        <div class="row mb-3">
+            {{-- Gráfico de Citas Agendadas --}}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center"
+                        style="background-color: {{ tenantSetting('color_metrics', '#BF8A49') }}; color: white;">
+                        <h5 class="mb-0">Citas agendadas en los últimos
+                            <form method="GET" class="d-inline" style="width: 80px;">
+                                <input type="number" min="1" max="60" name="appointments_days"
+                                    value="{{ $appointments_days }}" class="form-control form-control-sm d-inline"
+                                    style="width: 60px; display: inline-block;" onchange="this.form.submit()">
+                            </form>
+                            días
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="appointmentsChart" style="min-height:300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Gráfico de Planes Más Reservados --}}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center"
+                        style="background-color: {{ tenantSetting('color_metrics', '#BF8A49') }}; color: white;">
+                        <h5 class="mb-0">Planes más reservados en los últimos
+                            <form method="GET" class="d-inline" style="width: 80px;">
+                                <input type="number" min="1" max="90" name="plans_days"
+                                    value="{{ $plans_days }}" class="form-control form-control-sm d-inline"
+                                    style="width: 60px; display: inline-block;" onchange="this.form.submit()">
+                            </form>
+                            días
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="plansChart" style="min-height:300px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- Tabla de Usuarios --}}
         <div class="card mb-4 border-0 shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center"
@@ -88,7 +130,8 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center py-3 text-muted">No hay usuarios registrados en los últimos 5 días.</td>
+                                    <td colspan="4" class="text-center py-3 text-muted">No hay usuarios registrados en
+                                        los últimos 5 días.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -97,4 +140,103 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gráfico de Citas Agendadas
+        const appointmentsCtx = document.getElementById('appointmentsChart').getContext('2d');
+        new Chart(appointmentsCtx, {
+            type: 'line',
+            data: {
+                labels: @json($appointmentsChart['labels']),
+                datasets: [{
+                    label: 'Citas',
+                    data: @json($appointmentsChart['data']),
+                    borderColor: '#8C2D18',
+                    backgroundColor: 'rgba(140,45,24,0.1)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Días',
+                            font: {
+                                size: 10
+                            }
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Cantidad de Citas Agendadas',
+                            font: {
+                                size: 10
+                            }
+                        },
+                        ticks: {
+                            stepSize: 1,
+                        },
+                    },
+                },
+            }
+        });
+
+        // Gráfico de Planes Más Reservados
+        const plansCtx = document.getElementById('plansChart').getContext('2d');
+        new Chart(plansCtx, {
+            type: 'bar',
+            data: {
+                labels: @json($plansChart['labels']),
+                datasets: [{
+                    label: 'Reservas',
+                    data: @json($plansChart['data']),
+                    backgroundColor: '#BF8A49'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Planes',
+                            font: {
+                                size: 10
+                            }
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Cantidad de Reservas',
+                            font: {
+                                size: 10
+                            }
+                        },
+                        ticks: {
+                            stepSize: 1,
+                        },
+                    },
+                },
+            }
+        });
+    });
+</script>
