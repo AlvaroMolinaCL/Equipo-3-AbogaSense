@@ -197,8 +197,7 @@
                                             @endif
 
                                             @if (auth()->user()->hasRole('Admin') || $file->uploaded_by == auth()->id())
-                                                <form action="{{ route('files.destroy', $file) }}" method="POST" class="d-flex"
-                                                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar este archivo?')">
+                                                <form action="{{ route('files.destroy', $file) }}" method="POST" class="form-eliminar-archivo">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-sm d-flex align-items-center justify-content-center gap-1 w-100"
@@ -258,3 +257,29 @@
         }
     </style>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('form.form-eliminar-archivo').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡Esta acción no se puede deshacer!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}",
+                        cancelButtonColor: "{{ tenantSetting('button_color_sidebar', '#BF8A49') }}",
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+@endpush

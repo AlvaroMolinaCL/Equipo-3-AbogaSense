@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AppearanceController extends Controller
 {
@@ -14,8 +13,6 @@ class AppearanceController extends Controller
         $tenant = tenant();
         return view('tenants.default.appearance', compact('tenant'));
     }
-
-
 
     public function edit()
     {
@@ -61,8 +58,6 @@ class AppearanceController extends Controller
             $tenant->logo_path_2 = "images/logo/{$tenant->id}/$filename";
         }
 
-
-        // Actualizar los demás campos
         $tenant->fill($request->only([
             'background_color_1',
             'text_color_1',
@@ -84,5 +79,4 @@ class AppearanceController extends Controller
 
         return response()->json(['success' => true]);
     }
-
 }

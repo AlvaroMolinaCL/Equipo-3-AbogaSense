@@ -84,8 +84,7 @@
                                                 </a>
 
                                                 {{-- Eliminar --}}
-                                                <form action="{{ route('users.destroy', $user) }}" method="POST"
-                                                    onsubmit="return confirm('¿Estás seguro de eliminar este usuario?')">
+                                                <form action="{{ route('users.destroy', $user) }}" method="POST" class="form-eliminar-usuario">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
@@ -110,3 +109,29 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('form.form-eliminar-usuario').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡Esta acción no se puede deshacer!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}",
+                        cancelButtonColor: "{{ tenantSetting('button_color_sidebar', '#BF8A49') }}",
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+@endpush

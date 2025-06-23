@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
 
 class ProductController extends Controller
 {
@@ -41,10 +39,9 @@ class ProductController extends Controller
             $data['image'] = 'images/products/' . $filename;
         }
 
-
         Product::create($data);
 
-        return redirect()->route('products.index')->with('success', 'Producto creado con éxito');
+        return redirect()->route('products.index')->with('success', 'Plan creado con éxito.');
     }
 
     public function index()
@@ -73,7 +70,6 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            // Elimina la imagen anterior si existe
             if ($product->image && file_exists(public_path($product->image))) {
                 unlink(public_path($product->image));
             }
@@ -84,24 +80,21 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        return redirect()->route('products.index')->with('success', 'Producto actualizado');
+        return redirect()->route('products.index')->with('success', 'Plan actualizado con éxito.');
     }
 
     public function destroy(Product $product)
     {
-        // Borra la imagen si existe
         if ($product->image && file_exists(public_path($product->image))) {
             unlink(public_path($product->image));
         }
 
-
-
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Producto eliminado');
+        return redirect()->route('products.index')->with('success', 'Plan eliminado con éxito.');
     }
     public function plans()
     {
-        $products = Product::all(); // o los productos filtrados por tipo = "plan"
+        $products = Product::all();
         return view('tenants.default.plans.index', compact('products'));
     }
 }

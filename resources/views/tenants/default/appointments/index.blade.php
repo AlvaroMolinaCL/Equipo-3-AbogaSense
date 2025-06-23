@@ -92,7 +92,7 @@
                 eventOrder: "start,-duration,allDay,title",
                 dayMaxEvents: 1,
                 eventDisplay: 'block',
-                displayEventTime: false, // <-- esta línea evita que se muestre la hora por defecto
+                displayEventTime: false,
                 moreLinkContent: args => ({ html: `<span class="more-badge">+${args.num} más</span>` }),
                 dayHeaderFormat: { weekday: 'long' },
                 titleFormat: { year: 'numeric', month: 'long' },

@@ -101,8 +101,8 @@
         </h3>
         <a href="{{ route('dashboard') }}" class="btn btn-sm"
             style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};
-                                                                                                                                                                                                                                                                      color: {{ tenantSetting('text_color_1', '#8C2D18') }};
-                                                                                                                                                                                                                                                                      border: 2px solid {{ tenantSetting('color_tables', '#8C2D18') }};">
+                    color: {{ tenantSetting('text_color_1', '#8C2D18') }};
+                    border: 2px solid {{ tenantSetting('color_tables', '#8C2D18') }};">
             <i class="bi bi-arrow-left me-2"></i>Volver
         </a>
     </div>
@@ -159,9 +159,9 @@
                             <div class="text-center">
                                 <button id="savePaletteBtn" class="btn"
                                     style="background-color: {{ tenantSetting('button_color_sidebar', '#F5E8D0') }}; 
-                                                                                                                                                                                                                                                                                               color: {{ tenantSetting('button_banner_text_color', 'white') }};
-                                                                                                                                                                                                                                                                                               transition: all 0.3s ease;">
-                                    <i class="fas fa-save me-2"></i>Aplicar Paleta Seleccionada
+                                            color: {{ tenantSetting('button_banner_text_color', 'white') }};
+                                            transition: all 0.3s ease;">
+                                    <i class="bi bi-save me-2"></i>Aplicar Paleta Seleccionada
                                 </button>
                             </div>
                         </div>
@@ -195,17 +195,17 @@
                                                 data-bs-parent="#accordionLogos">
                                                 <div class="accordion-body">
                                                     <div class="row g-3">
-                                                        <!-- Logo Principal -->
+                                                        {{-- Logo Principal --}}
                                                         <div class="col-md-6">
                                                             <label class="form-label fw-bold">Logo Principal</label>
                                                             <div class="text-center mb-3">
-                                                                <!-- Vista previa dinámica -->
+                                                                {{-- Vista previa dinámica --}}
                                                                 <img id="previewLogo1"
                                                                     src="{{ $tenant->logo_path_1 ? asset($tenant->logo_path_1) : '#' }}"
                                                                     alt="Vista previa logo principal"
                                                                     class="img-fluid rounded border mb-2"
                                                                     style="max-height: 150px; background-color: {{ $tenant->background_color_1 }};{{ !$tenant->logo_path_1 ? 'display: none;' : '' }}">
-                                                                <!-- Mensaje cuando no hay imagen -->
+                                                                {{-- Mensaje cuando no hay imagen --}}
                                                                 <p id="noLogo1Text" class="text-muted mb-2"
                                                                     {{ $tenant->logo_path_1 ? 'style=display:none;' : '' }}>
                                                                     No hay logo principal cargado
@@ -221,17 +221,17 @@
                                                                 máximo: 2MB</div>
                                                         </div>
 
-                                                        <!-- Logo Secundario -->
+                                                        {{-- Logo Secundario --}}
                                                         <div class="col-md-6">
                                                             <label class="form-label fw-bold">Logo Secundario</label>
                                                             <div class="text-center mb-3">
-                                                                <!-- Vista previa dinámica -->
+                                                                {{-- Vista previa dinámica --}}
                                                                 <img id="previewLogo2"
                                                                     src="{{ $tenant->logo_path_2 ? asset($tenant->logo_path_2) : '#' }}"
                                                                     alt="Vista previa logo secundario"
                                                                     class="img-fluid rounded border mb-2"
                                                                     style="max-height: 150px; background-color: {{ $tenant->background_color_2 }};{{ !$tenant->logo_path_2 ? 'display: none;' : '' }}">
-                                                                <!-- Mensaje cuando no hay imagen -->
+                                                                {{-- Mensaje cuando no hay imagen --}}
                                                                 <p id="noLogo2Text" class="text-muted mb-2"
                                                                     {{ $tenant->logo_path_2 ? 'style=display:none;' : '' }}>
                                                                     No hay logo secundario cargado
@@ -518,9 +518,9 @@
                                     <div class="text-center mt-4">
                                         <button type="submit" class="btn"
                                             style="background-color: {{ tenantSetting('button_color_sidebar', '#F5E8D0') }}; 
-                                                                                                                                                                                                                                                                               color: {{ tenantSetting('button_banner_text_color', 'white') }};
-                                                                                                                                                                                                                                                                               transition: all 0.3s ease;">
-                                            <i class="fas fa-save me-2"></i>Guardar Personalización
+                                                    color: {{ tenantSetting('button_banner_text_color', 'white') }};
+                                                    transition: all 0.3s ease;">
+                                            <i class="bi bi-save me-2"></i>Guardar Personalización
                                         </button>
                                     </div>
                                 </form>
@@ -547,7 +547,7 @@
                                         Principales
                                     </h4>
 
-                                    <!-- Nav Tabs -->
+                                    {{-- Nav Tabs --}}
                                     <ul class="nav nav-tabs mb-4" id="homeTextsTab" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link active" id="inicio-tab" data-bs-toggle="tab"
@@ -565,25 +565,25 @@
                                         </li>
                                     </ul>
 
-                                    <!-- Tab Content -->
+                                    {{-- Tab Content --}}
                                     <div class="tab-content" id="homeTextsTabContent">
 
-                                        <!-- INICIO -->
+                                        {{-- INICIO --}}
                                         <div class="tab-pane fade show active" id="inicio" role="tabpanel">
-                                            <!-- Slogan -->
+                                            {{-- Slogan --}}
                                             <div class="mb-3">
                                                 <label for="slogan_text"
                                                     class="form-label"><strong>Slogan</strong></label>
                                                 <textarea class="form-control summernote" name="slogan_text" id="slogan_text" rows="2"
-                                                    placeholder="Ej: Innovación y calidad">{!! old('slogan_text', tenantText('slogan_text', 'La información es poder, <strong>¡empodérate!</strong>')) !!}</textarea>
+                                                    placeholder="Ej: Innovación y calidad">{!! old('slogan_text', tenantText('slogan_text', '<strong>¡Bienvenidos!</strong>')) !!}</textarea>
                                             </div>
 
-                                            <!-- Cuerpo del slogan -->
+                                            {{-- Cuerpo del slogan --}}
                                             <div class="mb-3">
                                                 <label for="slogan_body" class="form-label"><strong>Cuerpo del
                                                         slogan</strong></label>
                                                 <textarea class="form-control summernote" name="slogan_body" id="slogan_body" rows="2"
-                                                    placeholder="Ej: Más de 20 años brindando soluciones">{{ old('slogan_body', tenantText('slogan_body', 'Una representación judicial con perspectiva de género, exige un acompañamiento empático e informado para alivianar las cargas del proceso.')) }}</textarea>
+                                                    placeholder="Ej: Más de 20 años brindando soluciones">{{ old('slogan_body', tenantText('slogan_body', 'Esta es nuestra página, <strong>¡conócenos!</strong>')) }}</textarea>
                                             </div>
 
                                             <div class="mb-3">
@@ -606,7 +606,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Sobre Nosotros -->
+                                            {{-- Sobre Nosotros --}}
                                             <div class="mb-3">
                                                 <label for="about_text" class="form-label"><strong>Sobre
                                                         Nosotros</strong></label>
@@ -616,29 +616,29 @@
                                                         tenantText(
                                                             'about_text',
                                                             '
-                                                                                                                                                                                                                <p style="text-align: justify;">
-                                                                                                                                                                                                                    Soy Omara Muñoz Navarro, abogada especializada en derecho penal, derecho de familia, derechos humanos y litigación con perspectiva de género.
-                                                                                                                                                                                                                </p>
-                                                                                                                                                                                                                <p style="text-align: justify;">
-                                                                                                                                                                                                                    Mi propósito es acompañarte en procesos legales complejos, entregándote herramientas claras, asesoría accesible y representación comprometida.
-                                                                                                                                                                                                                </p>
-                                                                                                                                                                                                                <p style="text-align: justify;">
-                                                                                                                                                                                                                    Conozco el sistema desde adentro, a lo largo de mi desarrollo académico y profesional me desempeñé en las distintas instituciones que componen nuestro sistema judicial. Saber cómo desarrollan su quehacer Tribunales de Justicia; Ministerio Público; Defensoría Penal Pública; programas de apoyo a mujeres, niños, niñas y adolescentes, entre otras, me permite orientarte de forma certera y buscar soluciones dentro de las reales posibilidades que brinda el sistema.
-                                                                                                                                                                                                                </p>
-                                                                                                                                                                                                                ',
+                                                                <p style="text-align: justify;">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a odio purus. Nullam nec commodo urna, vel dignissim enim. Aenean ac quam sit amet libero volutpat ornare.
+                                                                </p>
+                                                                <p style="text-align: justify;">
+                                                                    Nunc at odio ac magna sagittis varius. Maecenas ut orci vel felis maximus condimentum.
+                                                                </p>
+                                                                <p style="text-align: justify;">
+                                                                    Quisque vel quam tortor. Etiam iaculis tincidunt purus, eget congue urna volutpat sed.
+                                                                </p>
+                                                            ',
                                                         ),
                                                     ) }}</textarea>
                                             </div>
 
-                                            <!-- Servicios -->
-                                            <!-- Servicio 1 -->
+                                            {{-- Servicios --}}
+                                            {{-- Servicio 1 --}}
                                             <div class="mb-3">
                                                 <label for="service1_title" class="form-label">
                                                     <strong>Título Servicio 1</strong>
                                                 </label>
                                                 <input type="text" class="form-control" name="service1_title"
                                                     id="service1_title"
-                                                    value="{{ old('service1_title', tenantText('service1_title', 'Asesoría jurídica integral')) }}"
+                                                    value="{{ old('service1_title', tenantText('service1_title', 'Servicio 1')) }}"
                                                     placeholder="Título del servicio 1">
                                             </div>
                                             <div class="mb-4">
@@ -650,19 +650,19 @@
                                                         'service1_body',
                                                         tenantText(
                                                             'service1_body',
-                                                            '<p style="text-align: justify;">Te ofrezco un servicio de orientación legal para identificar el escenario jurídico que enfrentas.</p>',
+                                                            '<p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a odio purus.</p>',
                                                         ),
                                                     ) !!}</textarea>
                                             </div>
 
-                                            <!-- Servicio 2 -->
+                                            {{-- Servicio 2 --}}
                                             <div class="mb-3">
                                                 <label for="service2_title" class="form-label">
                                                     <strong>Título Servicio 2</strong>
                                                 </label>
                                                 <input type="text" class="form-control" name="service2_title"
                                                     id="service2_title"
-                                                    value="{{ old('service2_title', tenantText('service2_title', 'Representación judicial')) }}"
+                                                    value="{{ old('service2_title', tenantText('service2_title', 'Servicio 2')) }}"
                                                     placeholder="Título del servicio 2">
                                             </div>
                                             <div class="mb-4">
@@ -674,19 +674,19 @@
                                                         'service2_body',
                                                         tenantText(
                                                             'service2_body',
-                                                            '<p style="text-align: justify;">Te represento en procesos judiciales penales, de familia u otras materias.</p>',
+                                                            '<p style="text-align: justify;">Nullam nec commodo urna, vel dignissim enim. Aenean ac quam sit amet libero volutpat ornare.</p>',
                                                         ),
                                                     ) !!}</textarea>
                                             </div>
 
-                                            <!-- Servicio 3 -->
+                                            {{-- Servicio 3 --}}
                                             <div class="mb-3">
                                                 <label for="service3_title" class="form-label">
                                                     <strong>Título Servicio 3</strong>
                                                 </label>
                                                 <input type="text" class="form-control" name="service3_title"
                                                     id="service3_title"
-                                                    value="{{ old('service3_title', tenantText('service3_title', 'Capacitaciones y charlas')) }}"
+                                                    value="{{ old('service3_title', tenantText('service3_title', 'Servicio 3')) }}"
                                                     placeholder="Título del servicio 3">
                                             </div>
                                             <div class="mb-4">
@@ -698,22 +698,22 @@
                                                         'service3_body',
                                                         tenantText(
                                                             'service3_body',
-                                                            '<p style="text-align: justify;">Realizo talleres, charlas y capacitaciones para grupos en contextos académicos, laborales o comunitarios.</p>',
+                                                            '<p style="text-align: justify;">Praesent tempus accumsan urna. Sed vel tempor nulla, et sodales enim. Vivamus a dictum urna, ut cursus leo.</p>',
                                                         ),
                                                     ) !!}</textarea>
                                             </div>
                                         </div>
 
-                                        <!-- SERVICIOS -->
+                                        {{-- SERVICIOS --}}
                                         <div class="tab-pane fade" id="servicios" role="tabpanel">
-                                            <!-- Títulos y Descripciones de Servicio 1 -->
+                                            {{-- Títulos y Descripciones de Servicio 1 --}}
                                             <div class="mb-3">
                                                 <label for="title_service_1" class="form-label">
                                                     <strong>Título Servicio 1</strong>
                                                 </label>
                                                 <input type="text" class="form-control" name="title_service_1"
                                                     id="title_service_1"
-                                                    value="{{ old('title_service_1', tenantText('title_service_1', 'Asesoría jurídica integral')) }}"
+                                                    value="{{ old('title_service_1', tenantText('title_service_1', 'Servicio 1')) }}"
                                                     placeholder="Título del servicio 1">
                                             </div>
 
@@ -727,27 +727,28 @@
                                                         tenantText(
                                                             'body_service_1',
                                                             '
-                                                                                                                                                                                                            <p style="text-align: justify;">Te ofrezco un servicio de orientación legal para identificar el escenario jurídico que enfrentas.</p>
-                                                                                                                                                                                                            <p style="text-align: justify;">Conocerás:</p>
-                                                                                                                                                                                                            <ul>
-                                                                                                                                                                                                                <li style="text-align: justify;">La procedencia de acciones judiciales en materias de violencia contra la mujer.</li>
-                                                                                                                                                                                                                <li style="text-align: justify;">Pasos a seguir para iniciar procedimientos judiciales.</li>
-                                                                                                                                                                                                                <li style="text-align: justify;">Análisis de la necesidad de representación privada o derivación a organismos públicos.</li>
-                                                                                                                                                                                                                <li style="text-align: justify;">Explicación clara de la dinámica de los procesos en derecho penal, familia y otras áreas.</li>
-                                                                                                                                                                                                                <li style="text-align: justify;">Derivación segura a abogadas especializadas si así lo requieres.</li>
-                                                                                                                                                                                                            </ul>',
+                                                                <p style="text-align: justify;">Quisque accumsan odio quis facilisis ullamcorper.</p>
+                                                                <p style="text-align: justify;">Praesent pharetra:</p>
+                                                                <ul>
+                                                                    <li style="text-align: justify;">Ut elementum neque sem, vitae condimentum magna ullamcorper eget.</li>
+                                                                    <li style="text-align: justify;">Pellentesque eleifend mauris non risus consequat feugiat.</li>
+                                                                    <li style="text-align: justify;">Fusce rhoncus justo elementum eros hendrerit, ac tincidunt neque tempor.</li>
+                                                                    <li style="text-align: justify;">Donec eleifend, elit et rhoncus sodales, eros risus euismod justo, ac tristique massa est vitae nisl.</li>
+                                                                    <li style="text-align: justify;">Nunc ac dictum mauris, in blandit tortor.</li>
+                                                                </ul>
+                                                            ',
                                                         ),
                                                     ) !!}</textarea>
                                             </div>
 
-                                            <!-- Títulos y Descripciones de Servicio 2 -->
+                                            {{-- Títulos y Descripciones de Servicio 2 --}}
                                             <div class="mb-3">
                                                 <label for="title_service_2" class="form-label">
                                                     <strong>Título Servicio 2</strong>
                                                 </label>
                                                 <input type="text" class="form-control" name="title_service_2"
                                                     id="title_service_2"
-                                                    value="{{ old('title_service_2', tenantText('title_service_2', 'Representación judicial en causas de derecho penal, familia, u otros')) }}"
+                                                    value="{{ old('title_service_2', tenantText('title_service_2', 'Servicio 2')) }}"
                                                     placeholder="Título del servicio 2">
                                             </div>
 
@@ -761,25 +762,25 @@
                                                         tenantText(
                                                             'body_service_2',
                                                             '
-                                                                                                                                                                                                        <p style="text-align: justify;">Te represento en procesos judiciales penales, de familia u otras materias, comprometiéndome a:</p>
-                                                                                                                                                                                                        <ul>
-                                                                                                                                                                                                            <li style="text-align: justify;">Diseñar contigo la estrategia de defensa o acción.</li>
-                                                                                                                                                                                                            <li style="text-align: justify;">Representar tus intereses bajo perspectiva de género, territorio, interculturalidad, derechos humanos, según corresponda.</li>
-                                                                                                                                                                                                            <li style="text-align: justify;">Informarte en cada etapa, asegurando tu participación activa en la toma de decisiones.</li>
-                                                                                                                                                                                                        </ul>
-                                                                                                                                                                                                    ',
+                                                                <p style="text-align: justify;">Sed tincidunt ligula odio, sit amet tempor leo elementum et:</p>
+                                                                <ul>
+                                                                    <li style="text-align: justify;">Quisque bibendum hendrerit libero. </li>
+                                                                    <li style="text-align: justify;">Nulla vestibulum quam ante, vel tincidunt mi dapibus ac.</li>
+                                                                    <li style="text-align: justify;">Praesent pharetra, urna quis porta auctor, mi lacus pellentesque metus, at pharetra purus lorem sed quam.</li>
+                                                                </ul>
+                                                            ',
                                                         ),
                                                     ) !!}</textarea>
                                             </div>
 
-                                            <!-- Títulos y Descripciones de Servicio 3 -->
+                                            {{-- Títulos y Descripciones de Servicio 3 --}}
                                             <div class="mb-3">
                                                 <label for="title_service_3" class="form-label">
                                                     <strong>Título Servicio 3</strong>
                                                 </label>
                                                 <input type="text" class="form-control" name="title_service_3"
                                                     id="title_service_3"
-                                                    value="{{ old('title_service_3', tenantText('title_service_3', 'Capacitaciones y charlas')) }}"
+                                                    value="{{ old('title_service_3', tenantText('title_service_3', 'Servicio 3')) }}"
                                                     placeholder="Título del servicio 3">
                                             </div>
 
@@ -793,19 +794,19 @@
                                                         tenantText(
                                                             'body_service_3',
                                                             '
-                                                                                                                                                                                                        <p style="text-align: justify;">Realizo talleres, charlas y capacitaciones para grupos en contextos académicos, laborales o comunitarios.</p>
-                                                                                                                                                                                                        <p style="text-align: justify;">Temáticas abordadas:</p>
-                                                                                                                                                                                                        <ul>
-                                                                                                                                                                                                            <li style="text-align: justify;">Sensibilización en género.</li>
-                                                                                                                                                                                                            <li style="text-align: justify;">Normativa nacional e internacional sobre derechos humanos, género y otras materias.</li>
-                                                                                                                                                                                                            <li style="text-align: justify;">Funcionamiento práctico de los procedimientos judiciales.</li>
-                                                                                                                                                                                                        </ul>
-                                                                                                                                                                                                    ',
+                                                                <p style="text-align: justify;">Praesent tempus accumsan urna. Sed vel tempor nulla, et sodales enim. Vivamus a dictum urna, ut cursus leo.</p>
+                                                                <p style="text-align: justify;">Aliquam erat volutpat:</p>
+                                                                <ul>
+                                                                    <li style="text-align: justify;">Mauris pretium aliquam neque vitae efficitur.</li>
+                                                                    <li style="text-align: justify;">Sed massa neque, malesuada ut blandit in, maximus non lorem.</li>
+                                                                    <li style="text-align: justify;">Duis posuere placerat vestibulum.</li>
+                                                                </ul>
+                                                            ',
                                                         ),
                                                     ) !!}</textarea>
                                             </div>
 
-                                            <!-- Imágenes de Servicios -->
+                                            {{-- Imágenes de Servicios --}}
                                             <div class="mb-3">
                                                 <p class="text-muted small mb-4">
                                                     ⚠️ Estas imágenes también se muestran en la página de inicio. Si las
@@ -826,7 +827,7 @@
                                                 <div class="form-text">Recomendado: 600x400px, formato PNG.</div>
                                             </div>
 
-                                            <!-- Imagen Servicio 2 -->
+                                            {{-- Imagen Servicio 2 --}}
                                             <div class="mb-3">
 
                                                 <label for="services_path_2" class="form-label">
@@ -844,7 +845,7 @@
                                                 <div class="form-text">Recomendado: 600x400px, formato PNG.</div>
                                             </div>
 
-                                            <!-- Imagen Servicio 3 -->
+                                            {{-- Imagen Servicio 3 --}}
                                             <div class="mb-3">
                                                 <label for="services_path_3" class="form-label">
                                                     <strong>Imagen Servicio 3</strong>
@@ -862,9 +863,9 @@
                                             </div>
                                         </div>
 
-                                        <!-- ABOUT -->
+                                        {{-- ABOUT --}}
                                         <div class="tab-pane fade" id="contacto" role="tabpanel">
-                                            <!-- Sobre mi-->
+                                            {{-- Sobre mi--}}
                                             <div class="mb-3">
                                                 <label for="about_us" class="form-label"><strong>Sobre mí</strong></label>
                                                 <textarea class="form-control summernote" name="about_us" id="about_us" rows="10">{!! old(
@@ -872,15 +873,15 @@
                                                     tenantText(
                                                         'about_us',
                                                         '
-                                                                                                                                                                                <p style="text-align: justify;">Soy Omara Muñoz Navarro, abogada especializada en derecho penal, derecho de familia, derechos humanos y litigación con perspectiva de género.</p>
-                                                                                                                                                                                <p style="text-align: justify;">Mi propósito es acompañarte en procesos legales complejos, entregándote herramientas claras, asesoría accesible y representación comprometida.</p>
-                                                                                                                                                                                <p style="text-align: justify;">Conozco el sistema desde adentro, a lo largo de mi desarrollo académico y profesional me desempeñé en las distintas instituciones que componen nuestro sistema judicial. Saber cómo desarrollan su quehacer Tribunales de Justicia; Ministerio Público; Defensoría Penal Pública; programas de apoyo a mujeres, niños, niñas y adolescentes, entre otras, me permite orientarte de forma certera y buscar soluciones dentro de las reales posibilidades que brinda el sistema.</p>
-                                                                                                                                                                                <p style="text-align: justify;"><strong>"La información es poder, empodérate"</strong></p>
-                                                                                                                                                                            ',
+                                                            <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a odio purus. Nullam nec commodo urna, vel dignissim enim. Aenean ac quam sit amet libero volutpat ornare.</p>
+                                                            <p style="text-align: justify;">Nunc at odio ac magna sagittis varius. Maecenas ut orci vel felis maximus condimentum.</p>
+                                                            <p style="text-align: justify;">Aliquam erat volutpat. Mauris pretium aliquam neque vitae efficitur. Sed massa neque, malesuada ut blandit in, maximus non lorem. Sed nec eleifend odio. Vivamus faucibus maximus pellentesque. Duis posuere placerat vestibulum. Sed tincidunt ligula odio, sit amet tempor leo elementum et. Quisque bibendum hendrerit libero.</p>
+                                                            <p style="text-align: justify;"><strong>"Duis rhoncus, ipsum at vehicula aliquet"</strong></p>
+                                                        ',
                                                     ),
                                                 ) !!}</textarea>
                                             </div>
-                                            <!-- experience -->
+                                            {{-- experience --}}
                                             <div class="mb-3">
                                                 <label for="experience"
                                                     class="form-label"><strong>Experiencia</strong></label>
@@ -889,20 +890,21 @@
                                                     tenantText(
                                                         'experience',
                                                         '
-                                                                                                                                                                                <ul class="fade-in-section">
-                                                                                                                                                                                    <li>Abogada titulada por la Universidad de Concepción.</li>
-                                                                                                                                                                                    <li>Magíster en Derecho Penal y Derecho Procesal Penal, Universidad Católica del Norte (en curso).</li>
-                                                                                                                                                                                    <li>Diplomada en Derechos Humanos y Función Pública, Universidad de Los Lagos e Instituto Nacional de Derechos Humanos.</li>
-                                                                                                                                                                                </ul>
-                                                                                                                                                                            ',
+                                                            <ul class="fade-in-section">
+                                                                <li>Orci varius natoque penatibus et magnis dis parturient montes.</li>
+                                                                <li>Morbi arcu felis, tristique in neque vitae, imperdiet finibus elit.</li>
+                                                                <li>Aliquam pulvinar ligula a mi lobortis efficitur.</li>
+                                                            </ul>
+                                                        ',
                                                     ),
                                                 ) !!}</textarea>
                                             </div>
 
-                                            <!-- Imagen Sobre Nosotros -->
+                                            {{-- Imagen Sobre Nosotros --}}
                                             <div class="mb-3">
                                                 <p class="text-muted small mb-4">
-                                                    ⚠️ Estas imágenes también se muestran en la página de inicio. Si la cambias
+                                                    ⚠️ Estas imágenes también se muestran en la página de inicio. Si la
+                                                    cambias
                                                     aquí, se actualizará automáticamente en el inicio.
                                                 </p>
                                                 <label for="about_path" class="form-label"><strong>Imagen Sobre
@@ -920,27 +922,22 @@
                                                 <div class="form-text">Recomendado: 500x500px, formato JPG o PNG. Foto de
                                                     perfil.</div>
                                             </div>
-
-
                                         </div>
-
                                     </div>
 
-
-                                    <!-- Botón Guardar -->
+                                    {{-- Botón Guardar --}}
                                     <div class="text-center mt-4">
                                         <button type="submit" class="btn"
                                             style="background-color: {{ tenantSetting('button_color_sidebar', '#F5E8D0') }};
-                                                                                                                                                                                                                                                color: {{ tenantSetting('button_banner_text_color', 'white') }};
-                                                                                                                                                                                                                                                transition: all 0.3s ease;">
-                                            <i class="fas fa-save me-2"></i>Guardar Contenido
+                                                    color: {{ tenantSetting('button_banner_text_color', 'white') }};
+                                                    transition: all 0.3s ease;">
+                                            <i class="bi bi-save me-2"></i>Guardar Contenido
                                         </button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -980,7 +977,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Configuración para imagenes
             setupImagePreview('logo_1', 'previewLogo1', 'noLogo1Text');
             setupImagePreview('logo_2', 'previewLogo2', 'noLogo2Text');
             setupImagePreview('banner_path', 'previewBanner', 'noBannerText');
@@ -995,7 +991,6 @@
                 const noImageText = noImageTextId ? document.getElementById(noImageTextId) : null;
 
                 if (input && preview) {
-                    // Mostrar la vista previa actual si existe
                     if (preview.src && !preview.src.includes('#')) {
                         preview.style.display = 'block';
                         if (noImageText) noImageText.style.display = 'none';
@@ -1006,7 +1001,6 @@
 
                     input.addEventListener('change', function() {
                         if (this.files && this.files[0]) {
-                            // Validar el tipo de archivo
                             const validTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/gif',
                                 'image/webp'
                             ];
@@ -1016,21 +1010,18 @@
                                 return;
                             }
 
-                            // Validar el tamaño (2MB máximo)
                             if (this.files[0].size > 2 * 1024 * 1024) {
                                 alert('La imagen es demasiado grande. El tamaño máximo permitido es 2MB');
                                 this.value = '';
                                 return;
                             }
 
-                            // Mostrar vista previa
                             const reader = new FileReader();
                             reader.onload = function(e) {
                                 preview.src = e.target.result;
                                 preview.style.display = 'block';
                                 if (noImageText) noImageText.style.display = 'none';
 
-                                // Ajustar tamaño según el tipo de imagen
                                 if (inputId === 'banner_path') {
                                     preview.style.maxHeight = '300px';
                                     preview.style.width = 'auto';
@@ -1044,7 +1035,6 @@
                             }
                             reader.readAsDataURL(this.files[0]);
                         } else {
-                            // Si no se seleccionó archivo, restaurar estado original
                             if (preview.dataset.defaultSrc) {
                                 preview.src = preview.dataset.defaultSrc;
                                 preview.style.display = 'block';
@@ -1060,7 +1050,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Manejo de paletas de colores
             const palettesContainer = document.getElementById('palettes-container');
             const saveBtn = document.getElementById('savePaletteBtn');
             let selectedPaletteKey = null;
@@ -1084,15 +1073,13 @@
                     selectedPaletteData = JSON.parse(card.getAttribute('data-palette'));
                     console.log('Paleta seleccionada:', selectedPaletteData);
 
-                    // Actualizar el botón con los colores de la paleta seleccionada
                     saveBtn.style.backgroundColor = selectedPaletteData.button_color_sidebar;
                     saveBtn.style.color = selectedPaletteData.navbar_text_color_1;
 
-                    // Actualizar los campos de personalización
                     updateCustomizationForm(selectedPaletteData);
                 } catch (error) {
                     console.error('Error al parsear JSON:', error);
-                    showAlert('error', 'Error al seleccionar la paleta');
+                    showAlert('error', 'Error al seleccionar la paleta.');
                 }
             });
 
@@ -1111,26 +1098,22 @@
             }
 
             function showAlert(type, message) {
-                const alertBox = document.createElement('div');
-                alertBox.className =
-                    `alert alert-${type} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
-                alertBox.style.zIndex = '9999';
-                alertBox.innerHTML =
-                    `
-                                                                                                                                                                                                                                                                            ${message}
-                                                                                                                                                                                                                                                                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                                                                                                                                                                                                                                                        `;
-                document.body.appendChild(alertBox);
+                let icon = 'info';
+                if (type === 'success') icon = 'success';
+                if (type === 'danger' || type === 'error') icon = 'error';
+                if (type === 'warning') icon = 'warning';
 
-                setTimeout(() => {
-                    alertBox.classList.remove('show');
-                    setTimeout(() => alertBox.remove(), 150);
-                }, 5000);
+                Swal.fire({
+                    icon: icon,
+                    title: type === 'success' ? '¡Éxito!' : (type === 'warning' ? 'Advertencia' : 'Error'),
+                    html: message,
+                    confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}"
+                });
             }
 
             async function savePalette() {
                 if (!selectedPaletteData) {
-                    showAlert('warning', 'Por favor selecciona una paleta primero');
+                    showAlert('warning', 'Por favor, seleccione una paleta primero.');
                     return false;
                 }
 
@@ -1158,14 +1141,14 @@
                     }
 
                     if (data.success || data.status === "success") {
-                        showAlert('success', 'Paleta guardada correctamente');
+                        showAlert('success', 'Paleta guardada con éxito.');
                         return true;
                     } else {
                         throw new Error(data.message || 'Error al procesar la respuesta');
                     }
                 } catch (error) {
                     console.error('Error al guardar:', error);
-                    showAlert('danger', `Error al guardar: ${error.message}`);
+                    showAlert('danger', `Error al guardar: ${error.message}.`);
                     return false;
                 }
             }
@@ -1178,14 +1161,13 @@
                 const saved = await savePalette();
 
                 saveBtn.disabled = false;
-                saveBtn.innerHTML = '<i class="fas fa-save me-2"></i>Aplicar Paleta Seleccionada';
+                saveBtn.innerHTML = '<i class="bi bi-save me-2"></i>Aplicar Paleta Seleccionada';
 
                 if (saved) {
                     setTimeout(() => location.reload(), 1500);
                 }
             });
 
-            // Manejo del formulario de personalización
             const customizationForm = document.getElementById('customizationForm');
 
             customizationForm.addEventListener('submit', async function(e) {
@@ -1216,7 +1198,7 @@
                     }
 
                     if (data.success || data.status === "success") {
-                        showAlert('success', 'Personalización guardada correctamente');
+                        showAlert('success', 'Personalización guardada con éxito.');
                         setTimeout(() => location.reload(), 1500);
                     } else {
                         throw new Error(data.message || 'Error al procesar la respuesta');
@@ -1226,19 +1208,69 @@
                     showAlert('danger', `Error al guardar: ${error.message}`);
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.innerHTML = '<i class="fas fa-save me-2"></i>Guardar Personalización';
+                    submitBtn.innerHTML = '<i class="bi bi-save me-2"></i>Guardar Personalización';
                 }
             });
 
+            const customTextsForm = document.querySelector('form[action="{{ route('tenant.texts.update') }}"]');
+            
+            if (customTextsForm) {
+                customTextsForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalBtnHtml = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML =
+                        '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Guardando...';
+                
+                    try {
+                        const formData = new FormData(this);
+                        formData.append('_method', 'PUT');
+                    
+                        const response = await fetch(this.action, {
+                            method: "POST",
+                            headers: {
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                                "Accept": "application/json",
+                                "X-Requested-With": "XMLHttpRequest"
+                            },
+                            body: formData
+                        });
+                    
+                        const data = await response.json();
+                    
+                        if (!response.ok) {
+                            if (data.errors) {
+                                showAlert('error', Object.values(data.errors).map(arr => arr.join('<br>')).join('<br>'));
+                            } else {
+                                throw new Error(data.message || 'Error en la respuesta del servidor');
+                            }
+                        } else if (data.success || data.status === "success") {
+                            showAlert('success', 'Contenido personalizado guardado con éxito.');
+                            setTimeout(() => location.reload(), 1500);
+                        } else {
+                            throw new Error(data.message || 'Error al procesar la respuesta');
+                        }
+                    } catch (error) {
+                        console.error('Error al guardar:', error);
+                        showAlert('danger', `Error al guardar: ${error.message}`);
+                    } finally {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnHtml;
+                    }
+                });
+            }
         });
     </script>
-    <!-- Summernote CSS -->
+
+    {{-- Summernote CSS --}}
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 
-    <!-- jQuery -->
+    {{-- jQuery --}}
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 
-    <!-- Summernote JS -->
+    {{-- Summernote JS --}}
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
     <script>
@@ -1253,6 +1285,4 @@
             });
         });
     </script>
-
-
 @endsection

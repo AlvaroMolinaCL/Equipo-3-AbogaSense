@@ -1,9 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\TenantText;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TenantTextController extends Controller
 {
@@ -18,14 +19,12 @@ class TenantTextController extends Controller
         return view('tenant.texts.edit', compact('texts'));
     }
 
-
-
     public function update(Request $request)
     {
         $tenant = tenant();
 
-        // Validación incluyendo imágenes
-        $request->validate([
+        // Validación personalizada para AJAX
+        $rules = [
             'slogan_text' => 'required|string',
             'slogan_body' => 'required|string',
             'about_text' => 'required|string',
@@ -48,10 +47,18 @@ class TenantTextController extends Controller
             'body_service_3' => 'required|string',
             'about_us' => 'required|string',
             'experience' => 'required|string',
+        ];
 
-        ]);
+        if ($request->ajax()) {
+            $validator = Validator::make($request->all(), $rules);
 
-        // Guardar textos normales en tenant_texts
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
+        } else {
+            $request->validate($rules);
+        }
+
         $keys = ['slogan_text', 'slogan_body', 'about_text', 'service1_title', 'service1_body', 'service2_title', 'service2_body', 'service3_title', 'service3_body', 'title_service_1', 'title_service_2', 'title_service_3', 'body_service_1', 'body_service_2', 'body_service_3', 'about_us', 'experience'];
 
         foreach ($keys as $key) {
@@ -63,7 +70,6 @@ class TenantTextController extends Controller
             );
         }
 
-        // Manejo de imágenes - guardamos el nombre en la tabla tenants directamente
         if ($request->hasFile('services_path_1')) {
             $file1 = $request->file('services_path_1');
             $filename1 = time() . '_' . $file1->getClientOriginalName();
@@ -85,40 +91,33 @@ class TenantTextController extends Controller
             $tenant->services_path_3 = $filename3;
         }
 
-
-        // Manejo de about_path (imagen sobre nosotros)
         if ($request->hasFile('about_path')) {
             $file = $request->file('about_path');
-
             $filename = time() . '_' . $file->getClientOriginalName();
             $destinationPath = public_path('images/about');
 
-            // Crear el directorio si no existe
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0755, true);
             }
 
             $file->move($destinationPath, $filename);
-
-            // Guardar nombre del archivo en la columna about_path
             $tenant->about_path = $filename;
         }
 
         if ($request->hasFile('banner_path')) {
             $file = $request->file('banner_path');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $destinationPath = public_path('images/banner');  // puedes crear esta carpeta
+            $destinationPath = public_path('images/banner');
             $file->move($destinationPath, $filename);
-
-            // Guardar en columna banner_path de tenant
             $tenant->banner_path = $filename;
         }
 
-
-        // Guardar cambios en tenant
         $tenant->save();
 
-        return redirect()->back()->with('success', 'Textos e imágenes actualizados correctamente');
+        if ($request->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
+        return redirect()->back()->with('success', 'Textos e imágenes actualizados con éxito.');
     }
 }
-

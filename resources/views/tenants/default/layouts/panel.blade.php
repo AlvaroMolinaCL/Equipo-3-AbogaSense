@@ -201,7 +201,31 @@
             });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
+    
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}"
+            });
+        </script>
+    @endif
+
+    @if($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: '{!! implode("<br>", $errors->all()) !!}',
+                confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}"
+            });
+        </script>
+    @endif
 </body>
 
 </html>

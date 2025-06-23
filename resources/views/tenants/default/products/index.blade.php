@@ -17,11 +17,6 @@
             </a>
         </div>
 
-        {{-- Éxito --}}
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
         {{-- Tabla --}}
         <div class="card mb-4 border-0 shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center"
@@ -69,9 +64,7 @@
                                                                            color: white; min-width: 100px;">
                                                 <i class="bi bi-pencil-square"></i> Editar
                                             </a>
-                                            <form action="{{ route('products.destroy', $product) }}" method="POST"
-                                                onsubmit="return confirm('¿Seguro que deseas eliminar este producto?')"
-                                                style="width: 100px;">
+                                            <form action="{{ route('products.destroy', $product) }}" method="POST" class="form-eliminar-producto">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button
@@ -95,3 +88,29 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('form.form-eliminar-producto').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "¡Esta acción no se puede deshacer!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}",
+                        cancelButtonColor: "{{ tenantSetting('button_color_sidebar', '#BF8A49') }}",
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+@endpush
