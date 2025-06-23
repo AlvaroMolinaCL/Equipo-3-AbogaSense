@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PlanConfirmationMail;
 use App\Models\Tenant;
-use Database\Seeders\TenantInitialSetupSeeder;
-
-
+use Database\Seeders\Tenant\TenantInitialSetupSeeder;
 
 class PlanCheckoutController extends Controller
 {
