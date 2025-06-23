@@ -141,6 +141,7 @@ Route::middleware([
             Route::post('/', [CaseController::class, 'store'])->name('cases.store');
             Route::get('/{case}/edit', [CaseController::class, 'edit'])->name('cases.edit');
             Route::put('/{case}', [CaseController::class, 'update'])->name('cases.update');
+            Route::delete('/{case}', [CaseController::class, 'destroy'])->name('cases.destroy');
         });
 
         // Transbank

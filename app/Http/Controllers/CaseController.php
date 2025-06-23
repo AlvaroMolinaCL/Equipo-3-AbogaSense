@@ -15,8 +15,7 @@ class CaseController extends Controller
         $tenantId = tenant('id');
         $cases = LegalCase::where('tenant_id', $tenantId)->get();
 
-        // Corrige la vista a la carpeta correcta
-        return view('tenants.default.casos.index', compact('cases', 'tenantId'));
+        return view('tenants.default.cases.index', compact('cases', 'tenantId'));
     }
 
     public function create()
@@ -24,7 +23,7 @@ class CaseController extends Controller
         $tenantId = tenant('id');
         $users = User::all();
 
-        return view('tenants.default.casos.create', compact('users', 'tenantId'));
+        return view('tenants.default.cases.create', compact('users', 'tenantId'));
     }
 
     public function store(Request $request)
@@ -43,7 +42,7 @@ class CaseController extends Controller
             Mail::to($case->user->email)->send(new CaseUpdated($case));
         }
 
-        return redirect()->route('cases.index');
+        return redirect()->route('cases.index')->with('success', 'Caso creado con éxito.');
     }
 
     public function edit(LegalCase $case)
@@ -51,7 +50,7 @@ class CaseController extends Controller
         $tenantId = tenant('id');
         $users = User::all();
 
-        return view('tenants.default.casos.edit', compact('case', 'users', 'tenantId'));
+        return view('tenants.default.cases.edit', compact('case', 'users', 'tenantId'));
     }
 
     public function update(Request $request, LegalCase $case)
@@ -62,6 +61,12 @@ class CaseController extends Controller
             Mail::to($case->user->email)->send(new CaseUpdated($case));
         }
 
-        return redirect()->route('cases.index');
+        return redirect()->route('cases.index')->with('success', 'Caso actualizado con éxito.');
+    }
+
+    public function destroy(\App\Models\LegalCase $case)
+    {
+        $case->delete();
+        return redirect()->route('cases.index')->with('success', 'Caso eliminado con éxito.');
     }
 }

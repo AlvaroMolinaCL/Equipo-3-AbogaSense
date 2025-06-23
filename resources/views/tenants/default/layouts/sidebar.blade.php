@@ -33,6 +33,32 @@
             </a>
         </li>
 
+        {{-- Agenda (Desplegable) --}}
+        <li class="nav-item">
+            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
+                href="#agendaMenu"
+                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};"
+                aria-expanded="{{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'true' : 'false' }}">
+                <span><i class="bi bi-calendar me-2"></i> Agenda</span>
+                <i class="bi bi-chevron-down small"></i>
+            </a>
+            <div class="collapse ps-3 {{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'show' : '' }}"
+                id="agendaMenu" data-bs-parent="#sidebarAccordion">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('available-slots.index') ? 'active' : '' }}"
+                            href="{{ route('available-slots.index') }}"
+                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Disponibilidad</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('appointments.index') ? 'active' : '' }}"
+                            href="{{ route('appointments.index') }}"
+                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Citas Agendadas</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
         {{-- Apariencia --}}
         <li class="nav-item">
             <a class="nav-link {{ Route::is('appearance') ? 'active' : '' }}" href="{{ route('appearance') }}"
@@ -69,30 +95,13 @@
             </li>
         @endif
 
-        {{-- Mi Agenda (Desplegable) --}}
-        <li class="nav-item">
-            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse"
-                href="#agendaMenu"
-                style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};"
-                aria-expanded="{{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'true' : 'false' }}">
-                <span><i class="bi bi-calendar me-2"></i> Mi Agenda</span>
-                <i class="bi bi-chevron-down small"></i>
+        {{-- Casos --}}
+        <li>
+            <a class="nav-link {{ Route::is('cases.index') ? 'active' : '' }}"
+               href="{{ route('cases.index', ['tenantId' => request()->route('tenantId')]) }}"
+               style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">
+               <span><i class="bi bi-journal-text me-2"></i> Casos</span>
             </a>
-            <div class="collapse ps-3 {{ Route::is('available-slots.*') || Route::is('appointments.*') ? 'show' : '' }}"
-                id="agendaMenu" data-bs-parent="#sidebarAccordion">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link {{ Route::is('available-slots.index') ? 'active' : '' }}"
-                            href="{{ route('available-slots.index') }}"
-                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Disponibilidad</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ Route::is('appointments.index') ? 'active' : '' }}"
-                            href="{{ route('appointments.index') }}"
-                            style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">Citas Agendadas</a>
-                    </li>
-                </ul>
-            </div>
         </li>
 
         {{-- Planes --}}
@@ -117,16 +126,6 @@
                 style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};" aria-expanded="false">
                 <span><i class="bi bi-people me-2"></i> Usuarios</span>
             </a>
-        </li>
-
-        {{-- Casos --}}
-        <li>
-            <a class="nav-link {{ Route::is('cases.index') ? 'active' : '' }}"
-               href="{{ route('cases.index', ['tenantId' => request()->route('tenantId')]) }}"
-               style="color: {{ tenantSetting('navbar_text_color_1', 'white') }};">
-               <span><i class="bi bi-person-check me-2"></i> Casos</span>
-            </a>
-
         </li>
     </ul>
 
