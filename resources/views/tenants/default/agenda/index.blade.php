@@ -258,7 +258,6 @@
                     slotsList.innerHTML = `<p class="text-muted">Cargando horarios...</p>`;
                     modal.show();
 
-
                     const formatTime = timeStr => timeStr.slice(0, 5);
 
                     fetch(`/api/client-slots?date=${date}`)

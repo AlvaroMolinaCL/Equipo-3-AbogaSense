@@ -51,7 +51,7 @@ class AgendaController extends Controller
         if (tenantAgendaFlow() === 'solo_cuestionario') {
             return redirect()->route('tenant.agenda.questionnaire.thanks');
         } else {
-            return redirect()->route('tenant.agenda.index')->with('success', 'Gracias por completar el cuestionario.');
+            return redirect()->route('tenant.agenda.index');
         }
     }
 
@@ -102,13 +102,13 @@ class AgendaController extends Controller
             'appointment_questionnaire_response_id' => $validated['questionnaire_response_id'],
         ]);
 
-        return redirect()->route('checkout')->with('success', 'Cita agendada con éxito.');
+        return redirect()->route('checkout');
     }
 
     public function confirm(Request $request)
     {
         $slotId = $request->query('slot_id');
-        $questionnaireResponseId = $request->query('questionnaire_response_id'); // pásalo en la URL
+        $questionnaireResponseId = $request->query('questionnaire_response_id');
 
         $slot = AvailableSlot::where('id', $slotId)->first();
         if (!$slot) {
@@ -120,7 +120,6 @@ class AgendaController extends Controller
 
         $user = Auth::user();
 
-        // Busca el último cuestionario respondido por el usuario
         $questionnaireResponse = QuestionnaireResponse::where('user_id', $user->id)
             ->latest()
             ->first();

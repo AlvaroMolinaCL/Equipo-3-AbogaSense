@@ -11,7 +11,7 @@
         .day-card {
             max-height: 100%;
             flex-shrink: 0;
-            width: 500px; /* antes 350 */
+            width: 500px;
             transition: box-shadow 0.3s ease;
         }
 
@@ -53,7 +53,7 @@
     </style>
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-        <h3 class="fw-bold mt-3 mb-0" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+        <h3 class="fw-bold mb-0" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
             <i class="bi bi-calendar-plus me-2"></i>Carga de Horarios
         </h3>
         <a href="{{ route('available-slots.index') }}" class="btn btn-sm"
@@ -101,7 +101,7 @@
         {{-- Botón de envío --}}
         <div class="mt-4 text-center border-top pt-4">
             <button id="saveButton" type="submit"
-                class="btn fw-bold px-4 py-2 btn-disabled"
+                class="btn fw-bold px-4 py-2 btn-horario"
                 disabled
                 style="background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
                     color: {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }};">

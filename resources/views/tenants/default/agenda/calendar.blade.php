@@ -43,7 +43,7 @@
                         .then(data => {
                             const cont = document.getElementById('day-details');
                             cont.innerHTML = `<h5>Horarios del ${info.dateStr}</h5>`;
-
+                            
                             cont.innerHTML += `
                                     <form action="/available-slots" method="POST" class="mb-4">
                                         <input type="hidden" name="_token" value="${document.querySelector('meta[name=csrf-token]').content}">
@@ -57,13 +57,11 @@
                                                 <input name="end_time" type="time" class="form-control" required>
                                             </div>
                                             <div class="col-md-4">
-                                                <button type="submit" class="btn btn-sm btn-primary">+ Agregar Horario</button>
+                                                <button type="submit" class="btn btn-sm btn-horario">+ Agregar Horario</button>
                                             </div>
                                         </div>
                                     </form>
                                 `;
-
-
 
                             if (data.length === 0) {
                                 cont.innerHTML += '<p>No hay horarios agregados para este día.</p>';
@@ -93,4 +91,12 @@
             calendar.render();
         });
     </script>
+
+    <style>
+        .btn.btn-horario {
+            background-color: {{ tenantSetting('color_tables', '#8C2D18') }} !important;
+            color: #fff !important;
+            border-color: {{ tenantSetting('color_tables', '#8C2D18') }} !important;
+        }
+    </style>
 @endsection

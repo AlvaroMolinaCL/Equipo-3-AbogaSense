@@ -26,7 +26,6 @@ class AvailableSlotController extends Controller
         return view('tenants.default.available-slots.index', compact('slots', 'scheduleBatches'));
     }
 
-
     public function apiIndex(Request $request)
     {
         $query = AvailableSlot::with('appointments');
@@ -93,10 +92,10 @@ class AvailableSlotController extends Controller
         } else {
             $query->where(function ($q) use ($today, $currentTime) {
                 $q->where('date', '>', $today)
-                ->orWhere(function ($subq) use ($today, $currentTime) {
-                    $subq->where('date', $today)
-                        ->where('start_time', '>=', $currentTime); // 🔴 Hoy: misma lógica
-                });
+                    ->orWhere(function ($subq) use ($today, $currentTime) {
+                        $subq->where('date', $today)
+                            ->where('start_time', '>=', $currentTime); // 🔴 Hoy: misma lógica
+                    });
             });
         }
 
@@ -163,7 +162,7 @@ class AvailableSlotController extends Controller
         );
     }
     */
-    
+
     public function create()
     {
         return view('tenants.default.available-slots.create');
@@ -193,7 +192,7 @@ class AvailableSlotController extends Controller
                 'end_time' => $request->end_time,
             ]);
 
-            return redirect()->route('available-slots.index')->with('success', 'Horario puntual agregado.');
+            return redirect()->route('available-slots.index')->with('success', 'Bloque horario agregado con éxito.');
         }
 
         if ($request->mode === 'recurrente') {
@@ -235,10 +234,10 @@ class AvailableSlotController extends Controller
                 }
             }
 
-            return redirect()->route('available-slots.index')->with('success', 'Disponibilidad recurrente agregada.');
+            return redirect()->route('available-slots.index')->with('success', 'Bloque horario recurrente agregado con éxito.');
         }
 
-        return back()->with('error', 'Modo de disponibilidad no válido.');
+        return back()->with('error', 'Bloque horario no válido.');
     }
 
 
@@ -257,7 +256,7 @@ class AvailableSlotController extends Controller
 
         // Protección: no permitir editar si ya hay una cita
         if ($slot->appointments()->exists()) {
-            return back()->with('error', 'No se puede modificar este horario, ya ha sido reservado.');
+            return back()->with('error', 'Ya ha sido reservado este bloque horario. No puede ser modificado.');
         }
 
         $slot->update([
@@ -267,7 +266,7 @@ class AvailableSlotController extends Controller
             'end_time' => $validated['end_time'],
         ]);
 
-        return redirect()->route('available-slots.index')->with('success', 'Bloque actualizado correctamente.');
+        return redirect()->route('available-slots.index')->with('success', 'Bloque horario actualizado con éxito.');
     }
 
 
@@ -275,7 +274,7 @@ class AvailableSlotController extends Controller
     {
         $availableSlot->delete();
 
-        return redirect()->route('available-slots.index')->with('success', 'Disponibilidad eliminada correctamente.');
+        return redirect()->route('available-slots.index')->with('success', 'Bloque horario eliminado con éxito.');
     }
 
     public function getAvailableHours(Request $request)

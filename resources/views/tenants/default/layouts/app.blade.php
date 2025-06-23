@@ -383,7 +383,7 @@
                 icon: 'success',
                 title: '¡Éxito!',
                 text: '{{ session('success') }}',
-                confirmButtonColor: '#8C2D18'
+                confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}"
             });
         </script>
     @endif
@@ -394,7 +394,7 @@
                 icon: 'error',
                 title: 'Error',
                 html: '{!! implode("<br>", $errors->all()) !!}',
-                confirmButtonColor: '#8C2D18'
+                confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}"
             });
         </script>
     @endif

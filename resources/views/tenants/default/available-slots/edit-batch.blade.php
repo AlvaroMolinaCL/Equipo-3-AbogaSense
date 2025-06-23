@@ -115,7 +115,7 @@
             {{-- Botón de envío --}}
             <div class="mt-4 text-center border-top pt-4">
                 <button id="saveButton" type="submit"
-                    class="btn fw-bold px-4 py-2 btn-disabled"
+                    class="btn fw-bold px-4 py-2 btn-horario"
                     disabled
                     style="background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};
                         color: {{ tenantSetting('navbar_text_color_2', '#FFFFFF') }};">

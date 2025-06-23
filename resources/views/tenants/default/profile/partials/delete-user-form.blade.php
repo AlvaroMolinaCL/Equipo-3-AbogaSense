@@ -66,10 +66,11 @@
 
                 <div class="modal-footer border-0">
                     <button type="button" class="btn fw-medium" data-bs-dismiss="modal"
-                        style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }}; color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                        style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }}; color: {{ tenantSetting('color_tables', '#8C2D18') }};">
                         {{ __('Cancelar') }}
                     </button>
-                    <button type="submit" class="btn fw-medium" style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }}; color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                    <button type="submit" class="btn fw-medium"
+                        style="background-color: {{ tenantSetting('color_tables', '#8C2D18') }}; color: {{ tenantSetting('button_banner_text_color', 'white') }}">
                         <i class="bi bi-trash3 me-1"></i>{{ __('Eliminar Definitivamente') }}
                     </button>
                 </div>

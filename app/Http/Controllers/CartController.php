@@ -31,12 +31,10 @@ class CartController extends Controller
             ['user_id' => Auth::id(), 'status' => 'active']
         );
 
-        // Antes de agregar el nuevo producto, limpia los anteriores
         $cart->items()->delete();
 
         $product = Product::findOrFail($request->product_id);
 
-        // Agrega el nuevo producto con cantidad fija 1
         CartItem::create([
             'cart_id' => $cart->id,
             'product_id' => $product->id,
@@ -44,19 +42,16 @@ class CartController extends Controller
             'price' => $product->price,
         ]);
 
-        return redirect()->route('tenant.agenda.questionnaire')->with('success', 'Producto agregado al carrito.');
+        return redirect()->route('tenant.agenda.questionnaire');
     }
-
-
 
     public function remove($itemId)
     {
         $item = CartItem::findOrFail($itemId);
         $item->delete();
 
-        return redirect()->back()->with('success', 'Producto eliminado.');
+        return redirect()->back();
     }
-
 
     public function clear()
     {
@@ -68,6 +63,4 @@ class CartController extends Controller
 
         return back()->with('success', 'Carrito vaciado correctamente');
     }
-
-
 }

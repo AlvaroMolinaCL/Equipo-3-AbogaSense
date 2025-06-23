@@ -138,6 +138,12 @@
             outline: none;
             box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
         }
+
+        .btn.btn-horario {
+            background-color: {{ tenantSetting('color_tables', '#8C2D18') }} !important;
+            color: #fff !important;
+            border-color: {{ tenantSetting('color_tables', '#8C2D18') }} !important;
+        }
     </style>
 </head>
 

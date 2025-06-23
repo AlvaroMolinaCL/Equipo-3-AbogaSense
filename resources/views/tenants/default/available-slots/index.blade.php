@@ -188,7 +188,6 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 3000;
             padding: 12px 24px;
             border-radius: 8px;
             background-color: #cfe2ff;
@@ -220,9 +219,17 @@
     </style>
 
     <div class="container">
-        <h3 class="fw-bold mt-3 mb-4" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
-            <i class="bi bi-calendar-event me-2"></i>{{ __('Calendario de Disponibilidad') }}
-        </h3>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-calendar-event me-2"></i>{{ __('Calendario de Disponibilidad') }}
+            </h3>
+            <a href="{{ route('dashboard') }}" class="btn btn-sm"
+                style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};
+                  color: {{ tenantSetting('text_color_1', '#8C2D18') }};
+                  border: 2px solid {{ tenantSetting('color_tables', '#8C2D18') }};">
+                <i class="bi bi-arrow-left me-2"></i>Volver
+            </a>
+        </div>
         <div id="batch-error-message" class="alert alert-danger text-center fw-bold shadow d-none"
             style="position: absolute; left: 50%; transform: translateX(-50%); z-index: 4000; padding: 12px 24px;
                     border-radius: 8px; font-size: 0.95rem; width: fit-content;">
@@ -250,93 +257,80 @@
             @if($scheduleBatches->isEmpty())
                 <p class="text-muted">Aún no has guardado ninguna carga de horarios.</p>
             @else
-                <div class="table-responsive">
-                    <table class="table align-middle table-custom">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Días programados</th>
-                                <th>Total horarios</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($scheduleBatches as $batch)
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table align-middle table-custom">
+                            <thead class="table-light">
                                 <tr>
-                                    <td class="fw-bold text-dark" title="Creada el {{ $batch->created_at->format('d/m/Y H:i') }}">
-                                        {{ $batch->name ?? 'Carga de horarios de ' . $batch->days . ' días' }}
-                                    </td>
-
-                                    <td>{{ $batch->days }}</td>
-                                    <td>{{ $batch->slots_count }}</td>
-                                    <td class="text-center">
-                                        {{-- Botones con íconos --}}
-                                        <button type="button"
-                                            class="btn btn-sm btn-outline-info me-1 preview-batch-btn"
-                                            data-batch-id="{{ $batch->id }}"
-                                            title="Previsualizar">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </button>
-                                        <form method="GET" action="{{ route('available-slots.index') }}" class="d-inline form-apply-batch">
-                                            <input type="hidden" name="batch_id" value="{{ $batch->id }}">
-                                            <button type="submit" class="btn btn-sm btn-outline-success me-1" title="Aplicar">
-                                                <i class="bi bi-check2-circle"></i>
-                                            </button>
-                                        </form>
-
-                                        <a href="{{ route('schedule-batches.edit', $batch->id) }}" class="btn btn-sm btn-outline-primary me-1" title="Editar">
-                                            <i class="bi bi-pencil-fill"></i>
-                                        </a>
-
-                                        <form method="POST" action="{{ route('schedule-batches.destroy', $batch->id) }}" class="d-inline delete-batch-form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                                <i class="bi bi-trash3-fill"></i>
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Días Programados</th>
+                                    <th class="text-center">Total Horarios</th>
+                                    <th class="text-center">Acciones</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <!-- Modal de Confirmación para eliminar una carga -->
-                    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content border-0 shadow">
-                                <div class="modal-header text-white"
-                                    style="background-color: {{ tenantSetting('navbar_color_2', '#8C2D18') }};">
-                                    <h5 class="modal-title" id="deleteConfirmLabel">Confirmar eliminación</h5>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                                </div>
-                                <div class="modal-body">
-                                    ¿Estás seguro de que deseas eliminar esta carga de horarios?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                    <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Eliminar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            </thead>
+                            <tbody class="text-center">
+                                @foreach($scheduleBatches as $batch)
+                                    <tr>
+                                        <td class="fw-bold text-dark" title="Creada el {{ $batch->created_at->format('d/m/Y H:i') }}">
+                                            {{ $batch->name ?? 'Carga de horarios de ' . $batch->days . ' días' }}
+                                        </td>
 
-                    <div id="preview-popup" class="card shadow-sm d-none"
-                        style="z-index: 2000;
-                                position: fixed;
-                                top: 50%;
-                                left: 50%;
-                                transform: translate(-50%, -50%);
-                                max-width: 600px;
-                                width: 90%;
-                                background: #fff;
-                                border-radius: 12px;
-                                border: 1px solid #ccc;
-                                padding: 24px;">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-bold m-0" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">Previsualización</h5>
-                            <button type="button" class="btn-close" aria-label="Cerrar" onclick="document.getElementById('preview-popup').classList.add('d-none');"></button>
+                                        <td>{{ $batch->days }}</td>
+                                        <td>{{ $batch->slots_count }}</td>
+                                        <td class="text-center">
+                                            {{-- Botones con íconos --}}
+                                            <button type="button"
+                                                class="btn btn-sm me-1 preview-batch-btn"
+                                                style="background-color: {{ tenantSetting('color_tables', '#8C2D18') }}; color: {{ tenantSetting('button_banner_text_color', 'white') }};"
+                                                data-batch-id="{{ $batch->id }}"
+                                                title="Previsualizar">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                            <form method="GET" action="{{ route('available-slots.index') }}" class="d-inline form-apply-batch">
+                                                <input type="hidden" name="batch_id" value="{{ $batch->id }}">
+                                                <button type="submit" class="btn btn-sm me-1 preview-batch-btn"
+                                                style="background-color: {{ tenantSetting('button_color_sidebar', '#BF8A49') }}; color: {{ tenantSetting('button_banner_text_color', 'white') }};" title="Aplicar">
+                                                    <i class="bi bi-check2-circle"></i>
+                                                </button>
+                                            </form>
+
+                                            <a href="{{ route('schedule-batches.edit', $batch->id) }}" class="btn btn-sm me-1 preview-batch-btn"
+                                                style="background-color: {{ tenantSetting('color_tables', '#8C2D18') }}; color: {{ tenantSetting('button_banner_text_color', 'white') }};" title="Editar">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+
+                                            <form method="POST" action="{{ route('schedule-batches.destroy', $batch->id) }}" class="d-inline delete-batch-form">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm me-1 preview-batch-btn"
+                                                    style="background-color: {{ tenantSetting('button_color_sidebar', '#BF8A49') }}; color: {{ tenantSetting('button_banner_text_color', 'white') }};" title="Eliminar">
+                                                    <i class="bi bi-trash3-fill"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                        <div id="preview-popup" class="card shadow-sm d-none"
+                            style="z-index: 2000;
+                                    position: fixed;
+                                    top: 50%;
+                                    left: 50%;
+                                    transform: translate(-50%, -50%);
+                                    max-width: 600px;
+                                    width: 90%;
+                                    background: #fff;
+                                    border-radius: 12px;
+                                    border: 1px solid #ccc;
+                                    padding: 24px;">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold m-0" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">Previsualización</h5>
+                                <button type="button" class="btn-close" aria-label="Cerrar" onclick="document.getElementById('preview-popup').classList.add('d-none');"></button>
+                            </div>
+                            <div id="preview-popup-content" style="overflow-x: auto; max-height: 400px;"></div>
                         </div>
-                        <div id="preview-popup-content" style="overflow-x: auto; max-height: 400px;"></div>
                     </div>
                 </div>
             @endif
@@ -446,17 +440,45 @@
                         const existingCard = document.getElementById('batch-confirmation-card');
                         if (existingCard) existingCard.remove();
 
-                        // Crear tarjeta
-                        const card = document.createElement('div');
-                        card.id = 'batch-confirmation-card';
-                        card.innerHTML = `
-                            <p class="mb-3">¿Estás seguro de aplicar esta carga comenzando desde el <strong>${startDate.toLocaleDateString('es-CL')}</strong>?</p>
-                            <div class="d-flex justify-content-center gap-3 mt-3">
-                                <button class="btn btn-success" id="confirm-apply-yes">Sí</button>
-                                <button class="btn btn-outline-secondary" id="confirm-apply-no">No</button>
-                            </div>
-                        `;
-                        document.body.appendChild(card);
+                        Swal.fire({
+                            title: '¿Aplicar carga de horarios?',
+                            html: `¿Estás seguro de aplicar esta carga horaria comenzando desde el <strong>${startDate.toLocaleDateString('es-CL')}</strong>?`,
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}",
+                            cancelButtonColor: "{{ tenantSetting('button_color_sidebar', '#BF8A49') }}",
+                            confirmButtonText: 'Sí, aplicar',
+                            cancelButtonText: 'Cancelar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                                fetch('/api/apply-batch', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': csrfToken
+                                    },
+                                    body: JSON.stringify({
+                                        batch_id: batchId,
+                                        start_date: info.dateStr
+                                    })
+                                }).then(res => res.json())
+                                .then(response => {
+                                    if (response.success) {
+                                        window.location.href = '{{ route('available-slots.index') }}';
+                                    } else if (response.error === 'overlap') {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Conflicto de horarios',
+                                            text: 'La carga de horarios se canceló por un choque de horarios existentes.',
+                                            confirmButtonColor: '#8C2D18'
+                                        });
+                                        batchPreviewMode = false;
+                                        batchPreviewSlots = [];
+                                    }
+                                });
+                            }
+                        });
 
                         document.getElementById('confirm-apply-yes').addEventListener('click', () => {
                             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
@@ -476,24 +498,16 @@
                                 if (response.success) {
                                     window.location.href = '{{ route('available-slots.index') }}';
                                 } else if (response.error === 'overlap') {
-                                    // Mostrar mensaje de error
                                     const errorMsg = document.getElementById('batch-error-message');
                                     errorMsg.classList.remove('d-none');
 
-                                    // Ocultar mensaje tras 5 segundos
                                     setTimeout(() => {
                                         errorMsg.classList.add('d-none');
                                     }, 5000);
 
-                                    // Cerrar tarjeta de confirmación (si aún está abierta)
-                                    const card = document.getElementById('batch-confirmation-card');
-                                    if (card) card.remove();
-
-                                    // Ocultar mensaje flotante de instrucción
                                     const msg = document.getElementById('batch-apply-message');
                                     if (msg) msg.remove();
 
-                                    // Cancelar flujo de inserción
                                     batchPreviewMode = false;
                                     batchPreviewSlots = [];
                                 }
@@ -577,7 +591,7 @@
                                         <input type="text" name="end_time" id="end_time_input" class="form-control flat-time" required>
                                     </div>
                                     <div class="col-md-4 d-grid align-self-end">
-                                        <button id="submit-slot-btn" type="submit" class="btn fw-bold disabled-btn btn-secondary" disabled>
+                                        <button id="submit-slot-btn" type="submit" class="btn fw-bold disabled-btn btn-horario" disabled>
                                             + Agregar Horario
                                         </button>
                                     </div>
@@ -820,20 +834,58 @@
 
             calendar.render();
         });
-
-        // Confirmación visual al eliminar una carga
-        let selectedDeleteForm = null;
-        document.querySelectorAll('.delete-batch-form').forEach(form => {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault(); // Evitar envío inmediato
-                selectedDeleteForm = form;
-                const modal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
-                modal.show();
-            });
-        });
-        document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
-            if (selectedDeleteForm) selectedDeleteForm.submit();
-        });
-
     </script>
 @endsection
+
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-batch-form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Eliminar carga de horarios?',
+                        text: 'Esta acción no se puede deshacer.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}",
+                        cancelButtonColor: "{{ tenantSetting('button_color_sidebar', '#BF8A49') }}",
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('slots-list-modal').addEventListener('submit', function(e) {
+                const form = e.target;
+                if (
+                    form.tagName === 'FORM' &&
+                    form.action.includes('/available-slots/') &&
+                    form.querySelector('button[type="submit"].btn-outline-danger')
+                ) {
+                    e.preventDefault();
+                    Swal.fire({
+                        title: '¿Eliminar bloque horario?',
+                        text: 'Esta acción no se puede deshacer.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: "{{ tenantSetting('color_tables', '#8C2D18') }}",
+                        cancelButtonColor: "{{ tenantSetting('button_color_sidebar', '#BF8A49') }}",
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

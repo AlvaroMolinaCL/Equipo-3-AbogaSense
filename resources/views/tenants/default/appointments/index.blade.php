@@ -70,9 +70,17 @@
     </style>
 
     <div class="container">
-        <h3 class="fw-bold mt-3 mb-4" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
-            <i class="bi bi-calendar-check me-2"></i>{{ __('Citas Agendadas') }}
-        </h3>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0" style="color: {{ tenantSetting('text_color_1', '#8C2D18') }};">
+                <i class="bi bi-calendar-check me-2"></i>{{ __('Citas Agendadas') }}
+            </h3>
+            <a href="{{ route('available-slots.index') }}" class="btn btn-sm"
+                style="background-color: {{ tenantSetting('background_color_1', '#F5E8D0') }};
+                    color: {{ tenantSetting('text_color_1', '#8C2D18') }};
+                    border: 2px solid {{ tenantSetting('color_tables', '#8C2D18') }};">
+                <i class="bi bi-arrow-left me-2"></i>Volver
+            </a>
+        </div>
         <div id="calendar"></div>
     </div>
 
