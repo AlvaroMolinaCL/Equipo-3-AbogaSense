@@ -48,14 +48,14 @@ class AppearanceController extends Controller
             $file = $request->file('logo_1');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path("images/logo/{$tenant->id}"), $filename);
-            $tenant->logo_path_1 = "images/logo/{$tenant->id}/$filename";
+            $tenant->logo_path_1 = "/images/logo/{$tenant->id}/$filename";
         }
 
         if ($request->hasFile('logo_2')) {
             $file = $request->file('logo_2');
             $filename = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path("images/logo/{$tenant->id}"), $filename);
-            $tenant->logo_path_2 = "images/logo/{$tenant->id}/$filename";
+            $tenant->logo_path_2 = "/images/logo/{$tenant->id}/$filename";
         }
 
         $tenant->fill($request->only([
